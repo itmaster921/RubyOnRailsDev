@@ -1,0 +1,34 @@
+<tr id=<%= "discount-#{discount.id}" %>>
+  <td>
+    <% if can? :manage, Discount %>
+      <a onclick="loadDiscountModal(this);" data-discount-url="<%= edit_venue_discount_path(venue, discount) %>">
+        <%= discount.name %>
+      </a>
+    <% else %>
+      <%= discount.name %>
+    <% end %>
+  </td>
+  <td>
+    <span><%= discount.value %> </span>
+    <% if discount.percentage? %>
+      %
+    <% else %>
+      <i class="fa fa-eur" aria-hidden="true"></i>
+    <% end %>
+  </td>
+  <td>
+    <span><%= I18n.t("discounts.shared.#{discount.method}") %> </span>
+  </td>
+  <td>
+    <span><%= discount.round ? t('.rounded') : '' %> </span>
+  </td>
+  <% if can? :manage, Discount %>
+    <td>
+      <%= link_to venue_discount_path(venue, discount), method: :delete, remote: true, class: 'del-discount' do  %>
+        <button type="button" class="btn btn-primary ">
+          <i class="fa fa-trash"></i>
+        </button>
+      <% end %>
+    </td>
+  <% end %>
+</tr>

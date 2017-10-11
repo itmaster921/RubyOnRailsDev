@@ -1,0 +1,73 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2><%= t('.header')%></h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#"><%= @venue.company.company_legal_name %></a>
+            </li>
+            <li>
+                <a><%= @venue.venue_name %></a>
+            </li>
+            <li class="active">
+                <strong><%= t('.header')%></strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+  <div class="col-lg-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-content">
+        <br/>
+        <input type="text" class="form-control input-sm m-b-xs" id="filter"
+               placeholder="<%= t('.search_placeholder')%>">
+        <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
+          <thead>
+            <tr>
+              <th><%= t('.table_head_id')%></th>
+              <th><%= t('.table_head_cancellation_time')%></th>
+              <th><%= t('.table_head_user')%></th>
+              <th><%= t('.table_head_reservation_time')%></th>
+              <th><%= t('.table_head_reservation_court')%></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @reservations.each do |r| %>
+              <tr>
+                <td><%= r.id %></td>
+                <td><%= TimeSanitizer.output(r.updated_at).to_s %></td>
+                <td><%= r.user.full_name %></td>
+                <td><%= TimeSanitizer.output(r.start_time).strftime('%d/%m/%Y %H:%M') %></td>
+                <td><%= r.court.court_name %></td>
+                <td ><%= link_to t('.reservation_log_link'), reservation_show_log_path(r), class: 'admin-show-reservation-log-JS' %></td>
+              </tr>
+            <% end %>
+          </tbody>
+            <tfoot>
+            <tr>
+              <td colspan="2">
+                <ul class="pagination pull-right"></ul>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'reservations/modal' %>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+  $('.footable').footable();
+  $('.footable2').footable();
+
+
+});
+
+</script>

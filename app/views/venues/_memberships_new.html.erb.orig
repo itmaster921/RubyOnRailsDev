@@ -1,0 +1,209 @@
+<%= form_tag '/memberships', method: :post do %>
+
+<%= hidden_field_tag :venue_id, @venue.id %>
+<div class="panel-body">
+  <div class="col-md-6" style="border-right:1px solid #d3d3d3;height:100%">
+    <div class="full-height-scroll">
+      <div class="">
+        <h2><%= t('.header')%></h2>
+          <div class="row">
+            <div class="col-md-9">
+              <div class="form-group">
+                <label><%= t('.select_court_label')%></label>
+                <select name="membership[court_id]" id="court" class="select2_demo_2 form-control" style="width: 100%" data-venue-id="<%= @venue.id %>"></select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-9">
+              <div class="form-group">
+                <label ><%= t('.select_weekday_label')%></label>
+                <select name="membership[weekday]" id="weekday" class="select2_demo_2 form-control" style="width: 100%" data-venue-id="<%= @venue.id %>">
+                <option value="monday"><%= t('date.day_names')[1] %></option>
+                <option value="tuesday"><%= t('date.day_names')[2] %></option>
+                <option value="wednesday"><%= t('date.day_names')[3] %></option>
+                <option value="thursday"><%= t('date.day_names')[4] %></option>
+                <option value="friday"><%= t('date.day_names')[5] %></option>
+                <option value="saturday"><%= t('date.day_names')[6] %></option>
+                <option value="sunday"><%= t('date.day_names')[0] %></option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-9">
+              <div class="form-group has-feedback">
+<<<<<<< HEAD
+                  <label class="control-label"><%= t('.price_label')%></label>
+                  <input type="text" class="form-control" placeholder="<%= t('.price_label')%>"  name="membership[price]"/>
+=======
+                  <label class="control-label">Price</label>
+                  <input type="text" class="form-control" placeholder="Price"  name="membership[price]" required='true' number='true'/>
+>>>>>>> beaec3dbf044113567db2aeea18a5bf6d195cb47
+                  <i class="glyphicon glyphicon-usd form-control-feedback"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-9">
+              <div class="form-group">
+                <label ><%= t('.select_start_time')%></label>
+                <div class="input-group clockpicker">
+                              <input type="text" class="form-control" id="searchTime" name="membership[start_time]" required>
+                              <span class="input-group-addon">
+                                  <span class="glyphicon glyphicon-time"></span>
+                              </span>
+                          </div>
+                          <script type="text/javascript">
+                          $('.clockpicker').clockpicker({
+                                    placement: 'bottom',
+                                        align: 'left',
+                                        autoclose: true});
+                          </script>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-9">
+              <div class="form-group">
+                <label ><%= t('.select_end_time')%></label>
+                <div class="input-group clockpicker">
+                              <input type="text" class="form-control" id="searchTime" name="membership[end_time]" required>
+                              <span class="input-group-addon">
+                                  <span class="glyphicon glyphicon-time"></span>
+                              </span>
+                          </div>
+                          <script type="text/javascript">
+                          $('.clockpicker').clockpicker({
+                                    placement: 'bottom',
+                                        align: 'left',
+                                        autoclose: true});
+                          </script>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-9">
+              <div class="form-group">
+                <div class="input-group date" data-provide="datepicker">
+<<<<<<< HEAD
+                  <label ><%= t('.membership_start_date')%></label>
+                  <input type="text" class="form-control" id="membership-start" data-date-format="dd/mm/yyyy" value="<%= Time.now.strftime("%d/%m/%Y") %>" name="membership[start_date]">
+=======
+                  <label >Membership Start Date</label>
+                  <input type="text" class="form-control" id="membership-start" data-date-format="dd/mm/yyyy" value="<%= Time.now.strftime("%d/%m/%Y") %>" name="membership[start_date]" required>
+>>>>>>> beaec3dbf044113567db2aeea18a5bf6d195cb47
+                  <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-th"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-9">
+              <div class="form-group">
+                <div class="input-group date" data-provide="datepicker">
+<<<<<<< HEAD
+                  <label ><%= t('.membership_end_date')%></label>
+                  <input type="text" class="form-control" id="membership-end" data-date-format="dd/mm/yyyy" value="<%= Time.now.strftime("%d/%m/%Y") %>" name="membership[end_date]">
+=======
+                  <label >Membership End Date</label>
+                  <input type="text" class="form-control" id="membership-end" data-date-format="dd/mm/yyyy" value="<%= Time.now.strftime("%d/%m/%Y") %>" name="membership[end_date]" required>
+>>>>>>> beaec3dbf044113567db2aeea18a5bf6d195cb47
+                  <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-th"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-9">
+              <div class="form-group">
+                <%= submit_tag t('.submit_button'), class: "btn" %>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6" >
+    <h2><%= t('.membership_owner')%></h2>
+    <div class="row">
+      <div class="col-md-12">
+        <div class='btn-group'>
+          <div class='btn btn-white' data-target='user-select' onclick='showPane(this)'><%= t('.select_existing_user')%></div>
+          <div class='btn btn-white' data-target='user-info' onclick='showPane(this)'><%= t('.create_new_user')%></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id='user-pane'>
+      <div id='user-select'>
+        <div class="row">
+          <div class="col-md-9">
+            <div class="form-group">
+              <label><%= t('.select_user_label')%></label>
+              <select class="select2_demo_2 form-control" id="e4" data-venue-id="<%= @venue.id %>" style="width:100%" name="membership[user_id]" data-user-select >
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%= render partial: 'users/user_no_password' %>
+    </div>
+
+  </div>
+
+
+</div>
+<% end %>
+
+<script type="text/javascript">
+      $(document).ready(function() {
+        var $courts = $('#selectcourt');
+        var $form_id = $('#e4');
+        $($form_id).validate();
+
+        $("#e3").select2();
+
+        $("#weekday").select2();
+
+        jQuery.getJSON('/venues/' + $form_id.attr('data-venue-id') + '/map_users.json').done(
+            function( data ) {
+
+                data = $.map(data, function(item) {
+                    return { id: item.id, text: item.name };
+                });
+
+                jQuery('#e4').select2({
+                    placeholder: 'Select User',
+                    allowClear: true,
+                    minimumInputLength: 0,
+                    data: data
+                });
+
+            }
+        );
+
+        jQuery.getJSON('/venues/' + $form_id.attr('data-venue-id') + '/courts.json').done(
+            function( data ) {
+
+                data = $.map(data, function(item) {
+                    return { id: item.id, text: item.title };
+                });
+
+                jQuery('#selectcourt').select2({
+                    placeholder: 'Select Courts',
+                    allowClear: true,
+                    minimumInputLength: 0,
+                    data: data
+                });
+            }
+        );
+    });
+</script>

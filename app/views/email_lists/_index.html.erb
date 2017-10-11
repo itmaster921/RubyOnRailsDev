@@ -1,0 +1,28 @@
+<br/>
+<div id="email-lists" data-venue='<%= @venue.id %>'>
+
+  <!--div class="col-sm-5 m-b-xs">
+    <input type="text" class="form-control input-sm m-b-xs inline" id="filter" placeholder="<%= "Search in table" %>">
+  </div-->
+
+  <div class='form-inline m-b-md m-l-md'>
+    <%= text_field_tag "email_list_name", "", placeholder: t('.name_placeholder'), class: 'form-control' %>
+    <%= button_tag "Create", class: 'btn btn-default', onclick: 'createEmailList()' %>
+  </div>
+
+  <div class="tabs-container">
+    <div class="tabs-left">
+      <ul class="nav nav-tabs">
+        <% @email_lists.each_with_index do |email_list, i| %>
+          <li class="<%= 'active' if i == 0 %>">
+            <%= link_to "#tab-#{email_list.id}", "data-toggle": "tab", onclick: 'loadEmailListTab(this)', 'data-email-list': email_list.id do %>
+              <% email_list.name %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+
+      <div class="tab-content "></div>
+    </div>
+  </div>
+</div>

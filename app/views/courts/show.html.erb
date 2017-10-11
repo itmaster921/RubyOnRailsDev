@@ -1,0 +1,99 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2><%= @court.court_name %> for <%= @venue.venue_name %></h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#"><%= current_admin.company.company_legal_name %></a>
+            </li>
+            <li>
+                <a><%= @venue.venue_name %></a>
+            </li>
+            <li class="active">
+                <strong><%= t('.add_title')%></strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content p-md">
+                <h2><%= t('.court_info')%></h2>
+                <p><strong><%= t('.court_sport')%></strong></p>
+                <p><%= @court.sport %></p>
+                <p><strong><%= t('.court_description')%></strong></p>
+                <p><%= @court.court_description %></p>
+                <h5><%= link_to t('.edit_link'), edit_venue_court_path  %></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 ">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content p-md">
+                <h2><%= t('.prices_title')%></h2>
+                <% if @court.prices %>
+                  <h4><%= t('.prices_monday')%></h4>
+
+                  <% @court.prices.each do |price| %>
+                    <% if price.monday %>
+                      <strong><%= t('.from')%></strong> <%= price.start_time.try(:strftime, '%H:%M') %> <strong><%= t('.to') %></strong> <%= price.end_time.try(:strftime, '%H:%M') %> <%= number_to_currency(price.price) %> <strong><%= link_to t('.remove_link'), [@venue, price], method: :delete, data: {confirm: t('.confirm_msg')}  %> </strong> <br>
+                    <% end %>
+                  <% end %>
+                  <h4><%= t('.prices_tuesday')%></h4>
+
+                  <% @court.prices.each do |price| %>
+                    <% if price.tuesday %>
+                      <strong><%= t('.from')%></strong> <%= price.start_time.try(:strftime, '%H:%M') %> <strong><%= t('.to') %></strong> <%= price.end_time.try(:strftime, '%H:%M') %> <%= number_to_currency(price.price) %> <strong><%= link_to t('.remove_link'), [@venue, price], method: :delete, data: {confirm: t('.confirm_msg')}  %> </strong> <br>
+                    <% end %>
+                  <% end %>
+                  <h4><%= t('.prices_wednesday')%></h4>
+
+                  <% @court.prices.each do |price| %>
+                    <% if price.wednesday %>
+                      <strong><%= t('.from')%></strong> <%= price.start_time.try(:strftime, '%H:%M') %> <strong><%= t('.to') %></strong> <%= price.end_time.try(:strftime, '%H:%M') %> <%= number_to_currency(price.price) %> <strong><%= link_to t('.remove_link'), [@venue, price], method: :delete, data: {confirm: t('.confirm_msg')}  %> </strong> <br>
+                    <% end %>
+                  <% end %>
+                  <h4><%= t('.prices_thursday')%></h4>
+
+                  <% @court.prices.each do |price| %>
+                    <% if price.thursday %>
+                      <strong><%= t('.from')%></strong> <%= price.start_time.try(:strftime, '%H:%M') %> <strong><%= t('.to') %></strong> <%= price.end_time.try(:strftime, '%H:%M') %> <%= number_to_currency(price.price) %> <strong><%= link_to t('.remove_link'), [@venue, price], method: :delete, data: {confirm: t('.confirm_msg')}  %> </strong> <br>
+                    <% end %>
+                  <% end %>
+                  <h4><%= t('.prices_friday')%></h4>
+
+                  <% @court.prices.each do |price| %>
+                    <% if price.friday %>
+                      <strong><%= t('.from')%></strong> <%= price.start_time.try(:strftime, '%H:%M') %> <strong><%= t('.to') %></strong> <%= price.end_time.try(:strftime, '%H:%M') %> <%= number_to_currency(price.price) %> <strong><%= link_to t('.remove_link'), [@venue, price], method: :delete, data: {confirm: t('.confirm_msg')}  %> </strong> <br>
+                    <% end %>
+                  <% end %>
+                  <h4><%= t('.prices_saturday')%></h4>
+
+                  <% @court.prices.each do |price| %>
+                    <% if price.saturday %>
+                      <strong><%= t('.from')%></strong> <%= price.start_time.try(:strftime, '%H:%M') %> <strong><%= t('.to') %></strong> <%= price.end_time.try(:strftime, '%H:%M') %> <%= number_to_currency(price.price) %> <strong><%= link_to t('.remove_link'), [@venue, price], method: :delete, data: {confirm: t('.confirm_msg')}  %> </strong> <br>
+                    <% end %>
+                  <% end %>
+                  <h4><%= t('.prices_sunday')%></h4>
+                  <% @court.prices.each do |price| %>
+                    <% if price.sunday %>
+                      <strong><%= t('.from')%></strong> <%= price.start_time.try(:strftime, '%H:%M') %> <strong><%= t('.to') %></strong> <%= price.end_time.try(:strftime, '%H:%M') %> <%= number_to_currency(price.price) %> <strong><%= link_to t('.remove_link'), [@venue, price], method: :delete, data: {confirm: t('.confirm_msg')}  %> </strong> <br>
+                    <% end %>
+                  <% end %>
+                <% else %>
+                <% end %>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+        </div>
+        <br>
+    </div>
+</div>
+
+
+

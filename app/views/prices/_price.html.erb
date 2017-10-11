@@ -1,0 +1,29 @@
+<tr data-price='<%= price.id %>' >
+  <td>
+    <a onclick="_priceModal.open('<%= venue_price_path(venue, price)%>');" class="client-link">
+      <%= t('.header')%> <%= price.id %>
+  </a>
+  </td>
+  <td><%= price.start_time.try(:strftime, '%H:%M') %> -
+    <%= price.end_time.try(:strftime, '%H:%M') %></td>
+  <td><strong><%= number_to_currency(price.price) %></strong>
+  </td>
+  <td>
+    <% if price.monday %><%=t('.monday')%><% end %>
+    <% if price.tuesday %><%=t('.tuesday')%><% end %>
+    <% if price.wednesday %><%=t('.wednesday')%><% end %>
+    <% if price.thursday %><%=t('.thursday')%><% end %>
+    <% if price.friday %><%=t('.friday')%><% end %>
+    <% if price.saturday %><%=t('.saturday')%><% end %>
+    <% if price.sunday %><%=t('.sunday')%><% end %>
+  </td>
+  <% if can? :manage, Price %>
+    <td>
+      <%= link_to venue_price_path(venue, price), method: :delete, remote: true, class: 'remote-del-btn price' do  %>
+        <button type="button" class="btn btn-primary ">
+          <i class="fa fa-trash"></i>
+        </button>
+      <% end %>
+    </td>
+  <% end %>
+</tr>

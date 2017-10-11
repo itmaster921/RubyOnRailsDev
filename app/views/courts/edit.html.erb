@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <div class="col-lg-12 text-center">
+    <h2><%= t('.header')%></h2>
+  </div>
+</div>
+
+<div class="modal-body">
+  <%= form_for [@venue, @court], remote: true, html: {id: 'edit-court'}  do |c| %>
+    <%= render partial: "courts/form", locals: {court: c} %>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" id="cancel-update" data-court-url="<%= venue_court_modal_path(@venue, @court) %>" onclick="loadCourtModal(this)">
+      <i class="fa fa-arrow-left"></i> <%= t('.cancel_button')%>
+    </button>
+    <%= c.submit t('.submit_button'), :class => "btn btn-default", form: 'edit-court' %>
+<% end %>
+</div>

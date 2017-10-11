@@ -1,0 +1,27 @@
+<div class="modal fade admin-modal" id="edit-admin" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>
+          <%= t('.header') %>
+        </h3>
+      </div>
+      <%= form_for [company, admin], html: { multipart: true }, remote: true, authenticity_token: true, data: { type: :json }  do |f| %>
+        <div class="modal-body">
+          <%= render partial: "admins/form", locals: {f: f} %>
+          <% if admin.god? %>
+            <label> Upload your passport for verification </label>
+            <%= file_field_tag :passport %>
+          <% end %>
+        </div>
+        <div class="modal-footer">
+          <div class="actions text-center">
+            <button class='btn btn-primary ladda-button' data-style='expand-right' type='submit' onclick='$("#edit-admin").submit();'>
+              <%= t('.button')%>
+            </button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

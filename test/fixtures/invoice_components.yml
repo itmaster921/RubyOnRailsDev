@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  reservation_id: 
+  price: 9.99
+  is_paid: false
+
+two:
+  reservation_id: 
+  price: 9.99
+  is_paid: false

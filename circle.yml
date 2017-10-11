@@ -1,0 +1,15 @@
+dependencies:
+ pre:
+   - sudo pip install awsebcli --ignore-installed setuptools
+   - sudo apt-get install pngcrush jpegoptim
+   - sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
+database:
+ override:
+   - bundle exec rake db:drop
+   - bundle exec rake db:create RAILS_ENV=test
+   - bundle exec rake db:migrate RAILS_ENV=test
+deployment:
+ production:
+   branch: master
+   commands:
+     - eb deploy --profile default

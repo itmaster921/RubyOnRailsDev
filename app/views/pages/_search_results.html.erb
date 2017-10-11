@@ -1,0 +1,129 @@
+<% if current_user.present? %>
+  <input type="hidden" value="<%= current_user.id %>" id="userId" />
+<% end %>
+<%= render 'shared/newnav' %>
+  <main class="b-page">
+    <section class="page-section">
+        <div class="venue-grid">
+          <div class="venue-grid__search">
+            <form class="search-venue search-venue_results" role="search">
+              <div class="search-venue__block">
+                <%= select_tag 'searchSport', options_for_select(Court.supported_sports, params[:sport_name]), class: 'select2_sport form-control' %>
+                <div class="search-venue__line"></div>
+              </div>
+              <div class="search-venue__block">
+                <select class="select2_duration form-control" id="searchDuration" data-value=<%= params[:duration] %>>
+                  <option value="60" <%= params[:duration] == '60' ? 'selected' : '' %>><%= t('.duration')%></option>
+                  <option value="90" <%= params[:duration] == '90' ? 'selected' : '' %>><%= t('.duration')%></option>
+                  <option value="120" <%= params[:duration] == '120' ? 'selected' : '' %>><%= t('.duration')%></option>
+                </select>
+                <div class="search-venue__line"></div>
+              </div>
+              <div class="search-venue__block">
+                <div class="input-group">
+                  <input type="text" class="search-venue__input js-datepicker form-control" id="searchDate" value="<% if params["date"].present? %><%= params["date"] %><% else %><%= Time.zone.now.strftime("%d/%m/%Y") %><% end %>" placeholder="datapicker" />
+                  <span class="input-group-addon"><span class="icon-calender"></span></span>
+                </div>
+                <div class="search-venue__line"></div>
+              </div>
+              <div class="search-venue__block">
+                <%= search_time_select_box(params[:time]) %>
+              </div>
+              <div class="search-venue__block">
+                <button class="btn" type="submit" id="searchAvailableVenuesBtn"><%= t('pages.search_form.find_venue')%></button>
+              </div>
+          </form>
+          <input type="hidden" id="reservationDuration" value="<%= @duration %>" />
+          </div>
+
+          <% if @available_times %>
+          <div class="grid-columns-3" >
+          <!-- VENUE REPETITION FROM HERE -->
+            <% @venues_data.each do |vd| %>
+            <% venue = vd[:venue] %>
+            <% data = vd[:data] %>
+            <% next if data[:all_available_times].empty? %>
+            <% @name = venue.venue_name %>
+            <input type="hidden" value="<%= venue.id %>" id="venueId"/>
+            <div class="venue-wrap venue_details">
+              <div class="venue ">
+                <img class="venue-img" src="<%= venue.try_photo_url %>" alt="Venue image">
+                <div class="venue-overlay">
+                  <h4 class="venue-title">Info</h4>
+                  <div>
+                    <div class="venue-attr">
+                      <div class="venue-attr_img icon-map-xs"></div>
+                      <div class="venue-attr_text"><%= venue.street %>,
+                        <br><%= venue.zip %> <%= venue.city %></div>
+                    </div>
+                    <div class="venue-attr">
+                      <div class="venue-attr_img icon-phone"></div>
+                      <a class="venue-attr_text" href=""><%= venue.phone_number %></a>
+                    </div>
+                    <div class="venue-attr">
+                      <div class="venue-attr_img icon-site"></div>
+                      <a class="venue-attr_text" href=""><%= venue.website %></a>
+                    </div>
+                  </div>
+                  <a href="<%= venue_path(venue) %>" class="venue-btn"></a>
+
+                </div>
+                <div class="venue-footer">
+                  <div class="venue-footer-cont">
+                    <div class="venue-name"><%= venue.venue_name %></div>
+                  </div>
+                  <div class="venue-price">
+                    <span class="venue-price_currency">€</span>
+                    <span class="venue-price_val"><%= data[:min_price] %></span>
+                    <span class="venue-price_plus">+</span>
+                  </div>
+                </div>
+              </div>
+              <div class="venue__times">
+                <!-- VENUE TIMES -->
+                <%#= print data[:marginalized_available_times] %>
+                <% data[:marginalized_available_times].each do |time| %>
+                  <%= link_to "#booking-modal", "data-toggle" => "modal", :id => 'searchAvailableMultiBtn', class: 'search-available-time',
+                    data: { venue: venue.id, time: minute_of_a_day_to_time(time), venue_name: venue.venue_name } do  %>
+                  <button class="venue__time">
+                    <span class="venue__time-clock"><%= minute_of_a_day_to_time(time) %></span>
+                  </button>
+                  <% end %>
+                <% end %>
+                <!-- VENUE TIMES END -->
+              </div>
+            </div>
+            <% end %>
+            <!-- VENUE REPETITION ENDS -->
+          </div>
+          <% else %>
+            <% if params["date"].present? && params["time"].present? && params["duration"].present? %>
+              <h4 class="col-sm-12">
+                <%= t('.not_available_with_params_html',
+                      count: 0,
+                      duration: params[:duration],
+                      date: @time.to_date.strftime("%d/%m/%Y"),
+                      time: params[:time] )%>
+              </h4>
+            <% else %>
+            <h4 class="col-sm-12"><%= t('.not_available', count: @available_times) %></strong></h4>
+            <% end %>
+          <% end %>
+        </div>
+    </section>
+
+  </main>
+<%= render 'layouts/footer' %>
+<%= render 'shared/booking_success_modal' %>
+<%= render 'shared/booking_modal' %>
+<%= render 'shared/not_logged_modal' %>
+<% if current_user %>
+  <%= render 'shared/payment_modal' %>
+<% end %>
+<script>
+  $(document).ready(function () {
+    Init.grid();
+  });
+</script>
+<script src="https://checkout.stripe.com/checkout.js">
+</script>

@@ -1,0 +1,164 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2><%= t('.header') %></h2>
+    <ol class="breadcrumb">
+      <li>
+        <a href="#"><%= @venue.company.company_legal_name %></a>
+      </li>
+      <li>
+        <a><%= @venue.venue_name %></a>
+      </li>
+      <li class="active">
+        <strong><%= t('.header') %></strong>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox">
+        <div class="ibox-content">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a data-toggle="tab" href="#booking-confirmation-email-tab">
+                <i class="fa fa-user"></i>
+                  <%= t('.booking_confirmation_email')%>
+              </a>
+            </li>
+            <li>
+              <a data-toggle="tab" href="#registration-confirmation-email-tab">
+                <i class="fa fa-user"></i>
+                  <%= t('.registration_confirmation_email')%>
+              </a>
+            </li>
+            <li class>
+              <a data-toggle="tab" href="#email-lists-tab" onclick="loadEmailLists(this)" data-url="<%= venue_email_lists_path(@venue) %>">
+                <i class="fa fa-users"></i>
+                <%= t('.email_lists') %>
+              </a>
+            </li>
+            <li class>
+              <a data-toggle="tab" href="#send-email-tab" onclick="initSendEmailTab(this)" data-venue="<%= @venue.id %>">
+                <i class="fa fa-pencil"></i>
+                <%= t('.compose') %>
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div id="booking-confirmation-email-tab" class="tab-pane active">
+              <br/>
+              <h3>
+                <%= t('.booking_confirmation_header') %>
+              </h3>
+              <br/>
+              <%= form_tag venue_update_emails_path(@venue) do %>
+                <div class='row'>
+                  <div class='col-md-12'>
+                    <textarea cols='150'
+                              rows='15'
+                              name='venue[confirmation_message]'
+                              placeholder="<%= t('.booking_confirmation_placeholder')%>"><%= @venue.confirmation_message %></textarea>
+                  </div>
+                </div>
+                <div class='row'>
+                  <div class='col-md-4'>
+                    <input type='submit' class='btn btn-primary' value='Update'/>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            <div id="registration-confirmation-email-tab" class="tab-pane active">
+              <br/>
+              <h3>
+                <%= t('.registration_confirmation_header') %>
+              </h3>
+              <br/>
+              <%= form_tag venue_update_emails_path(@venue) do %>
+                <div class='row'>
+                  <div class='col-md-12'>
+                    <textarea cols='150'
+                              rows='15'
+                              name='venue[registration_confirmation_message]'
+                              placeholder="<%= t('.registration_confirmation_placeholder')%>"><%= @venue.registration_confirmation_message %></textarea>
+                  </div>
+                </div>
+                <div class='row'>
+                  <div class='col-md-4'>
+                    <input type='submit' class='btn btn-primary' value='Update'/>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            <div id="email-lists-tab" class="tab-pane clearfix"></div>
+            <div id="send-email-tab" class="tab-pane clearfix">
+              <%= render partial: '/email_lists/send_mail', locals: { venue: @venue } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal confirmation window -->
+<div id="confirm-modal" class="modal inmodal fade in" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; padding-left: 0px;">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+        <button class="btn btn-primary" id="confirm-btn">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TODO use common function for all modal windows -->
+<!-- modal window used in email list to add users -->
+<div id="add-users-modal" class="modal inmodal fade in" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; padding-left: 0px;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title"><%= "Add Users" %></h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-5 m-b-xs">
+            <input type="text" class="form-control input-sm m-b-xs inline" id="filter" placeholder="<%= "Search in table" %>">
+          </div>
+        </div>
+
+        <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="10" data-filter=#filter>
+          <thead>
+            <tr>
+              <th><%= "Name" %></th>
+              <th><%= "Email" %></th>
+              <th><%= "Actions" %></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5">
+                <ul class="pagination pull-right"></ul>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+        <button class="btn btn-primary" id="confirm-btn" data-dismiss="modal" onclick="addUsersToEmailList()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

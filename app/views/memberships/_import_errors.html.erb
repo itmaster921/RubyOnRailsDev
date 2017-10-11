@@ -1,0 +1,43 @@
+<% if @failed_rows.any? %>
+  <div class='row'>
+    <div class='col-md-4'><b><%= t('.failures') %>:</b></div>
+  </div>
+
+  <% @failed_rows.each do |row| %>
+    <div class='row'>
+      <div class='col-md-4'>
+        <b><%= sanitize row[:name] %></b>
+      </div>
+      <div class='col-md-8'>
+        <% row[:membership].errors.each do |name, error| %>
+          <% if name != :reservations %>
+            <div class='row'>
+              <div class='col-md-12'>
+                <%= sanitize row[:membership].errors.full_messages_for(name).join('; ') %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+        <% if row[:membership].reservations.select(&:errors).any? %>
+          <div class='row'>
+            <div class='col-md-12'>
+              <%= t('.invalid_reservations') %>
+
+              <% row[:membership].reservations.select(&:errors).each do |reservation| %>
+                <div class='row'>
+                  <div class='col-md-4'>
+                    <%= reservation.start_time.to_s(:date) %>
+                  </div>
+                  <div class='col-md-8'>
+                    <%= sanitize reservation.errors.full_messages.join('; ') %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class='import-errors-row-divider'></div>
+  <% end %>
+<% end %>

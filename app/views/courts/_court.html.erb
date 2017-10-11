@@ -1,0 +1,40 @@
+<tr data-court='<%= court.id %>'>
+  <td class="client-avatar">
+    <img alt="image" src="<%= image_path('amperlogoiconblue.png') %>">
+  </td>
+  <td>
+    <a onclick="loadCourtModal(this);" data-court-url="<%= venue_court_modal_path(venue, court) %>" class="client-link">
+      <%= court.court_name %>
+    </a>
+  </td>
+  <td>
+    <%= court.sport %>
+  </td>
+  <td>
+    <span class="label label-primary">
+      <%= court.active? ? t('.active') : t('.closed') %>
+    </span>
+  </td>
+    <td class="col-md-2">
+      <span>
+        <div id="shared_court_label">
+          <%= t('.shared_court') if court.shared_courts.any? %>
+            <div id="shared_courts_list">
+              <ul>
+                <% court.shared_courts.each do |c| %>
+                  <li><%= c.court_name + " (#{c.sport})" %>
+                <%  end %>
+              </ul>
+            </div>
+        </div>
+      </span>
+    </td>
+  <% if can? :manage, Court %>
+    <td>
+      <button type="button" class="btn btn-primary" data-delete-url="<%= venue_court_path(venue, court) %>"
+              onclick="deleteCourt(this);">
+        <i class="fa fa-trash"></i>
+      </button>
+    </td>
+  <% end %>
+</tr>

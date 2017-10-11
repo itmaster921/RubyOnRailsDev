@@ -1,0 +1,105 @@
+% Standard Finnish Invoice Template v0.4
+% Copyright 2008 Jaakko Heusala <jheusala@iki.fi>
+%
+% See README in finnish for instructions.
+%
+% $Id: invoice.tex 4581 2008-02-24 18:59:30Z jheusala $
+% [The zlib/libpng License]
+%
+% This software is provided 'as-is', without any express or implied
+% warranty. In no event will the authors be held liable for any damages
+% arising from the use of this software.
+%
+% Permission is granted to anyone to use this software for any purpose,
+% including commercial applications, and to alter it and redistribute it
+% freely, subject to the following restrictions:
+%
+%    1. The origin of this software must not be misrepresented; you must not
+%    claim that you wrote the original software. If you use this software
+%    in a product, an acknowledgment in the product documentation would be
+%    appreciated but is not required.
+%
+%    2. Altered source versions must be plainly marked as such, and must not be
+%    misrepresented as being the original software.
+%
+%    3. This notice may not be removed or altered from any source
+%    distribution.
+%
+
+\documentclass[a4paper,10pt]{letter}
+\title{Lasku 1234}
+\date{20.02.2008}
+\usepackage{pslatex}
+\usepackage[utf8]{inputenc}
+\usepackage[finnish]{babel}
+\pagestyle{empty}
+\usepackage[left=0cm,top=0cm,right=0cm,bottom=0cm,nohead,nofoot]{geometry}
+\usepackage[gen]{eurosym}
+\usepackage{color}
+\usepackage{pstricks}
+\usepackage{rotating}
+\usepackage[T1]{fontenc} % Fixes scandinavian character problem
+\begin{document}
+
+\setlength{\unitlength}{1mm}
+\begin{picture}(210,297)(0,0)
+
+  %% Document Header
+  \fontsize{12pt}{14pt}
+  \selectfont
+  \put(20,277){
+    \begin{tabular}[t]{@{}p{8.5cm}@{}p{8.5cm}@{}r}
+      \parbox[t]{9.5cm}{
+        \fontsize{16pt}{18pt}
+        \selectfont
+        \textsc{<%= @company.company_legal_name %>} \\
+        \fontsize{12pt}{14pt}
+        \selectfont
+        <%= @company.company_street_address %> \\
+        <%= "#{@company.company_zip} #{@company.company_city}" %> \\
+        <%= @company.company_country %> \\
+
+      }
+      &
+      \parbox[t]{8.5cm}{
+        LASKU \\
+        \\
+        <%= Date.today.strftime("%d/%m/%Y") %>
+        \\
+        \\
+        \\
+      } & 1 (1) \\
+    \end{tabular}
+  }
+
+
+  %% Items
+  %\fontsize{8pt}{9pt}
+  \selectfont
+  \put(10,222){
+
+    \begin{tabular}[t]{ll}
+      \textbf{Transfer Amount} & \textbf{Transfer Data} \\
+      \hline
+
+      <% @transfers.each do |t| %>
+        \$ <%= t.amount/100.0 %> & <%= Time.at(t.date).to_datetime.strftime("%d/%m/%Y") %> \\
+      \hline \\
+
+
+      \begin{tabular}[t]{lllll}
+        \textbf{Charge Amount} & \textbf{Charge Fee} & \textbf{Charge Net} & \textbf{Charge Date} & \textbf{Charge Type} \\
+        \hline
+        <% @company.transfer_transactions(t.id).each do |transfer| %>
+        \$ <%= transfer.amount / 100.0 %> & \$ <%= transfer.fee %> & \$ <%= transfer.net / 100.0 %> & <%= Time.at(transfer.created).to_datetime.strftime("%d/%m/%Y") %> & <%= transfer.type %>\\
+      <% end %>
+        \hline \\
+
+
+      \end{tabular} \\
+    <% end %>
+    \end{tabular}
+  }
+
+\end{picture}
+\end{document}

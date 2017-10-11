@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_time: 2016-03-22 16:12:09
+  end_time: 2016-03-22 16:12:09
+  price: 1.5
+  user_id: 
+  venue_id: 
+
+two:
+  start_time: 2016-03-22 16:12:09
+  end_time: 2016-03-22 16:12:09
+  price: 1.5
+  user_id: 
+  venue_id: 

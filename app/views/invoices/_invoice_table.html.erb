@@ -1,0 +1,23 @@
+<table class="footable">
+  <tr>
+    <th><%= t('.table_head_start_time')%></th>
+    <th><%= t('.table_head_end_time')%></th>
+    <th><%= t('.table_head_court')%></th>
+    <th><%= t('.table_head_price')%></th>
+  </tr>
+  <% total = 0.0 %>
+  <% invoice.invoice_components.each do |ic| %>
+    <% total += ic.price %>
+    <tr>
+      <td><%= ic.start_time %></td>
+      <td><%= ic.end_time %></td>
+      <td><%= ic.court_name %></td>
+      <td><%= ic.price %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td colspan="2"></td>
+    <td><strong><%= t('.total')%></strong></td>
+    <td><strong><%= total %></strong></td>
+  </tr>
+</table>

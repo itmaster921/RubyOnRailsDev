@@ -1,0 +1,127 @@
+<%= render 'shared/newnav' %>
+
+
+<main class="profile">
+  <div class="row">
+    <div class="col-xs-16 col-sm-12 col-sm-offset-2">
+      <div class="profile__header">
+        <div class="row">
+          <div class="col-xs-16 col-sm-10">
+            <div class="profile__photo">
+              <%= image_tag 'users/profile.png' %>
+            </div>
+            <div class="profile__name">
+              <div class="profile__name-primary"><%= t('.header')%></div>
+              <div class="profile__name-full"><%= @user.first_name %> <%= @user.last_name %></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="profile__navs">
+        <div class="profile__navs-link active"><%= link_to t('.edit_profile'), edit_user_registration_path(current_user) %></div>
+        <div class="profile__navs-link "><%= link_to t('.my_reservations'), user_path(current_user)  %></div>
+        <div class="profile__navs-link"><%= link_to t('.invoices'), user_invoices_path(current_user)  %></div>
+      </div>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-line form-line_light' }) do |f| %>
+        <%= render 'shared/devisemes' %>
+        <div class="profile-edit">
+          <div class="profile-edit__title">
+            <div class="row">
+              <div class="col-xs-16 col-sm-8">
+                <h4><%= t('.form_title')%></h4>
+              </div>
+              <div class="col-xs-16 col-sm-8">
+                <div class="profile-edit__title-lastupd"><%= t('.last_updated', date: current_user.updated_at.strftime('%D')) %> </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= f.text_field :first_name, autofocus: true, :placeholder => true, :class => 'form-control' %>
+              </fieldset>
+            </div>
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= f.text_field :last_name, autofocus: true, :placeholder => true, :class => 'form-control' %>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= f.email_field :email, :placeholder => true, :class => 'form-control' %>
+              </fieldset>
+            </div>
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= f.text_field :phone_number, :placeholder => true, :class => 'form-control' %>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= f.text_field :street_address, autofocus: true, :placeholder => true, :class => 'form-control' %>
+              </fieldset>
+            </div>
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= f.text_field :zipcode, autofocus: true, :placeholder => true, :class => 'form-control' %>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= f.text_field :city, autofocus: true, :placeholder => "City", :class => 'form-control' %>
+              </fieldset>
+            </div>
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <a data-toggle="modal" class="btn btn-secondary btn-lg profile-edit__addcard" data-target="#password-modal"><i class="fa fa-plus"></i>Vaihda Salasana</a>
+              </fieldset>
+            </div>
+          </div>
+
+
+						<div class="profile-edit__title">
+							<h4><%= t('.payment_method') %></h4>
+						</div>
+
+
+          <div class="row">
+            <div class="col-xs-16 col-sm-8" id='card-select-div'>
+              <fieldset class="form-group">
+                <% if @user.has_stripe? %>
+                  <%= render partial: 'users/credit_cards', locals: {cards: @user.cards} %>
+                <% else %>
+                    <span> <%= t('.no_cards_message') %> </span>
+                <% end %>
+              </fieldset>
+            </div>
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <input id="add-card" class="btn btn-secondary btn-lg profile-edit__addcard strp-btn" type="submit" value="<%= t('.add_new_card_button') %>" data-stripe-key="<%= Rails.configuration.stripe[:publishable_key] %>" data-stripe-locale="auto" data-user-url="<%= user_add_card_path(current_user) %>" >
+                </input>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+        <div class="profile-edit__save">
+          <%= f.submit t('.save_changes'), :class => "btn btn-lg btn-primary" %>
+        </div>
+        <% end %>
+    </div>
+  </div>
+</main>
+
+<%= render partial: 'shared/password_modal', locals: { user: @user } %>
+
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<%= render 'layouts/footer' %>

@@ -1,0 +1,21 @@
+
+<div class="col-sm-3 col-md-2 sidebar">
+  <ul class="nav nav-sidebar">
+    <% if current_company.venues %>
+      <% @venues.each do |venue| %>
+      <li>Your Venues:</li>
+      <li> <%= link_to venue.venue_name, venue_path(venue) %> </li>
+      <li> <%= link_to new_venue_path do  %> Add Venue <% end %> </li>
+      <% end %>
+    <% else %>
+    wtf ??
+    <li> <%= link_to new_venue_path do  %> Add Venue <% end %> </li>
+    <% end %>
+    <hr>
+    <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+    <li><a href="#">Reports</a></li>
+    <li><a href="#">Analytics</a></li>
+  </ul>
+</div>
+
+

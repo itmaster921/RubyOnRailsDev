@@ -1,0 +1,162 @@
+<div class="panel-body">
+  <div class="ibox float-e-margins">
+    <div class="">
+      <h3><%= t('.header')%></h3>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+          <div class="ibox-content memberships-list-JS" data-venueid='<%= @venue.id %>'>
+            <input type="text" class="form-control input-sm m-b-xs" id="filter"
+                   placeholder="Search in table"/>
+            <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
+              <thead>
+                <tr>
+                  <th><%= t('.table_head_name')%></th>
+                  <th><%= t('.table_head_start_date')%></th>
+                  <th><%= t('.table_head_end_date')%></th>
+                  <th><%= t('.table_head_price')%></th>
+                  <th><%= t('.table_head_weekday')%></th>
+                  <th><%= t('.table_head_court')%></th>
+                  <th><%= t('.table_head_time')%></th>
+                  <th><%= t('.table_head_edit')%></th>
+                  <th data-hide="all"><%= t('.table_head_remove')%></th>
+                  <th data-hide="all"><%= t('.table_head_reservations')%></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @memberships.each do |membership| %>
+                  <% mreservations = @reservations[membership.id] || [] %>
+                  <tr>
+                    <td><%= membership.user.try(:full_name) %></td>
+                    <td><%= TimeSanitizer.strftime(membership.start_time, :date) %></td>
+                    <td><%= TimeSanitizer.strftime(membership.end_time, :date) %></td>
+                    <td><%= number_to_currency(membership.price) %></td>
+                    <td>
+                      <%= "#{TimeSanitizer.localize(mreservations.first.try(:start_time), '%A')}" %>
+                    </td>
+                    <td><%= "#{mreservations.first.try(:court).try(:court_name)}"%></td>
+                    <td><%= "#{TimeSanitizer.strftime(mreservations.first.try(:start_time), :time)} - #{TimeSanitizer.strftime(mreservations.first.try(:end_time), :time)}" %></td>
+                    <td>
+                      <button type="button" class="btn"
+                               onclick='_membershipModal.open("<%= venue_membership_path(venue, membership) %>")'>
+                        Edit
+                      </button>
+                    </td>
+                    <td>
+                      <%= link_to venue_membership_path(membership.venue, membership), method: :delete, class: 'remote-del-btn price', data: { confirm: "Are you sure?" } do  %>
+                        <button type="button" class="btn btn-primary ">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      <% end %>
+                    </td>
+
+
+                    <td>
+                      <table class="table table-stripped">
+                        <tr>
+                          <th><%= t('.table_head_start_date')%></th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                        <% mreservations.sort_by(&:start_time).each do |r| %>
+                          <tr data-membership-reservation='<%= r.id %>'>
+                            <td><%= TimeSanitizer.strftime(r.start_time, :date) %></td>
+                            <td>
+                              <% if r.resold? %>
+                                <%= t('.resold_reservation') %>
+                              <% elsif r.reselling? %>
+                                <%= link_to t('.withdraw_resell_reservation_link'), reservation_resell_path(r) %>;
+                                <%= link_to t('reservations.show.resell_to_user_link'), resell_to_user_form_venue_reservation_path(membership.venue, r), class: 'admin-show-resell-to-user-JS'  %>
+                              <% elsif r.future? %>
+                                <%= link_to t('.resell_reservation_link'), reservation_resell_path(r) %>
+                              <% else %>
+                              <% end %>
+                            </td>
+                            <td ><%= link_to t('.reservation_log_link'), reservation_show_log_path(r), class: 'admin-show-reservation-log-JS' %></td>
+                          </tr>
+                        <% end %>
+                      </table>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="5">
+                    <ul class="pagination pull-right"></ul>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% unless @bad_reservations.nil? || @bad_reservations.empty?  %>
+  <div class="modal fade" id="memberships-errors" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel"><%=t('.errors')%></h4>
+        </div>
+        <div class="modal-body">
+          <h3><%= t('.resv_errors')%></h3>
+          <table class='table table-stripped toggle-arrow-tiny'>
+            <thead>
+              <tr>
+                <th><%= t('.table_head_start_date')%></th>
+                <th><%= t('.table_head_start_time')%></th>
+                <th><%= t('.table_head_end_time')%></th>
+                <th><%= t('.table_head_resv_court')%></th>
+                <th><%= t('.table_head_status')%></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @bad_reservations.each do |r| %>
+                <tr>
+                  <td><%= TimeSanitizer.strftime(r.start_time, :date) %></td>
+                  <td><%= TimeSanitizer.strftime(r.start_time, :time) %></td>
+                  <td><%= TimeSanitizer.strftime(r.end_time, :time) %></td>
+                  <td><%= r.court.court_name %></td>
+                  <td><span class='label label-danger'><%= t('.failed') %></span></td>
+                </tr>
+                <tr>
+                  <td colspan='5'>
+                    <% if r.errors.keys.include?(:overlapping_reservation) %>
+                      <p><%= r.errors.messages[:overlapping_reservation].first %></p>
+                    <% else %>
+                      <% r.errors.full_messages.each do |e| %>
+                        <p><%= e.to_s %></p>
+                      <% end %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white" data-dismiss="modal"><%= t('.cancel') %></button>
+          <%= button_to @ignore_overlaps_url, { form_class: "pull-right m-l-sm m-r-sm", class: 'btn btn-primary' } do %>
+            <span data-toggle="tooltip" title data-placement="top" data-original-title="<%= t('.ignore_overlaps_tooltip') %>">
+              <%= t('.create_non_overlapping') %>
+            </span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= render 'reservations/modal' %>
+
+<script>
+  $('[data-toggle="tooltip"]').tooltip();
+</script>

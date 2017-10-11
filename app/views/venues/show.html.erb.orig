@@ -1,0 +1,421 @@
+<%= render 'shared/newnav' %>
+<% if current_user.present? %>
+  <input type="hidden" value="<%= current_user.id %>" id="userId" />
+<% end %>
+  <main class="b-page venue-page">
+    <div class="page-venue__header" style="background-image: url(<%= @venue.photos[0].image.url() %>)">
+      <div class="row">
+        <div class="col-xs-16 col-sm-10 col-md-8 col-md-offset-2">
+          <div class="page-venue__header_left">
+            <div class="venue-footer">
+              <div class="venue-footer-cont">
+                <h1 class="venue-name"><%= @venue.venue_name %></h1>
+              </div>
+              <div class="page-venue__header-pricewrap">
+                <div class="page-venue__header-price venue-price">
+                  <span class="venue-price_currency">€</span>
+                  <span class="venue-price_val"><%= @lowprice %></span>
+                </div>
+                <span class="page-venue__header-price-divider"></span>
+                <div class="page-venue__header-price venue-price">
+                  <span class="venue-price_currency">€</span>
+                  <span class="venue-price_val"><%= @highprice %></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-16 col-sm-6">
+          <div class="page-venue__header_right js-accordion">
+            <div class="tabs-btns">
+              <button class="btn btn-tab js-accordion_link active" id="content-info" type="button"><%= t('.info')%></button>
+              <button class="btn btn-tab js-accordion_link" id="content-sports" type="button"><%= t('.sports')%></button>
+              <i class="icon-info" data-toggle="tooltip" data-placement="bottom" title="<%= t('.icon_title')%></i>
+            </div>
+            <div class="tabs-content">
+              <div class="collapse js-accordion_content" data-id="content-sports" id="collapse-info">
+                <div class="row">
+                  <div class="col-xs-12 col-xs-offset-3">
+
+<!--                    <div class="owl-top"></div>-->
+
+                    <ul class="nav page-venue__header-list">
+                      <li><span class="icon icon-tennis_white"></span><span><%= t('.tennis') %></span></li>
+                    </ul>
+
+<!--                    <div class="owl-bottom"></div>-->
+                  </div>
+                </div>
+
+                <!--<div class="card card-block">
+                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                </div>
+                <div class="card card-block">
+                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                </div>-->
+              </div>
+              <div class="collapse js-accordion_content page-venue__header-first" data-id="content-info" id="collapse-sports">
+<!--                <div class="card card-block">-->
+                <div class="page-venue__header__ann">
+                  <div class="venue-attr">
+                    <div class="venue-attr_img icon-map-xs_dark"></div>
+                    <div class="venue-attr_text"><%= @venue.street %>,
+                      <br><%= @venue.zip %> <%= @venue.city %></div>
+                  </div>
+                  <div class="venue-attr">
+                    <div class="venue-attr_img icon-phone_dark"></div>
+                    <a class="venue-attr_text" href=""><%= @venue.phone_number %></a>
+                  </div>
+                  <div class="venue-attr">
+                    <div class="venue-attr_img icon-site_dark"></div>
+                    <a class="venue-attr_text" href=""><%= @venue.website %></a>
+                  </div>
+
+                  <div class="venue-attr">
+                    <div class="venue-attr_img icon-parking_dark"></div>
+                    <a class="venue-attr_text" href=""><%= @venue.parking_info %></a>
+                  </div>
+                  <div class="venue-attr">
+                    <div class="venue-attr_img icon-transport_dark"></div>
+                    <a class="venue-attr_text" href=""><%= @venue.transit_info %></a>
+                  </div>
+
+                </div>
+                <div class="page-venue__header-slides" data-toggle="modal" data-target="#js-modal-venue-slider">
+                  <div class="row">
+                    <% @venue.photos.take(3).each_with_index do |photo, index| %>
+                      <div class="<% if index == 0 %>col-xs-offset-2<% end %> col-xs-4">
+                        <div class="page-venue__header-slide"><%= image_tag photo.image.url() %></div>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+<!--                </div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="bg-white page-section">
+      <div class="row">
+<<<<<<< HEAD
+        <article class="col-xs-16 col-sm-9 col-sm-offset-1 col-md-8 col-md-offset-2">
+          <h3>About this venue</h3>
+          <p><%= @venue.description %></p>
+        </article>
+        <article class="col-xs-16 col-md-3 col-sm-4 col-sm-offset-1">
+          <h3>Check times</h3>
+=======
+        <article class="col-xs-16 col-sm-8 col-sm-offset-2">
+          <h3><%= t('.about_venue') %></h3>
+          <p><%= @venue.description %></p>
+        </article>
+        <article class="col-xs-16 col-sm-3  col-sm-offset-1">
+          <h3><%= t('.check_times') %></h3>
+>>>>>>> iamthemorron-tranlations
+
+          <form class="search-venue search-venue_vertical">
+            <div class="search-venue__block">
+              <div class="search-venue__line"></div>
+            </div>
+            <div class="search-venue__block">
+              <select class="select2_duration form-control" id="searchDuration">
+                <option value="60"><%= t('.60minutes')%></option>
+              </select>
+              <div class="search-venue__line"></div>
+            </div>
+            <div class="search-venue__block">
+              <div class="input-group">
+                <input type="text" class="search-venue__input js-datepicker form-control" id="searchDate" value="<%= DateTime.now.strftime("%d/%m/%Y") %>" placeholder="datapicker" />
+                <span class="input-group-addon"><span class="icon-calender"></span></span>
+              </div>
+              <div class="search-venue__line"></div>
+            </div>
+            <% time = current_timezone.now.beginning_of_hour %>
+            <div class="search-venue__block">
+              <div class="input-group dropdown js-tmpckr">
+                <input type="text" class="search-venue__input dropdown-toggle js-timepicker form-control" id="searchTime" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" autocomplete="off" value="<%= (Time.zone.now + 1.hour).beginning_of_hour.strftime('%H:%M') %>" />
+                <span class="input-group-addon" data-toggle="dropdown"><span class="icon-clock"></span></span>
+
+                <div class="timepicker-dropdown dropdown-menu" aria-labelledby="timepicker">
+                  <div class="timepicker-dropdown__container">
+                    <div class="timepicker-dropdown__time">
+                      <div class="timepicker-dropdown__hours">
+                        <div class="timepicker-dropdown__arr_up js-uphour"></div>
+                        <div class="timepicker-dropdown__hour js-hour"><%= (Time.zone.now + 1.hour).beginning_of_hour.strftime('%H') %></div>
+                        <div class="timepicker-dropdown__arr_down js-downhour"></div>
+                      </div>
+                      <div class="timepicker-dropdown__sep">:</div>
+                      <div class="timepicker-dropdown__minutes">
+                        <div class="timepicker-dropdown__arr_up js-upminute"></div>
+                        <div class="timepicker-dropdown__minute js-minute"><%= (Time.zone.now + 1.hour).beginning_of_hour.strftime('%M') %></div>
+                        <div class="timepicker-dropdown__arr_down js-downminute"></div>
+                      </div>
+                    </div>
+                    <div class="timepicker-dropdown__ampm">
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <input type="hidden" value="<%= @venue.id %>" id="venueId"/>
+            <div class="search-venue__block">
+              <%= link_to "#booking-modal", "data-toggle" => "modal", :id => 'searchAvailableBtn' do %>
+                <button class="btn" role="button" type="submit"><%= t('.find_button')></button>
+              <% end %>
+            </div>
+          </form>
+        </article>
+      </div>
+    </section>
+    <section class="page-section">
+      <div class="row">
+        <article class="col-xs-16 col-sm-3 col-sm-offset-2">
+          <h3><%= t('.opening_hours')%></h3>
+          <div class="page-venue__hours">
+            <table class="table table-sm ">
+              <tbody>
+                <tr>
+                  <td><%= t('date.day_names')[1]%></td>
+                  <td><%= @venue.monday_opening_time.try(:strftime, '%H:%M') %> - <%= @venue.monday_closing_time.try(:strftime, '%H:%M') %></td>
+                </tr>
+                <tr>
+                  <td><%= t('date.day_names')[2]%></td>
+                  <td><%= @venue.tuesday_opening_time.try(:strftime, '%H:%M') %> - <%= @venue.tuesday_closing_time.try(:strftime, '%H:%M') %></td>
+                </tr>
+                <tr>
+                  <td><%= t('date.day_names')[3]%></td>
+                  <td><%= @venue.wednesday_opening_time.try(:strftime, '%H:%M') %> - <%= @venue.wednesday_closing_time.try(:strftime, '%H:%M') %></td>
+                </tr>
+                <tr>
+                  <td><%= t('date.day_names')[4]%></td>
+                  <td><%= @venue.thursday_opening_time.try(:strftime, '%H:%M') %> - <%= @venue.thursday_closing_time.try(:strftime, '%H:%M') %></td>
+                </tr>
+                <tr>
+                  <td><%= t('date.day_names')[5]%></td>
+                  <td><%= @venue.friday_opening_time.try(:strftime, '%H:%M') %> - <%= @venue.friday_closing_time.try(:strftime, '%H:%M') %></td>
+                </tr>
+                <tr>
+                  <td><%= t('date.day_names')[6]%></td>
+                  <td><%= @venue.saturday_opening_time.try(:strftime, '%H:%M') %> - <%= @venue.saturday_closing_time.try(:strftime, '%H:%M') %></td>
+                </tr>
+                <tr>
+                  <td><%= t('date.day_names')[0]%></td>
+                  <td><%= @venue.sunday_opening_time.try(:strftime, '%H:%M') %> - <%= @venue.sunday_closing_time.try(:strftime, '%H:%M') %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+        <article class="col-xs-16 col-sm-5">
+          <h3><%= t('.map') %></h3>
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=<%= "#{@venue.latitude},#{@venue.longitude}" %>&key=AIzaSyA6ZzAtv2AfMF7QYR8MlBVonlqsKQsruoE" allowfullscreen>
+            </iframe>
+          </div>
+        </article>
+      </div>
+
+    </section>
+    <!-- Large modal -->
+
+    <div class="modal fade" id="js-modal-venue-slider" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-slider">
+        <div class="modal-content">
+
+          <div class="b-item__slider-wrap">
+            <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+              <%= t('.close_button') %>
+            </button>
+            <div class="b-item__slider">
+              <div class="b-item__slider-container">
+                <div class="owl-carousel">
+                  <!--First image. Important!-->
+                  <div>
+                    <img class="b-item__slide" itemprop="image" src="<%= @venue.photos.first.image.url() %>" alt="" />
+                    <div class="b-item__slide_blur">
+                      <img class="owl-lazy" data-src="<%= @venue.photos.first.image.url() %>" alt=""/>
+                    </div>
+                  </div>
+                  <!--Others images. Important! They are have lazy load. Using data-src. -->
+                  <% stupidcounter = 0 %>
+                  <% @venue.photos.each do |photo| %>
+                    <% if stupidcounter != 0 %>
+                    <div>
+                      <img class="b-item__slide owl-lazy" itemprop="image" data-src="<%= photo.image.url() %>" alt="" />
+                      <div class="b-item__slide_blur">
+                        <img class="owl-lazy" data-src="<%= photo.image.url() %>" alt=""/>
+                      </div>
+                    </div>
+                    <% end %>
+                  <% stupidcounter += 1 %>
+                  <% end %>
+
+                </div>
+              </div>
+            </div>
+            <div class="b-item__slider-footer">
+              <div class="b-item__info">
+              <div class="b-item__info-name"><%= @venue.venue_name %></div>
+            </div>
+              <div class="b-item__thumbs">
+              <div class="b-item__thumbs-slider">
+                <div class="owl-carousel">
+                  <!-- All this images loads with lazy-load. -->
+                  <% @venue.photos.each do |photo| %>
+                  <img class="owl-lazy" data-src="<%= photo.image.url() %>" alt="">
+                  <% end %>
+
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+<%= render 'layouts/footer' %>
+<%= render 'shared/booking_success_modal' %>
+<%= render 'shared/booking_modal' %>
+<%= render 'shared/not_logged_modal' %>
+<% if current_user %>
+  <%= render 'shared/payment_modal' %>
+<% end %>
+
+<script>
+  $(document).ready(function () {
+    Init.venue();
+  });
+</script>
+<script>
+$(document).ready(function() {
+  var Timepicker = {
+    type: 23
+    , ampm: 0
+    , hour: 0
+    , minute: 0
+    , fieldhour: $('.js-hour')
+    , fieldminute: $('.js-minute')
+    , fieldampm: $('.js-ampm')
+    , input: $('.js-timepicker')
+    , start: function () {
+
+      $('.js-uphour').on('click', function () {
+        Timepicker.uphour()
+      });
+      $('.js-downhour').on('click', function () {
+        Timepicker.downhour()
+      });
+      $('.js-downminute').on('click', function () {
+        Timepicker.downminute()
+      });
+      $('.js-upminute').on('click', function () {
+        Timepicker.upminute()
+      });
+      $('.js-ampm').on('click', function () {
+        Timepicker.toggleampm()
+      });
+
+
+
+      $('.timepicker-dropdown').on('click', function () {
+        return false;
+      });
+
+      if(typeof (this.input.val()) != 'undefined')
+      {
+        var arr = this.input.val().split(':');
+        if(arr.length == 2){
+          this.hour = parseInt(arr[0]);
+          this.minute = parseInt(arr[1]);
+        }
+      }
+
+      this.print();
+    }
+    , print: function () {
+      var hour, minute, ampm;
+      if (this.hour < 10)
+        hour = '0' + this.hour;
+      else
+        hour = this.hour;
+
+      if (this.minute < 10)
+        minute = '0' + this.minute;
+      else
+        minute = this.minute;
+
+      if (this.ampm == 0) {
+        ampm = 'AM';
+        this.fieldampm.children('.timepicker-dropdown__am').addClass('selected');
+        this.fieldampm.children('.timepicker-dropdown__pm').removeClass('selected');
+      } else {
+        ampm = 'PM';
+        this.fieldampm.children('.timepicker-dropdown__am').removeClass('selected');
+        this.fieldampm.children('.timepicker-dropdown__pm').addClass('selected');
+      }
+
+
+      this.fieldhour.text(hour);
+      this.fieldminute.text(minute);
+
+      if (this.type == 12)
+        this.input.val(hour + ':' + minute + ' ' + ampm);
+      else
+        this.input.val(hour + ':' + minute);
+    }
+    , uphour: function () {
+      if (this.hour + 1 > this.type)
+        this.hour = 0;
+      else
+        this.hour = this.hour + 1;
+
+      this.print();
+    }
+    , downhour: function () {
+      if (this.hour - 1 < 0)
+        this.hour = this.type;
+      else
+        this.hour = this.hour - 1;
+
+      this.print();
+    }
+    , downminute: function () {
+      if (this.minute == 0)
+      {
+        this.minute = 30;
+        this.downhour();
+      }
+      else
+        this.minute = 0;
+
+      this.print();
+    }
+    , upminute: function () {
+      if (this.minute == 30)
+      {
+        this.minute = 0;
+        this.uphour();
+      }
+      else
+        this.minute = 30;
+
+      this.print();
+    }
+    , toggleampm: function () {
+      if (this.ampm == 0) this.ampm = 1;
+      else this.ampm = 0;
+      this.print();
+    }
+  };
+  Timepicker.start();
+});
+
+</script>
+
+</body>
+</html>

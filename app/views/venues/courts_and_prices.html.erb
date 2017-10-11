@@ -1,0 +1,173 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2><%= t('.header') %></h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#"><%= @venue.company.company_legal_name %></a>
+            </li>
+            <li>
+                <a><%= @venue.venue_name %></a>
+            </li>
+            <li class="active">
+                <strong><%= t('.header') %></strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h2><%= t('.header') %></h2>
+                    <p>
+                        <%= t('.find_text')%>
+                    </p>
+                    <div class="clients-list">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-user"></i> <%= t('.courts_link')%></a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-dollar"></i> <%= t('.price_rules_link')%></a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-6"><i class="fa fa-calendar"></i><%= t('.holidays_link')%></a></li>
+                            <% if can? :manage, Court %>
+                              <li class=""><a data-toggle="modal" data-target="#add-court" onclick="loadNewCourtModal(this)" data-venue-id="<%= @venue.id %>"><i class="fa fa-plus"></i><%= t('.add_courts')%></a></li>
+                            <% end %>
+                            <% if can? :manage, Price %>
+                              <li class=""><a data-toggle="modal" data-target="#add-price"><i class="fa fa-plus"></i><%= t('.add_prices')%></a></li>
+                            <% end %>
+                            <% if can? :manage, DayOff %>
+                              <li class=""><a data-toggle="tab" href="#tab-5"><i class="fa fa-plus"></i><%= t('.add_holidays')%></a></li>
+                            <% end %>
+
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="full-height-scroll">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover">
+                                          <%= render partial: 'courts/index', locals: { courts: @courts, venue: @venue} %>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab-2" class="tab-pane">
+                                <div class="full-height-scroll">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover">
+                                            <tbody id="prices">
+                                            <% @prices.each do |price| %>
+                                              <%= render partial: 'prices/price', locals: { price: price, venue: @venue} %>
+                                            <% end %>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab-5">
+                              <%= render 'holidays_new' %>
+                            </div>
+                            <div class="tab-pane" id="tab-6">
+                              <%= render 'holidays' %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="court-modal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="price-modal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="text-center">
+        </div>
+        <div class="modal inmodal" id="modalPriceConflict" tabindex="-1" role="dialog" aria-hidden="true">
+        </div>
+    </div>
+</div>
+
+<%= react_component('PriceModal', {can_manage: can?(:manage, Price),
+                                   courts: @venue.courts}, {}) %>
+
+<%= render 'court_new' %>
+<%= render 'price_new' %>
+
+<script type="text/javascript">
+
+
+      $(document).ready(function() {
+
+        // clicking destroy price button
+        $('body').on('click', '.js-destroy-price', function() {
+          var url = $(this).attr('href');
+          $.ajax({
+            type: "delete",
+            url: url,
+            success: function() {
+              $('#modalPriceConflict').modal('hide');
+            }
+          });
+
+          return false;
+        });
+
+        $('body').on('click', '.js-price-no-merge', function() {
+          $('#modalPriceConflict').modal('hide');
+          return false;
+        });
+
+        $('#weekdays').click(function(event) {
+            if(this.checked) {
+                $(':checkbox.weekdays').each(function() {
+                    this.checked = true;
+                });
+            }
+        });
+
+        $('#weekend').click(function(event) {
+            if(this.checked) {
+                $(':checkbox.weekend').each(function() {
+                    this.checked = true;
+                });
+            }
+        });
+        $('#all').click(function(event) {
+            if(this.checked) {
+                $(':checkbox.weekdays').each(function() {
+                    this.checked = true;
+                });
+                $(':checkbox.weekend').each(function() {
+                    this.checked = true;
+                });
+            }
+        });
+
+        var $courts = $('#e1');
+        $("#e3").select2();
+        initCourtSelect();
+
+
+        $("#checkbox").click(function(){
+            if($("#checkbox").is(':checked') ){
+                $("#e1 > option").prop("selected","selected");
+                $("#e1").trigger("change");
+            }else{
+                $("#e1 > option").removeAttr("selected");
+                 $("#e1").trigger("change");
+             }
+        });
+
+
+    });
+</script>

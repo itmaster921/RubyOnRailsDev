@@ -1,0 +1,80 @@
+<div class="modal modal_light fade modal_center modal_payment modal_payment-addnew" id="credit-card-modal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false">
+
+  <div class="modal-dialog" role="document">
+    <div class="modal__container">
+      <div class="modal__header modal__header_withicon">
+        <div class="icon-payment"></div>
+        <div class="modal__title"><%= t('.title')%></div>
+      </div>
+      <div class="modal__content">
+        <form>
+          <div class="row">
+            <div class="col-xs-15">
+              <fieldset class="form-group">
+                <input type="text" class="form-control" placeholder="<%= t('.card_number')%>" />
+              </fieldset>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-16 col-sm-5">
+              <fieldset class="form-group">
+                <%= select_tag('', options_for_select(t('date.month_names')[1..-1].each_with_index.map { |m, i| [m, i+1] }), class: 'form-control js-select2') %>
+              </fieldset>
+            </div>
+            <div class="col-xs-16 col-sm-5">
+              <fieldset class="form-group">
+                <select class="form-control js-select2">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+              </fieldset>
+            </div>
+            <div class="col-xs-16 col-sm-5">
+              <fieldset class="form-group">
+                <input type="text" class="form-control" placeholder="<%= t('.card_cvc')%>" />
+              </fieldset>
+            </div>
+          </div>
+
+          <fieldset class="form-group">
+            <button class="btn btn-primary btn-lg"><%= t('.submit_button')%></button>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <a data-dismiss="modal" aria-label="Close" href="#"><%= t('.cancel_button')%>></a>
+          </fieldset>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

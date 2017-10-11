@@ -1,0 +1,60 @@
+<!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">mywebsite</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li></li>
+        </ul>
+          <ul class="nav navbar-nav navbar-right">
+          <% if (!admin_signed_in?) %>
+            <li><%= link_to "Log In", new_user_session_path %> </li>
+            <li><%= link_to "Sign Up", new_user_registration_path %> </li>
+          <% else %>
+            <li><a href="#" role="button"><%= current_admin.first_name %></a></li>
+            <li><%= link_to "Edit Admin Profile", edit_admin_registration_path %> </li>
+
+            <li><%= link_to "Log out", destroy_admin_session_path, method: :delete  %></li>
+          <% end %>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+
+    <div class="row border-bottom">
+        <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                <form role="search" class="navbar-form-custom" method="post" action="/">
+                    <div class="form-group">
+                        <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search" />
+                    </div>
+                </form>
+            </div>
+            <ul class="nav navbar-top-links navbar-right">
+                <li>
+                  <%= current_admin.first_name %>
+
+
+                </li>
+                <li>
+                  <%= link_to "Edit Admin Profile", edit_admin_registration_path %>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-sign-out"></i> <%= link_to "Log out", destroy_admin_session_path, method: :delete  %>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+

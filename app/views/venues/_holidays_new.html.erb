@@ -1,0 +1,89 @@
+<div class="full-height-scroll">
+  <div class="ibox-content">
+    <h2><%= t('.header') %></h2>
+    <%= form_tag venue_day_off_index_path(@venue), remote: true, id: 'offday-form' do %>
+      <div class="row">
+        <div class="col-md-9">
+          <div class="form-group">
+            <label ><%= t('.select_court') %></label>
+            <select name="dayoff[court_id]" id="court" class="select2_demo_2 form-control" style="width: 100%" data-venue-id="<%= @venue.id %>"></select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-9">
+          <div class="form-group">
+          <label ><%= t('.start_date')%></label>
+            <div class="input-group date" data-provide="datepicker">
+              <input type="text" class="form-control" id="holiday-start-date" data-date-format="dd/mm/yyyy" value="" name="dayoff[start_date]">
+              <div class="input-group-addon">
+                <span class="fa fa-calendar"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-9">
+          <div class="form-group">
+          <label ><%= t('.end_date')%></label>
+            <div class="input-group date" data-provide="datepicker">
+              <input type="text" class="form-control" id="holiday-end-date" data-date-format="dd/mm/yyyy" value="" name="dayoff[end_date]">
+              <div class="input-group-addon">
+                <span class="fa fa-calendar"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-12">
+          <h3><%= t('.off_time')%></h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for=""><%= t('.start_time')%></label><br>
+            <div class="input-group clockpicker" data-autoclose="true">
+              <input type="text" class="form-control" id="holiday-start-time" value="" data-date-format="dd/mm/yyyy" name="dayoff[start_time]" >
+              <span class="input-group-addon">
+                <span class="fa fa-clock-o"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for=""><%= t('.end_time')%></label><br>
+            <div class="input-group clockpicker" data-autoclose="true">
+              <input type="text" class="form-control" id="holiday-end-time" data-date-format="dd/mm/yyyy" value="" name="dayoff[end_time]">
+              <span class="input-group-addon">
+                <span class="fa fa-clock-o"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-9">
+          <label >
+            <input type="checkbox" id="is-venue-checkbox" name="dayoff[venue]"></input>
+            <%= t('.whole_venue_checkbox')%>
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-9">
+          <div class="form-group">
+            <%= submit_tag t('.submit_button'), class: "btn" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

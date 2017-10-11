@@ -1,0 +1,8 @@
+$('#csv-import-report').html("<div><b><%= j @report %></b></div>");
+
+<% if @failed_customers.any? %>
+  $('#csv-import-report').append("<div><%= j I18n.t('companies.customers_import.failures') %>:</div>");
+  <% @failed_customers.each do |c| %>
+    $('#csv-import-report').append("<div><b><%= j sanitize(c.email.present? ? c.email : '---') %></b>: <%= j sanitize(c.errors.full_messages.join('; ')) %></div>");
+  <% end %>
+<% end %>

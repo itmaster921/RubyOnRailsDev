@@ -1,0 +1,60 @@
+<div class="row">
+  <table class="footable table table-stripped rsrv-footable-log">
+    <thead>
+      <tr>
+        <th><%= t('.table_head_time')%></th>
+        <th><%= t('.table_head_status')%></th>
+        <th data-hide="all"><%= t('.table_head_params')%></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reservation.logs.order(created_at: :desc).each do |rl| %>
+          <tr>
+            <td><%= TimeSanitizer.output(rl.created_at).to_s(:date_time) %></td>
+            <td><%= t_enum(:reservations_log, :status, rl.status) %></td>
+            <td>
+              <div class="row">
+                <div class="col-sm-4"><%= t('.start_time')%></div>
+                <div class="col-sm-8"><%= TimeSanitizer.output(rl.params[:start_time]).to_s(:time_date) %></div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-4"><%= t('.end_time')%></div>
+                <div class="col-sm-8"><%= TimeSanitizer.output(rl.params[:end_time]).to_s(:time_date) %></div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-4"><%= t('.court')%></div>
+                <div class="col-sm-8"><%= @court_names[rl.params[:court_id]] %></div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-4"><%= t('.payment_type')%></div>
+                <div class="col-sm-8"><%= t_enum(:reservation, :payment_type, rl.params[:payment_type]) %></div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-4"><%= t('.booking_type')%></div>
+                <div class="col-sm-8"><%= t_enum(:reservation, :booking_type, rl.params[:booking_type]) %></div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-4"><%= t('.user')%></div>
+                <div class="col-sm-8"><%= rl.params[:user_name] ? rl.params[:user_name] : rl.params[:user_id] %></div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-4"><%= t('.reselling')%></div>
+                <div class="col-sm-8"><%= t(rl.params[:reselling].to_s) %></div>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+
+    </tbody>
+  </table>
+</div>
+
+<div class="row text-center">
+  <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('.close_btn')%></button>
+</div>

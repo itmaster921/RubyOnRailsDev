@@ -1,0 +1,49 @@
+<%= render 'shared/devisemes' %>
+
+<main class="login-page">
+    <div class="modal modal_dark modal_center" style="display: block;">
+        <div class="modal-dialog" role="document">
+            <div class="modal__container">
+                <div class="modal__header modal__header_login">
+                    <div class="modal__logo"></div>
+                </div>
+                <div class="modal__content">
+                    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                        <fieldset class="form-group">
+                            <%= f.email_field :email, :class => "form-control", :placeholder => true %>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="form-group__append">
+                                <%= f.password_field :password, autocomplete: "off", :class => "form-control", :placeholder => true %>
+                                <span class="form-forgot"><%= link_to t('.forgot_password'), new_admin_password_path  %></span>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group form-group_btns">
+                            <button class="btn btn-primary btn-block" style="height: 50px"><%= t('.login_button') %></button>
+                        </fieldset>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+    $("#new_admin").validate({
+        rules: {
+            "admin[email]": {
+              required: true,
+              email: true,
+            },
+            "admin[password]": {
+                required: true,
+            },
+        }
+    });
+
+});
+</script>

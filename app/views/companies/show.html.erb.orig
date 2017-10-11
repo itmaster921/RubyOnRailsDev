@@ -1,0 +1,379 @@
+<input type="hidden" value="<%= @company.id %>" id="company-info">
+
+<% if !@company.managed? %>
+<div class="row">
+    <%= form_tag stripe_managed_path, method: 'POST' do %>
+        Stripe Managed Account test
+        <input type="checkbox" name="tos" checked"false">
+        I accept the <a href="https://stripe.com/us/terms"> Stripe Terms of Service</a>
+      <input type="submit" value="Create">
+    <% end %>
+</div>
+<% end %>
+
+<div class="row  border-bottom white-bg dashboard-header">
+    <div class="col-sm-3">
+<<<<<<< HEAD
+        <h2>Welcome <%= current_admin.first_name %></h2>
+=======
+        <h2><%= t('.welcome_msg', name: current_admin.first_name) %></h2>
+        <small><%= t('.notifications_msg', msgs: 42, notifications: 6) %></small>
+>>>>>>> iamthemorron-tranlations
+        <ul class="list-group clear-list m-t">
+            <li class="list-group-item fist-item">
+                <span class="label label-success">1</span> Ongelmien kanssa ottakaa yhteyttä jesse@ampersports.com tai 040 520 6330
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-9">
+        <h2><%= t('.revenue_title') %></h2>
+        <small class='revenue'><%= Time.now.strftime("%d %B %Y")  %></small>
+        <br/>
+        <div class="btn-group">
+          <button class="btn btn-white btn-revenue-view" data-view="day"><%= t('.day')%></button>
+          <button class="btn btn-white btn-revenue-view" data-view="month"><%= t('.month')%></button>
+          <button class="btn btn-white btn-revenue-view" data-view="year"><%= t('.year')%></button>
+        </div>
+        <div class="dashboard-chart revenue">
+        </div>
+    </div>
+</div>
+
+<% if @company.has_stripe? %>
+  <div class="wrapper wrapper-content">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="ibox float-e-margins">
+          <div class="ibox-title">
+            <span class="label label-success pull-right"><%= t('.total')%></span>
+            <h5><%= t('.balance_title')%></h5>
+          </div>
+          <div class="ibox-content">
+            <h1 class="no-margins">€ <%= number_with_delimiter(@company.balance) %></h1>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="ibox float-e-margins">
+          <div class="ibox-title">
+            <span class="label label-info pull-right"><%= t('.total')%></span>
+            <h5><%= t('.customers_title')%></h5>
+          </div>
+          <div class="ibox-content">
+            <h1 class="no-margins"><%= @company.customers.count %></h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="ibox float-e-margins">
+          <div class="ibox-title">
+            <span class="label label-primary pull-right"><%= t('.monthly')%></span>
+            <h5><%= t('.reservations_title')%></h5>
+          </div>
+          <div class="ibox-content">
+
+            <div class="row">
+              <div class="col-md-6">
+                <h1 class="no-margins">€ <%=  @resv_data[:amount] %></h1>
+              </div>
+              <div class="col-md-6">
+                <h1 class="no-margins"><%= @resv_data[:count] %></h1>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+<div class="row">
+    <div class="col-lg-8">
+      <div class="ibox float-e-margins">
+        <div class="ibox-content">
+          <h2><%= t('.reservations_title')%></h2>
+          <small class='resv'><%= Time.now.strftime("%d %B %Y")  %></small>
+          <br/>
+          <div class="btn-group">
+            <button class="btn btn-white btn-resv-view" data-view="day"><%= t('.day')%></button>
+            <button class="btn btn-white btn-resv-view" data-view="month"><%= t('.month')%></button>
+            <button class="btn btn-white btn-resv-view" data-view="year"><%= t('.year')%></button>
+          </div>
+          <div class="dashboard-chart resv">
+          </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+
+    setTimeout(function() {
+        toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            showMethod: 'slideDown',
+            timeOut: 4000
+        };
+        toastr.success('<%= t('.popup_msg')%>', '<%= t('.popup_welcome')%>');
+
+    }, 1300);
+
+    $(".bar_dashboard").peity("bar", {
+        fill: ["#1ab394", "#d7d7d7"],
+        width: 100
+    })
+
+    $("#sparkline8").sparkline([5, 6, 7, 2, 0, 4, 2, 4, 5, 7, 2, 4, 12, 14, 4, 2, 14, 12, 7], {
+        type: 'bar',
+        barWidth: 8,
+        height: '150px',
+        barColor: '#1ab394',
+        negBarColor: '#c6c6c6'
+    });
+
+    var updatingChart = $(".updating-chart").peity("line", { fill: '#1ab394', stroke: '#169c81', width: 64 })
+
+    setInterval(function () {
+        var random = Math.round(Math.random() * 10)
+        var values = updatingChart.text().split(",")
+        values.shift()
+        values.push(random)
+
+        updatingChart
+                .text(values.join(","))
+                .change()
+    }, 1000);
+
+    var data1 = [
+        [0, 4], [1, 8], [2, 5], [3, 10], [4, 4], [5, 16], [6, 5], [7, 11], [8, 6], [9, 11], [10, 30], [11, 10], [12, 13], [13, 4], [14, 3], [15, 3], [16, 6]
+    ];
+    var data2 = [
+        [0, 1], [1, 0], [2, 2], [3, 0], [4, 1], [5, 3], [6, 1], [7, 5], [8, 2], [9, 3], [10, 2], [11, 1], [12, 0], [13, 2], [14, 8], [15, 0], [16, 0]
+    ];
+    $("#flot-dashboard-chart").length && $.plot($("#flot-dashboard-chart"), [
+        data1, data2
+    ],
+            {
+                series: {
+                    lines: {
+                        show: false,
+                        fill: true
+                    },
+                    splines: {
+                        show: true,
+                        tension: 0.4,
+                        lineWidth: 1,
+                        fill: 0.4
+                    },
+                    points: {
+                        radius: 0,
+                        show: true
+                    },
+                    shadowSize: 2
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: true,
+                    tickColor: "#d5d5d5",
+                    borderWidth: 1,
+                    color: '#d5d5d5'
+                },
+                colors: ["#1ab394", "#1C84C6"],
+                xaxis: {
+                },
+                yaxis: {
+                    ticks: 4
+                },
+                tooltip: false
+            }
+    );
+
+    var doughnutData = [
+        {
+            value: 300,
+            color: "#a3e1d4",
+            highlight: "#1ab394",
+            label: "App"
+        },
+        {
+            value: 50,
+            color: "#dedede",
+            highlight: "#1ab394",
+            label: "Software"
+        },
+        {
+            value: 100,
+            color: "#A4CEE8",
+            highlight: "#1ab394",
+            label: "Laptop"
+        }
+    ];
+
+    var doughnutOptions = {
+        segmentShowStroke: true,
+        segmentStrokeColor: "#fff",
+        segmentStrokeWidth: 2,
+        percentageInnerCutout: 45, // This is 0 for Pie charts
+        animationSteps: 100,
+        animationEasing: "easeOutBounce",
+        animateRotate: true,
+        animateScale: false,
+    };
+
+    var ctx = document.getElementById("doughnutChart").getContext("2d");
+    var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+
+    var polarData = [
+        {
+            value: 300,
+            color: "#a3e1d4",
+            highlight: "#1ab394",
+            label: "App"
+        },
+        {
+            value: 140,
+            color: "#dedede",
+            highlight: "#1ab394",
+            label: "Software"
+        },
+        {
+            value: 200,
+            color: "#A4CEE8",
+            highlight: "#1ab394",
+            label: "Laptop"
+        }
+    ];
+
+    var polarOptions = {
+        scaleShowLabelBackdrop: true,
+        scaleBackdropColor: "rgba(255,255,255,0.75)",
+        scaleBeginAtZero: true,
+        scaleBackdropPaddingY: 1,
+        scaleBackdropPaddingX: 1,
+        scaleShowLine: true,
+        segmentShowStroke: true,
+        segmentStrokeColor: "#fff",
+        segmentStrokeWidth: 2,
+        animationSteps: 100,
+        animationEasing: "easeOutBounce",
+        animateRotate: true,
+        animateScale: false,
+    };
+    var ctx = document.getElementById("polarChart").getContext("2d");
+    var Polarchart = new Chart(ctx).PolarArea(polarData, polarOptions);
+
+});
+
+</script>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+    $("span.pie").peity("pie", {
+        fill: ['#1ab394', '#d7d7d7', '#ffffff']
+    })
+
+    var d1 = [[1262304000000, 6], [1264982400000, 3057], [1267401600000, 20434], [1270080000000, 31982], [1272672000000, 26602], [1275350400000, 27826], [1277942400000, 24302], [1280620800000, 24237], [1283299200000, 21004], [1285891200000, 12144], [1288569600000, 10577], [1291161600000, 10295]];
+    var d2 = [[1262304000000, 5], [1264982400000, 200], [1267401600000, 1605], [1270080000000, 6129], [1272672000000, 11643], [1275350400000, 19055], [1277942400000, 30062], [1280620800000, 39197], [1283299200000, 37000], [1285891200000, 27000], [1288569600000, 21000], [1291161600000, 17000]];
+
+    var data1 = [
+        { label: "Data 1", data: d1, color: '#17a084' },
+        { label: "Data 2", data: d2, color: '#127e68' }
+    ];
+    $.plot($("#flot-chart1"), data1, {
+        xaxis: {
+            tickDecimals: 0
+        },
+        series: {
+            lines: {
+                show: true,
+                fill: true,
+                fillColor: {
+                    colors: [{
+                        opacity: 1
+                    }, {
+                        opacity: 1
+                    }]
+                },
+            },
+            points: {
+                width: 0.1,
+                show: false
+            },
+        },
+        grid: {
+            show: false,
+            borderWidth: 0
+        },
+        legend: {
+            show: false,
+        }
+    });
+
+    var lineData = {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [
+            {
+                label: "Example dataset",
+                fillColor: "rgba(220,220,220,0.5)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [65, 59, 40, 51, 36, 25, 40]
+            },
+            {
+                label: "Example dataset",
+                fillColor: "rgba(26,179,148,0.5)",
+                strokeColor: "rgba(26,179,148,0.7)",
+                pointColor: "rgba(26,179,148,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(26,179,148,1)",
+                data: [48, 48, 60, 39, 56, 37, 30]
+            }
+        ]
+    };
+
+    var lineOptions = {
+        scaleShowGridLines: true,
+        scaleGridLineColor: "rgba(0,0,0,.05)",
+        scaleGridLineWidth: 1,
+        bezierCurve: true,
+        bezierCurveTension: 0.4,
+        pointDot: true,
+        pointDotRadius: 4,
+        pointDotStrokeWidth: 1,
+        pointHitDetectionRadius: 20,
+        datasetStroke: true,
+        datasetStrokeWidth: 2,
+        datasetFill: true,
+        responsive: true,
+    };
+
+
+    var ctx = document.getElementById("lineChart").getContext("2d");
+    var myNewChart = new Chart(ctx).Line(lineData, lineOptions);
+
+
+});
+
+
+</script>
+
+<!-- some constants to be used by plotting scripts -->
+<script>
+const startOfDay = <%= Time.now.beginning_of_day.to_i * 1000 %>;
+const startOfNextDay = <%= Date.tomorrow.beginning_of_day.to_i * 1000 %>;
+const startOfMonth = <%= Time.now.beginning_of_month.to_i * 1000 %>;
+const startOfNextMonth = <%= Time.now.beginning_of_month.next_month.to_i * 1000 %>;
+const startOfYear = <%= Time.now.beginning_of_year.to_i * 1000 %>;
+const startOfNextYear = <%= Time.now.beginning_of_month.next_year.to_i * 1000 %>;
+</script>

@@ -1,0 +1,35 @@
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <% if controller_name == 'venues' && action_name == 'view' %>
+              <li class='dropdown'><%= react_component('ReservationsCartDropdown') %></li>
+            <% end %>
+
+            <li><%= link_to t('layouts.navigation.logout_link'), destroy_admin_session_path, method: :delete  %></li>
+						<li>
+							<select id='lang'>
+								<option value='fi' <%= I18n.locale == :fi ? 'selected' : '' %>>Suomi</option>
+								<option value='en' <%= I18n.locale != :fi ? 'selected' : '' %>>English</option>
+							</select>
+						</li>
+        </ul>
+    </nav>
+</div>
+
+<script>
+$(function () {
+	$('#lang').on('change', function() {
+    if (window.location.href.indexOf('locale') > 0) {
+      window.location.href = window.location.href.replace(/locale=../g, 'locale=' + $('#lang').val());
+    } else {
+      if (window.location.href.indexOf('?') > 0)
+        window.location.href = window.location + '&locale=' + $('#lang').val();
+      else
+        window.location.href = window.location + '?locale=' + $('#lang').val();
+    }
+
+	});
+});
+</script>

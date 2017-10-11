@@ -1,0 +1,25 @@
+<div class="modal fade" id="add-court" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>
+          <%= t('.header') %>
+        </h3>
+      </div>
+      <div class="modal-body">
+        <%= form_for [@venue, @venue.courts.new], remote: true  do |c| %>
+          <div id="new-court-form"></div>
+          <!-- <%= render partial: "courts/form", locals: {court: c} %> -->
+          <hr/>
+          <label><%= t('.courts_number_label')%></label>
+          <input type='text' name='copies' number='true' required='true' value='1'/>
+        </div>
+      <div class="modal-footer">
+        <div class="actions text-center">
+          <%= c.submit t('.submit_button'), :class => "btn btn-primary" %>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>

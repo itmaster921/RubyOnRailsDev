@@ -1,0 +1,47 @@
+<div class="modal-header">
+  <div class="m-b-lg">
+    <h2><%= t('.header')%> <%= price.id %></h2>
+    <p>
+    <%= t('.notice')%>
+    </p>
+    <p><span class="pull-right"> <strong><%=t('.from')%></strong> <%= price.start_time.try(:strftime, '%H:%M') %>
+    <strong><%=t('.to')%></strong> <%= price.end_time.try(:strftime, '%H:%M') %> </span>
+    <%=t('.price')%> <strong><%= number_to_currency(price.price) %></strong></p>
+  </div>
+</div>
+<div class="modal-body">
+  <div class="full-height-scroll">
+    <ul class="list-group clear-list">
+      <strong><%= t('.price_rule') %></strong>
+      <% price.courts.each do |c| %>
+        <li class="list-group-item fist-item">
+          <span class="pull-right"> <span class="label label-primary">ID: <%= c.id %></span> </span>
+          <%= c.court_name %>
+        </li>
+      <% end %>
+    </ul>
+
+    <strong><%= t('.days_affect') %></strong>
+    <p>
+    <ul>
+      <% if price.monday %><li><%= t('date.day_names')[1] %></li><% end %>
+      <% if price.tuesday %><li><%= t('date.day_names')[2] %></li><% end %>
+      <% if price.wednesday %> <li><%= t('date.day_names')[3] %></li><% end %>
+      <% if price.thursday %><li><%= t('date.day_names')[4] %></li><% end %>
+      <% if price.friday %><li><%= t('date.day_names')[5] %></li><% end %>
+      <% if price.saturday %><li><%= t('date.day_names')[6] %></li><% end %>
+      <% if price.sunday %><li><%= t('date.day_names')[0] %></li><% end %>
+    </ul>
+    </p>
+  </div>
+</div>
+<div class="modal-footer">
+  <% if can? :manage, Price %>
+    <%= link_to venue_price_path(venue, price), method: :delete, remote: true, class: 'remote-del-btn price' do  %>
+      <button type="button" class="btn btn-default ">
+        <i class="fa fa-trash"></i><%= t('.delete_button')%>
+      </button>
+    <% end %>
+  <% end %>
+  <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('.close_button')%></button>
+</div>

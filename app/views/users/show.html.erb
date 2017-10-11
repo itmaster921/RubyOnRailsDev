@@ -1,0 +1,121 @@
+<%= render 'shared/newnav' %>
+<%= render 'shared/message' %>
+
+<main class="profile">
+  <div class="row">
+    <div class="col-xs-16 col-sm-12 col-sm-offset-2">
+      <div class="profile__header">
+        <div class="row">
+          <div class="col-xs-16 col-sm-10">
+            <div class="profile__photo">
+              <%= image_tag 'users/profile.png' %>
+            </div>
+            <div class="profile__name">
+              <div class="profile__name-primary"><%= t('.header') %></div>
+              <div class="profile__name-full"><%= @user.first_name %> <%= @user.last_name %></div>
+            </div>
+          </div>
+          <div class="col-xs-16 col-sm-6">
+          </div>
+        </div>
+      </div>
+      <div class="profile__navs">
+
+        <div class="profile__navs-link"><%= link_to t('.edit_profile'), edit_user_registration_path(current_user) %></div>
+        <div class="profile__navs-link <%= "active" if !@recurring %>"><%= link_to t('.my_reservations'), user_path(current_user)  %></div>
+        <div class="profile__navs-link <%= "active" if @recurring %>"><%= link_to t('.my_recurring_reservations'), recurring_reservations_user_path(current_user)  %></div>
+        <div class="profile__navs-link"><%= link_to t('.invoices'), user_invoices_path(current_user)  %></div>
+
+        <div class="profile__navs-right">
+          <div class="profile__navs-link"><a href="?mode=past" class="<%= "active" if @mode == "past"%>"><%= t('.past_reservations')%></a></div>
+          <div class="profile__navs-link"><a href="?mode=future" class="<%= "active" if @mode == "future"%>"><%= t('.future_reservations') %></a></div>
+          <% if @recurring %>
+            <div class="profile__navs-link"><a href="?mode=reselling" class="<%= "active" if @mode == "reselling"%>"><%= t('.reselling_reservations')%></a></div>
+            <div class="profile__navs-link"><a href="?mode=resold" class="<%= "active" if @mode == "resold"%>"><%= t('.resold_reservations') %></a></div>
+          <% end %>
+        </div>
+
+      </div>
+
+      <div class="profile-reservations">
+        <% @reservations.each do |r| %>
+          <div class="profile-reservations__one profile-reservations__one_tennis">
+            <div class="row">
+              <div class="col-sm-16 col-md-8 padding-0">
+                <div class="venue profile-reservations__photo">
+                  <%= link_to (image_tag(r.court.venue.try_photo_url)), venue_path(r.court.venue[:id]) %>
+                  <div class="venue-overlay">
+                    <h4 class="venue-title">info</h4>
+                    <div>
+                      <div class="venue-attr">
+                        <div class="venue-attr_img icon-map-xs"></div>
+                        <div class="venue-attr_text"> <%= r.court.venue.street %>,
+                          <br><%= r.court.venue.zip %> <%= r.court.venue.city %></div>
+                      </div>
+                      <div class="venue-attr">
+                        <div class="venue-attr_img icon-phone"></div>
+                        <a class="venue-attr_text" href=""><%= r.court.venue.phone_number %></a>
+                      </div>
+                      <div class="venue-attr">
+                        <div class="venue-attr_img icon-site"></div>
+                        <a class="venue-attr_text" href=""><%= r.court.venue.website %></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-16 col-md-8 padding-0">
+                <div class="profile-reservations__time">
+                  <div class="profile-reservations__time-left"><%= TimeSanitizer.output(r.start_time).try(:strftime, '%B') %> <b><%= TimeSanitizer.output(r.start_time).try(:strftime, '%d') %></b> <%= TimeSanitizer.output(r.start_time).try(:strftime, '%Y') %> <% if r.refunded %> <b><%= t('.cancelled') %></b> <% end %></div>
+                  <div class="profile-reservations__time-right"><%= r.court.sport %></div>
+                </div>
+                <div class="profile-reservations__content">
+                  <div class="profile-reservations__content-title"><%= link_to r.court.venue.venue_name, venue_path(r.court.venue[:id])  %></div>
+                  <div class="profile-reservations__content-subtitle"><%= r.court.court_name %></div>
+                  <div class="profile-reservations__content-time"><span class="icon-clock icon-clock_blue"></span> <%= TimeSanitizer.output(r.start_time).try(:strftime, '%H:%M') %> - <%= TimeSanitizer.output(r.end_time).try(:strftime, '%H:%M')%></div>
+                  <div class="profile-reservations__content-price">
+                    <span class="text-primary">€</span><%= number_to_currency(r.price) %> | 
+                    <% if r.reselling? %>
+                      <%= t('.reservation_reselling') %>
+                    <% elsif r.payment_type == "paid" %>
+                      <%= t('.reservation_paid') %>
+                    <% elsif r.payment_type == "unpaid" %>
+                      <%= t('.reservation_unpaid') %>
+                    <% end %>
+                  </div>
+                  <% if r.user_id == current_user.id %>
+                    <div class="profile-reservations__content-action">
+                      <span>
+                        <% if @recurring %>
+                          <% if r.reselling? %>
+                            <%= link_to t('.withdraw_resell_reservation_link'), reservation_resell_path(r) %>
+                          <% elsif r.future? %>
+                            <%= link_to t('.resell_reservation_link'), reservation_resell_path(r) %>
+                          <% else %>
+                            <%= t('.cant_resell_reservation_message')%>
+                          <% end %>
+                        <% else %>
+                          <% if r.refundable? %>
+                            <%= link_to t('.cancel_reservation_link'), reservation_refund_path(r) %>
+                          <% elsif r.cancelable?  %>
+                            <%= link_to t('.cancel_reservation_link'), reservation_cancel_path(r) %>
+                          <% else %>
+                            <%= t('.cant_cancel_reservation_message')%>
+                          <% end %>
+                        <% end %>
+                      </span>
+                      <span class="profile-reservations__content-action-sep">|</span>
+                      <span><%= link_to t('.add_to_calendar'), venue_reservation_path(r.court.venue.id, r.id, format: :ics) %></span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%= render 'layouts/footer' %>

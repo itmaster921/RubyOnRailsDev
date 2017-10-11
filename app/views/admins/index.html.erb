@@ -1,0 +1,67 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+              <div class="ibox-content">
+                <h2><%= t('.header') %></h2>
+                <p>
+                <%= t('.title')%>
+                </p>
+                <ul class="nav nav-tabs">
+                  <li class="active"><a data-toggle="tab" href="#admins-tab"><i class="fa fa-user"></i><%= t('.list_title')%></a></li>
+                  <li class=""><a data-toggle="modal" data-target="#add-admin"><i class="fa fa-plus"></i><%= t('.add_link')%></a></li>
+                </ul>
+
+                <div class='tab-content'>
+                  <div id='admins-tab' class='tab-pane active'>
+                    <input type="text" class="form-control input-sm m-b-xs" id="filter"
+                                                                            placeholder="<%= t('.search_placeholder')%>">
+                    <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8" data-filter=#filter>
+                      <thead>
+                        <tr>
+                          <th data-toggle="true"><%= t('.table_header_name')%></th>
+                          <th><%= t('.table_header_email')%></th>
+                          <th><%= t('.table_header_auth_level')%></th>
+                        </tr>
+                      </thead>
+                      <tbody id='admins'>
+                        <% @admins.each do |admin| %>
+                          <%= render partial: 'admins/show', locals: { company: @company, admin: admin } %>
+                        <% end %>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <td colspan="5">
+                            <ul class="pagination pull-right"></ul>
+                          </td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render partial: 'new', locals: { company: @company } %>
+<%= render partial: 'edit', locals: { company: @company, admin: @company.admins.new } %>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+    $('.footable').footable();
+    $('.footable2').footable();
+
+
+});
+
+</script>

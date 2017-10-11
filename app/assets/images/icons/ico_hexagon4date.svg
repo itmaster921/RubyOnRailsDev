@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="47.03" height="44" viewBox="0 0 47.03 44">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #0e7dff;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="hexagon_for_date" data-name="hexagon for date" class="cls-1" d="M4501.87,1432.29l-7.57,13.43a8.353,8.353,0,0,1-7.25,4.29h-15.14a8.325,8.325,0,0,1-7.24-4.29l-7.57-13.43a8.723,8.723,0,0,1,0-8.57l7.57-13.44a8.315,8.315,0,0,1,7.24-4.28h15.14a8.343,8.343,0,0,1,7.25,4.28l7.57,13.44A8.774,8.774,0,0,1,4501.87,1432.29Z" transform="translate(-4455.97 -1406)"/>
+</svg>

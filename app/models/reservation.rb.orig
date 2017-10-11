@@ -1,0 +1,224 @@
+class Reservation < ActiveRecord::Base
+  belongs_to :court
+  belongs_to :user, polymorphic: true
+  has_many :invoice_components, dependent: :destroy
+  has_one :membership_connector, dependent: :destroy
+  has_one :membership, through: :membership_connector
+
+  validates :user, presence: true
+  validates :court, presence: true
+  validates :price, numericality: { greater_than_or_equal_to: 0 },
+                    allow_nil: false, presence: true
+  validates :start_time, presence: true
+  validates :end_time, presence: true
+
+  validate :no_overlapping_reservations
+  validate :not_on_offday, unless: 'court.nil?'
+  validate :duration_policy, unless: 'court.nil?'
+  validate :start_time_policy, unless: 'court.nil?'
+  validate :date_limit_policy, unless: 'court.nil?'
+  validate :court_active, unless: 'court.nil?'
+
+  scope :past, -> { where('start_time < ?', DateTime.now) }
+  scope :future, -> { where('start_time > ?', DateTime.now) }
+
+  enum booking_type: [:online, :admin]
+  enum payment_type: [:paid, :unpaid, :membership, :semi_paid]
+
+  before_save :set_payment_type,
+              unless: 'paid? || membership?'
+
+  after_create :booking_mail
+
+  def booking_mail
+    BookingMailer.booking_email(user, self)
+                 .deliver_now unless self.user_type == 'Guest'
+  end
+
+  def no_overlapping_reservations
+    if reservation_conflicts(start_time, end_time, court_id).count > 0
+      errors.add(:start_time, t('errors.reservation.start_time.overlapping'))
+    end
+  end
+
+  def track_user_cancellations(venue_id, reservation_id, user_id)
+      tracker = Mixpanel::Tracker.new(ENV["MIXPANEL_TOKEN"])
+      reservation = Reservation.find(reservation_id)
+      user = User.find(user_id)
+      tracker.track(
+        user_id,
+        "Bookings Cancelled By User",
+         {
+          venue_id: venue_id,
+          venue_name: Venue.find(venue_id).venue_name,
+          reservation_id: reservation_id,
+          price: reservation.price,
+          court_id: reservation.court_id
+        }
+      )
+    rescue
+      logger.error "Mixpanel payment tracking failed. Status: #{status} Return Code: #{return_code}, User: #{current_user.try(:id)}"
+  end
+
+  def track_admin_cancellations(venue_id, reservation_id, user_id)
+      tracker = Mixpanel::Tracker.new(ENV["MIXPANEL_TOKEN"])
+      reservation = Reservation.find(reservation_id)
+      user = User.find(user_id)
+      tracker.track(
+        user_id,
+        "Bookings Cancelled By Admin",
+         {
+          venue_id: venue_id,
+          venue_name: Venue.find(venue_id).venue_name,
+          reservation_id: reservation_id,
+          price: reservation.price,
+          court_id: reservation.court_id
+        }
+      )
+    rescue
+      logger.error "Mixpanel payment tracking failed. Status: #{status} Return Code: #{return_code}, User: #{current_user.try(:id)}"
+  end
+
+  def track_admin_reservations(venue_id, reservation_id, user_id)
+      tracker = Mixpanel::Tracker.new(ENV["MIXPANEL_TOKEN"])
+      reservation = Reservation.find(reservation_id)
+      user = User.find(user_id)
+      tracker.track(
+        user_id,
+        "Booking Done By Admin",
+         {
+          venue_id: venue_id,
+          venue_name: Venue.find(venue_id).venue_name,
+          reservation_id: reservation_id,
+          price: reservation.price,
+          court_id: reservation.court_id
+        }
+      )
+    rescue
+      logger.error "Mixpanel payment tracking failed. Status: #{status} Return Code: #{return_code}, User: #{current_user.try(:id)}"
+  end
+
+  def stripe_refund
+    Stripe::Charge.retrieve(self.charge_id).refund
+    self.update_attributes(refunded: true)
+  end
+
+  def not_on_offday
+<<<<<<< HEAD
+    if !court.working?(start_time.to_date)
+      errors.add(:start_time, 'The date you have chosen is a day off.')
+=======
+    if !court || !court.working?(start_time.to_date)
+      errors.add(:start_time, t('errors.reservation.start_time.day_off'))
+>>>>>>> iamthemorron-tranlations
+      return false
+    end
+    true
+  end
+
+  def cancellation_email
+    CancellationMailer.cancellation_email(self.user, self).deliver_now!
+  end
+
+  def reservation_conflicts(start_time, end_time, court_id)
+    start_time = start_time + 1.seconds
+    end_time = end_time - 1.seconds
+    started = Reservation.where(court_id: court_id).where(:start_time => (start_time)..(end_time)).where.not(id: id)
+    ended = Reservation.where(court_id: court_id).where(:end_time => start_time..end_time).where.not(id: id)
+    between = Reservation.where(court_id: court_id).where("start_time <= ?", start_time).where("end_time >= ?", end_time).where.not(id: id)
+    started + ended + between
+  end
+
+  def to_ics
+    event = Icalendar::Event.new
+    event.dtstart = start_time
+    event.dtend = end_time
+    event.summary = court.sport_name + ' at ' + court.venue.venue_name
+    event.description = court.sport_name
+    event.location = court.venue.street + ' ' + court.venue.zip + ' ' + court.venue.city
+    event.created = created_at
+    event.last_modified = updated_at
+    event
+  end
+
+  def charge(token)
+    transaction do
+      charge = Stripe::Charge.create(
+        amount: price.to_int * 100,
+        currency: 'usd',
+        source: token,
+        customer: user.stripe_id,
+        description: description,
+        destination: court.venue.company.stripe_user_id
+      )
+      update_attributes(is_billed: true)
+      update_attributes(is_paid: true)
+      update_attributes(charge_id: charge.id)
+    end
+  end
+
+  def description
+    "#Reservation: #{court.court_name} at #{court.venue.venue_name} for $#{price}"
+  end
+
+  def duration_policy
+    duration = end_time - start_time
+    case court.duration_policy.to_sym
+    when :one_hour
+      if duration != 1.hour
+        errors.add('end_time', t('errors.reservation.end_time.one_hour'))
+      end
+    when :two_hour
+      if duration != 2.hours
+        errors.add('end_time', t('errors.reservation.end_time.two_hours'))
+      end
+    else
+      true
+    end
+  end
+
+  def start_time_policy
+    case court.start_time_policy.to_sym
+    when :hour_mark
+      if start_time.min != 0
+        errors.add('start_time', t('errors.reservation.start_time.zero'))
+      end
+    when :half_hour_mark
+      if start_time.min != 30
+        errors.add('start_time', t('errors.reservation.start_time.half'))
+      end
+    else
+      true
+    end
+  end
+
+  def date_limit_policy
+    if start_time >= court.venue.booking_date_limit
+      errors.add('Start Time', t('errors.reservation.start_time.days_in_advance', limit: court.venue.booking_ahead_limit))
+    end
+  end
+
+  def court_active
+    errors.add('Court', t('errors.reservation.court.closed')) unless court.active?
+  end
+
+  def set_payment_type
+    self.amount_paid ||= 0
+    self.payment_type = if amount_paid >= price
+                          :paid
+                        elsif amount_paid > 0
+                          :semi_paid
+                        else
+                          :unpaid
+                        end
+  end
+
+  def color
+    case
+    when paid? then '#4caf50'
+    when unpaid? then '#f44336'
+    when semi_paid? then '#f8ac59'
+    else 'blue'
+    end
+  end
+end

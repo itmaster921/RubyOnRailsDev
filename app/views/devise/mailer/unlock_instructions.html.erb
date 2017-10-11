@@ -1,0 +1,9 @@
+
+
+<p><%=t('.header', email: @resource.email) %></p>
+
+<p><%= t('.content')%></p>
+
+<p><%= t('.instruction_line')%></p>
+
+<p><%= link_to t('.link_label'), unlock_url(@resource, unlock_token: @token) %></p>

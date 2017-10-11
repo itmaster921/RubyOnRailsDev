@@ -1,0 +1,65 @@
+<main class="login-page">
+    <div class="modal modal_dark modal_center" style="display: block;">
+        <div class="modal-dialog" role="document">
+            <div class="modal__container">
+                <div class="modal__header modal__header_signup">
+                    <div class="modal__logo"></div>
+                </div>
+                <div class="modal__content">
+                    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => { :id => "signup-form" }) do |f| %>
+                        <fieldset class="form-group">
+                            <div class="row">
+                                <div class="com-xs-12 col-sm-8"><%= f.text_field :first_name, :class => 'form-control', :placeholder => 'First Name' %></div>
+                                <div class="com-xs-12 col-sm-8"><%= f.text_field :last_name, :class => 'form-control', :placeholder => 'Last Name' %></div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <%= f.email_field :email, autofocus: true, :class => "form-control", :placeholder => true %>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <%= f.password_field :password, :class => 'form-control', :placeholder => true,  autocomplete: "off" %>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <%= f.password_field :password_confirmation, autocomplete: "off", :class => "form-control", :placeholder => true %>
+                        </fieldset>
+                        <fieldset class="form-group form-group_btns">
+                            <div class="btn-choose btn-choose_horizontal btn-choose_dark">
+                                <div class="btn-choose btn-choose_horizontal btn-choose_dark"><%= link_to user_omniauth_authorize_path(:facebook), class: "btn btn-primary-outline btn_lg" do %><span class="icon-fb_white"></span>&nbsp;signup with facebook<% end %><div class="btn-choose__or">or</div><button class="btn btn-primary btn_sm">sign up</button>
+                            </div>
+                        </fieldset>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+    $("#new_user").validate({
+        rules: {
+            "user[email]": {
+              required: true,
+              email: true,
+            },
+            "user[first_name]": {
+              required: true,
+            },
+            "user[last_name]": {
+              required: true,
+            },
+            "user[password]": {
+                required: true,
+                minlength: 8
+            },
+            "user[password_confirmation]": {
+                required: true,
+                minlength: 8,
+                equalTo: "#user_password"
+            }
+        }
+    });
+
+});
+</script>

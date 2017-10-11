@@ -1,0 +1,115 @@
+<%= form_tag venue_reservations_path(@venue), remote: true, class: 'remote-form', id: 'reservation-form' do %>
+  <%= render partial: 'form_info', locals: { edit_mode_text: t('.submit_button') } %>
+  <hr/>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group has-feedback">
+        <label class="control-label"><%= t('.price_label')%></label>
+        <label class="pull-right"><input id="price-auto" type="checkbox" checked> <%= t('.get_automatically') %></label>
+        <input type="text" id="reservationPrice" class="form-control" placeholder="<%= t('.price_placeholder')%>" name="reservations[1][price]" required>
+        <i class="fa fa-eur form-control-feedback" id="priceIcon"></i>
+      </div>
+    </div>
+  </div>
+  <div class="row hidden">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label ><%= t('.court_label')%></label>
+        <select name="reservations[1][court_id]" id="courtTest" class="select2_demo_2 form-control" style="width: 100%" required></select>
+      </div>
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label><%= t('.owner_label')%></label>
+        <br/>
+        <div class='btn-group'>
+          <div class='btn btn-white' data-target='#existing-user' onclick='switchUserPane(this)'><%= t('.select_existing')%></div>
+          <div class='btn btn-white' data-target='#new-user' onclick='switchUserPane(this)'><%= t('.select_new')%></div>
+          <div class='btn btn-white' data-target="#new-guest" onclick='switchUserPane(this)'><%= t('.select_guest')%></div>
+        </div>
+      </div>
+    </div>
+
+    <br/>
+    <br/>
+    <br/>
+
+    <div id='user-area' class='col-md-12'>
+
+      <div id='existing-user'>
+        <div class="form-group">
+          <label><%= t('.select_user_label')%></label>
+          <select class="select2_demo_2 form-control"
+                  id="selectUser"
+                  style="width: 100%"
+                  data-venue-id="<%= @venue.id %>"
+                  name="user[user_id]"
+                  data-user-select>
+          </select>
+        </div>
+      </div>
+
+      <%= render partial: 'users/user_no_password' %>
+      <%= render partial: 'guests/new' %>
+
+    </div>
+
+  </div>
+  <hr/>
+
+  <div class="row hidden">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for=""><%= t('.start_time_label')%></label><br>
+        <div class="input-group clockpicker" data-autoclose="true">
+          <input type="text" class="form-control" id="reservationStartTime" value="<%= Time.now.strftime("%d/%m/%Y") %>" data-date-format="dd/mm/yyyy" name="reservations[1][start_time]" required>
+          <span class="input-group-addon">
+            <span class="fa fa-clock-o"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row hidden">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for=""><%= t('.end_time_label')%></label><br>
+        <div class="input-group clockpicker" data-autoclose="true">
+          <input type="text" class="form-control" id="reservationEndTime" data-date-format="dd/mm/yyyy" value="<%= Time.now.strftime("%d/%m/%Y") %>" name="reservations[1][end_time]" required>
+          <span class="input-group-addon">
+            <span class="fa fa-clock-o"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row hidden">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="searchDate"><%= t('.select_date_label')%></label>
+        <div class="input-group date" data-provide="datepicker">
+          <input type="text" class="form-control" id="reservationDate" data-date-format="dd/mm/yyyy" value="<%= Time.now.strftime("%d/%m/%Y") %>" name="reservations[1][date]" required>
+          <div class="input-group-addon">
+            <span class="fa fa-calendar"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="reservationNote"><%= t('.note')%></label>
+        <textarea type="text" class="form-control" id="reservationNote"  name="reservation[note]" placeholder="<%= t('.note') %>" cols='50'/>
+      </div>
+    </div>
+  </div>
+  <div class="actions text-center">
+    <button class="btn reservationsSucces ladda-button btn-primary" type='submit' data-style="expand-right">
+      <%= t('.submit_button') %>
+    </button>
+  <% end %>

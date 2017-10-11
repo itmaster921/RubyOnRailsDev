@@ -1,0 +1,19 @@
+<%= form_for([@venue, @venue.reservations.new]) do |f| %>
+
+  <%= f.text_field :length %>
+  <%= f.text_field :date %>
+  <%= f.text_field :start_time %>
+  <%= f.hidden_field :venue_id, value: @venue.id %>
+  <%# need to check price for court price for that time (start time defines pricing) %>
+  <%# f.hidden_field :price, value: @venue.courts.first.price(start_time)*(length/60) %>
+
+  <%# Pseudocode: %>
+  <%# Search for chosen Date, Starting time, Length. %>
+  <%# Show results for Venue's all courts. Display only 1 of each time (15min / 30min increments) even if more are available %>
+  <%# On click(choose time) -> Show pop-up booking confirmation %>
+  <%# Booking confirmation: Show available time (if more are available, user can choose court now), show price for court at this time. %>
+  <%# Submit = Book + Pay(confirmation yes/no popup) %>
+
+  <br>
+  <%= f.submit t('.submit_button'), class: "btn btn-primary" %>
+<% end %>

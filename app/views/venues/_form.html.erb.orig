@@ -1,0 +1,318 @@
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+<div class="row">
+  <div class="col-md-12 ">
+    <div class="form-group">
+      <%= v.label :venue_name %>
+      <%= v.text_field :venue_name, :class => 'form-control', :placeholder => true, autofocus: true, required: true %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group">
+      <%= v.label :website %>
+      <%= v.text_field :website, :class => 'form-control', :placeholder => true, autofocus: true %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <%= v.label :phone_number %>
+      <%= v.text_field :phone_number, :class => 'form-control', :placeholder => true, autofocus: true %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      <%= v.label :description %>
+      <%= v.text_area :description, rows: 5, :class => 'form-control', :placeholder => true, autofocus: true, required: true%>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class='col-md-4'>
+    <div class="form-group">
+      <%= v.label :street %>
+      <%= v.text_field :street, :class => 'form-control', :placeholder => true, autofocus: true %>
+    </div>
+  </div>
+  <div class='col-md-4'>
+    <div class="form-group">
+      <%= v.label :zip %>
+      <%= v.text_field :zip, :class => 'form-control', :placeholder => true, autofocus: true %>
+    </div>
+  </div>
+  <div class='col-md-4'>
+    <div class="form-group">
+      <%= v.label :city %>
+      <%= v.text_field :city, :class => 'form-control', :placeholder => true, autofocus: true %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      <%= v.label :parking_info %>
+      <%= v.text_area :parking_info, rows: 3, :class => 'form-control', :placeholder => true, autofocus: true %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      <%= v.label :transit_info %>
+      <%= v.text_area :transit_info, rows: 3, :class => 'form-control', :placeholder => true, autofocus: true %>
+    </div>
+  </div>
+</div>
+
+<div class='row'>
+  <div class="col-md-4">
+    <div class="form-group">
+      <%= v.label :booking_ahead_limit %>
+      <%= v.text_field :booking_ahead_limit, :class => 'form-control', :placeholder => true, autofocus: true %>
+      <span class='help-block m-b-none'>
+        Number of days a user can book ahead.
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="container"><h3><%= t('.opening_hours')%></h3></div><br>
+  <div class="col-md-3">
+    <%= v.label :monday_opening_time %>
+    <div class="input-group clockpicker">
+<<<<<<< HEAD
+      <%= v.text_field :monday_opening_time, :value => @venue.monday_opening_time.try(:strftime, '%H:%M'),:class => 'form-control', :placeholder => '#' %>
+=======
+      <%= v.text_field :monday_opening_time, :class => 'form-control', :placeholder => true %>
+>>>>>>> iamthemorron-tranlations
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= v.label :tuesday_opening_time %>
+    <div class="input-group clockpicker">
+<<<<<<< HEAD
+      <%= v.text_field :tuesday_opening_time, :value => @venue.tuesday_opening_time.try(:strftime, '%H:%M'), :class => 'form-control', :placeholder => '#' %>
+=======
+      <%= v.text_field :tuesday_opening_time, :class => 'form-control', :placeholder => true %>
+>>>>>>> iamthemorron-tranlations
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= v.label :wednesday_opening_time %>
+    <div class="input-group clockpicker">
+<<<<<<< HEAD
+      <%= v.text_field :wednesday_opening_time, :value => @venue.wednesday_opening_time.try(:strftime, '%H:%M'), :class => 'form-control', :placeholder => '#' %>
+=======
+      <%= v.text_field :wednesday_opening_time, :class => 'form-control', :placeholder => true %>
+>>>>>>> iamthemorron-tranlations
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= v.label :thursday_opening_time %>
+    <div class="input-group clockpicker">
+<<<<<<< HEAD
+      <%= v.text_field :thursday_opening_time, :value => @venue.thursday_opening_time.try(:strftime, '%H:%M'), :class => 'form-control', :placeholder => '#' %>
+=======
+      <%= v.text_field :thursday_opening_time, :class => 'form-control', :placeholder => true %>
+>>>>>>> iamthemorron-tranlations
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= v.label :friday_opening_time %>
+    <div class="input-group clockpicker">
+<<<<<<< HEAD
+      <%= v.text_field :friday_opening_time, :value => @venue.friday_opening_time.try(:strftime, '%H:%M'), :class => 'form-control', :placeholder => '#' %>
+=======
+      <%= v.text_field :friday_opening_time, :class => 'form-control', :placeholder => true %>
+>>>>>>> iamthemorron-tranlations
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= v.label :saturday_opening_time %>
+    <div class="input-group clockpicker">
+<<<<<<< HEAD
+      <%= v.text_field :saturday_opening_time, :value => @venue.saturday_opening_time.try(:strftime, '%H:%M'), :class => 'form-control', :placeholder => '#' %>
+=======
+      <%= v.text_field :saturday_opening_time, :class => 'form-control', :placeholder => true %>
+>>>>>>> iamthemorron-tranlations
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= v.label :sunday_opening_time %>
+    <div class="input-group clockpicker">
+<<<<<<< HEAD
+      <%= v.text_field :sunday_opening_time, :value => @venue.sunday_opening_time.try(:strftime, '%H:%M'), :class => 'form-control', :placeholder => '#' %>
+=======
+      <%= v.text_field :sunday_opening_time, :class => 'form-control', :placeholder => true %>
+>>>>>>> iamthemorron-tranlations
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+</div>
+
+<div class="row">
+  <div class="container"><br><h3><%= t('.closing_time')%></h3></div>
+  <br>
+  <div class="col-md-3">
+    <%= v.label :monday_opening_time %>
+    <div class="input-group clockpicker">
+<<<<<<< HEAD
+      <%= v.text_field :monday_closing_time, :value => @venue.monday_closing_time.try(:strftime, '%H:%M'), :class => 'form-control', :placeholder => '#' %>
+=======
+      <%= v.text_field :monday_closing_time, :class => 'form-control', :placeholder => true %>
+>>>>>>> iamthemorron-tranlations
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= v.label :tuesday_opening_time %>
+    <div class="input-group clockpicker">
+<<<<<<< HEAD
+      <%= v.text_field :tuesday_closing_time, :value => @venue.tuesday_closing_time.try(:strftime, '%H:%M'), :class => 'form-control', :placeholder => '#' %>
+=======
+      <%= v.text_field :tuesday_closing_time, :class => 'form-control', :placeholder => true %>
+>>>>>>> iamthemorron-tranlations
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= v.label :wednesday_opening_time %>
+    <div class="input-group clockpicker">
+<<<<<<< HEAD
+      <%= v.text_field :wednesday_closing_time, :value => @venue.wednesday_closing_time.try(:strftime, '%H:%M'), :class => 'form-control', :placeholder => '#' %>
+=======
+      <%= v.text_field :wednesday_closing_time, :class => 'form-control', :placeholder => true %>
+>>>>>>> iamthemorron-tranlations
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= v.label :thursday_opening_time %>
+    <div class="input-group clockpicker">
+<<<<<<< HEAD
+      <%= v.text_field :thursday_closing_time, :value => @venue.thursday_closing_time.try(:strftime, '%H:%M'), :class => 'form-control', :placeholder => '#' %>
+=======
+      <%= v.text_field :thursday_closing_time, :class => 'form-control', :placeholder => true %>
+>>>>>>> iamthemorron-tranlations
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= v.label :friday_opening_time %>
+    <div class="input-group clockpicker">
+<<<<<<< HEAD
+      <%= v.text_field :friday_closing_time, :value => @venue.friday_closing_time.try(:strftime, '%H:%M'), :class => 'form-control', :placeholder => '#' %>
+=======
+      <%= v.text_field :friday_closing_time, :class => 'form-control', :placeholder => true %>
+>>>>>>> iamthemorron-tranlations
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= v.label :saturday_opening_time %>
+    <div class="input-group clockpicker">
+<<<<<<< HEAD
+      <%= v.text_field :saturday_closing_time, :value => @venue.saturday_closing_time.try(:strftime, '%H:%M'), :class => 'form-control', :placeholder => '#' %>
+=======
+      <%= v.text_field :saturday_closing_time, :class => 'form-control', :placeholder => true %>
+>>>>>>> iamthemorron-tranlations
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= v.label :sunday_opening_time %>
+    <div class="input-group clockpicker">
+<<<<<<< HEAD
+      <%= v.text_field :sunday_closing_time, :value => @venue.sunday_closing_time.try(:strftime, '%H:%M'), :class => 'form-control', :placeholder => '#' %>
+=======
+      <%= v.text_field :sunday_closing_time, :class => 'form-control', :placeholder => true %>
+>>>>>>> iamthemorron-tranlations
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <br>
+        <div class="form-group">
+          <div class="dz-message">
+          </div>
+          <div class="dropzone-previews">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

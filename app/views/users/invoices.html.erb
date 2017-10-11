@@ -1,0 +1,94 @@
+<%= render 'shared/newnav' %>
+
+<main class="profile">
+  <div class="row">
+    <div class="col-xs-16 col-sm-12 col-sm-offset-2">
+      <div class="profile__header">
+        <div class="row">
+          <div class="col-xs-16 col-sm-10">
+            <div class="profile__photo">
+              <%= image_tag 'users/profile.png' %>
+            </div>
+            <div class="profile__name">
+              <div class="profile__name-primary"><%= t('.header')%></div>
+              <div class="profile__name-full"><%= @user.first_name %> <%= @user.last_name %></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="profile__navs">
+        <div class="profile__navs-link "><%= link_to t('.edit_profile'), edit_user_registration_path(current_user) %></div>
+        <div class="profile__navs-link "><%= link_to t('.my_reservations'), user_path(current_user) %></div>
+        <div class="profile__navs-link active"><%= link_to t('.invoices'), user_invoices_path(current_user) %></div>
+
+        <div class="profile__navs-right">
+          <div class="profile__navs-link"><a href="?mode=unpaid" class="<%= "active" if @mode == "unpaid"%>"><%= t('.unpaid')%></a></div>
+          <div class="profile__navs-link"><a href="?mode=paid" class="<%= "active" if @mode == "paid"%>"><%= t('.paid')%></div>
+        </div>
+
+      </div>
+      <div class="profile-invoices">
+        <% @invoices.where(is_draft: false).where(is_paid: false).each do |i| %>
+
+        <div class="profile-invoices__one">
+          <div class="profile-invoices__title">
+            <div class="profile-invoices__title-container">
+              <div class="row">
+                <div class="col-sm-16 col-md-8">
+                  <div class="profile-invoices__title-date"><b><%= t('.title_date', date: (i.created_at + 2.weeks).strftime("%d/%m/%Y")) %></b></div>
+                </div>
+                <div class="col-sm-16 col-md-8">
+                  <div class="profile-invoices__title-price"><b><%= number_to_currency(i.total) %></b></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="profile-invoices__content">
+            <div class="row">
+              <div class="col-sm-16 col-md-8">
+                <div class="profile-invoices__place"><%= i.company.company_legal_name %></div>
+                <div class="profile-invoices__status"><%= t('.membership') %></div>
+                <div class="profile-invoices__contacts">
+                  <div class="profile-invoices__phone"><span class="icon-phone"></span><%= i.company.company_phone %></div>
+                  <div class="profile-invoices__email"><span class="icon-mail"></span>invoices@ampersports.com</div>
+                </div>
+              </div>
+              <div class="col-sm-16 col-md-8 col-lg-6">
+                <div class="btn-choose btn-choose_vertical btn-choose_dark">
+                  <button class="btn btn-primary btn_lg"><%= t('.pay_now_button') %></button>
+                  <div class="btn-choose__or"><%= t('support.or')%></div>
+                  <%= link_to t('.download_invoice'), company_invoice_path(i.company, i, format: :pdf), class: "btn btn-success btn_lg" %>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="profile-invoices__info venue">
+            <div class="venue-invoice">
+              <div class="venue-invoice__logo"></div>
+              <div class="venue-invoice__name"><%= t('.invoice_name_html', num: i.id) %></div>
+            </div>
+            <div class="venue-overlay">
+              <h4 class="venue-title"><%= t('.invoice_info')%></h4>
+              <div>
+                <div class="venue-attr">
+                  <div class="venue-attr_img icon-map-xs"></div>
+                  <div class="venue-attr_text"><%= i.company.company_street_address %><br><%= i.company.company_zip %> <%= i.company.company_city%></div>
+                </div>
+                <div class="venue-attr">
+                  <div class="venue-attr_img icon-site"></div>
+                  <a class="venue-attr_text" href=""><%= i.company.company_website %></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</main>
+<%= render 'layouts/footer' %>

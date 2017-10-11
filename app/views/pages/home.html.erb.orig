@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>Landing</title>
+	<script>
+	</script>
+</head>
+
+<body>
+	<header class="b-header b-header_mainpage">
+		<nav class="navbar navbar-full navbar-dark">
+			<button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#main-landing-navbar">
+				&#9776;
+			</button>
+			<div class="collapse navbar-toggleable-xs" id="main-landing-navbar">
+				<a class="navbar-brand_logo" href="/"></a>
+				<ul class="nav navbar-nav">
+					<li class="nav-item">
+						<div class="dropdown">
+							<button class="nav-link btn-location" id="js-dropdown-location" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon-map"></span><span>Helsinki</span></button>
+						</div>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav b-header-nav_right">
+          <% if (!user_signed_in?) %>
+          <li class="nav-item">
+            <a class="b-header-btn" href="#" data-toggle="modal" data-target="#signup-modal"><%= t('.signup_html')%></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#login-modal"><span class="icon-user"></span><span><%= t('.login_html')%></span></a>
+          </li>
+          <% else %>
+          <li class="nav-item nav-item_emptyborder">
+            <%= link_to user_path(current_user.id), class: "nav-link" do %>
+            <span class="icon-user"></span><span><%= current_user.first_name %></span></a> <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to destroy_user_session_path, method: :delete, class: "nav-link" do %>
+<<<<<<< HEAD
+            <span class="icon-logout"></span><span>Logout</span></a> <% end %>
+          </li>
+          <% end %>
+					<li class="nav-item">
+						<a class="nav-link" href="https://amper.zendesk.com/hc/en-us"><span class="icon-help"></span><span>Help</span></a>
+=======
+            <span class="icon-user"></span><span><%= t('.logout')%></span></a> <% end %>
+          </li>
+          <% end %>
+					<li class="nav-item">
+						<a class="nav-link" href="#"><span class="icon-help"></span><span><%= t('.help')%></span></a>
+>>>>>>> iamthemorron-tranlations
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-16 col-md-12 col-md-offset-2">
+					<div class="jumbotron jumbotron-header">
+						<h1><%= t('.header')%></h1>
+						<div class="lead"><%= t('.header_lead')%></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<main class="b-page">
+  <% if current_user.present? %>
+    <input type="hidden" value="<%= current_user.id %>" id="userId" />
+  <% end %>
+		<!--find a venue-->
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-16 col-lg-offset-1 col-lg-14 col-xl-offset-3 col-xl-10">
+					<form class="search-venue" role="search">
+						<div class="search-venue__block">
+							<select class="select2_sport form-control">
+								<option value="tennis"><%= t('.sport')%></option>
+							</select>
+							<div class="search-venue__line"></div>
+						</div>
+						<div class="search-venue__block">
+							<select class="select2_duration form-control" id="searchDuration">
+								<option value="60"><%= t('.duration')%></option>
+							</select>
+							<div class="search-venue__line"></div>
+						</div>
+						<div class="search-venue__block">
+							<div class="input-group">
+								<input type="text" class="search-venue__input js-datepicker form-control" value="<%= DateTime.now.strftime("%d/%m/%Y") %>" id="searchDate" placeholder="datapicker" />
+								<span class="input-group-addon"><span class="icon-calender"></span></span>
+							</div>
+							<div class="search-venue__line"></div>
+						</div>
+						<div class="search-venue__block">
+							<div class="input-group dropdown js-tmpckr">
+								<input type="text" class="search-venue__input dropdown-toggle js-timepicker form-control" autocomplete="off" id="searchTime" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="<%= (Time.zone.now + 1.hour).beginning_of_hour.strftime('%H:%M') %>" />
+								<span class="input-group-addon" data-toggle="dropdown"><span class="icon-clock"></span></span>
+								<div class="timepicker-dropdown dropdown-menu" aria-labelledby="timepicker">
+									<div class="timepicker-dropdown__container">
+										<div class="timepicker-dropdown__time">
+											<div class="timepicker-dropdown__hours">
+												<div class="timepicker-dropdown__arr_up js-uphour"></div>
+												<div class="timepicker-dropdown__hour js-hour"><%= (Time.zone.now + 1.hour).beginning_of_hour.strftime('%H') %></div>
+												<div class="timepicker-dropdown__arr_down js-downhour"></div>
+											</div>
+											<div class="timepicker-dropdown__sep">:</div>
+											<div class="timepicker-dropdown__minutes">
+												<div class="timepicker-dropdown__arr_up js-upminute"></div>
+												<div class="timepicker-dropdown__minute js-minute"><%= (Time.zone.now + 1.hour).beginning_of_hour.strftime('%M') %></div>
+												<div class="timepicker-dropdown__arr_down js-downminute"></div>
+											</div>
+										</div>
+										<div class="timepicker-dropdown__ampm">
+											<!--<div class="timepicker-dropdown__ampm-container js-ampm">
+												<div class="timepicker-dropdown__am">am</div>
+												<div class="timepicker-dropdown__pm">pm</div>
+											</div>-->
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<div class="search-venue__block">
+              <button class="btn" type="submit" id="searchAvailableVenuesBtn"><%= t('.find_venue')%></button>
+						</div>
+
+
+
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid jumbotron-main">
+
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-16 col-sm-offset-2 col-sm-8">
+						<div class="jumbotron">
+							<h2><%= t('.join_header') %></h2>
+							<hr>
+							<p class="lead"><%= t('.join_content') %></p>
+
+							<div class="lead">
+								<a class="btn btn-success btn-lg" href="#" role="button"><%= t('.join_button') %></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+    <div class="container">
+			<div class="row">
+				<div class="col-xs-16 col-md-12 col-md-offset-2">
+
+					<div class="venue-category">
+						<div class="dropdown">
+							<button class="venue-category__select" type="button" id="dropdown-cat-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <%= image_tag 'icons/cats/cat.svg' %>
+							</button>
+						</div>
+						<a href="">
+							<span><%= t('.venues_list') %></span>
+							<span class="icon-arrow-right"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="venue-col-3">
+				<div class="owl-carousel">
+          <% @venues.each do |venue| %>
+  					<div class="venue-wrap">
+  						<div class="venue">
+                <%= image_tag(venue.photos[0].image.url(), class: "venue-img") %>
+  							<div class="venue-overlay">
+  								<h4 class="venue-title"><%= venue.venue_name %></h4>
+
+  								<div>
+  									<div class="venue-attr">
+  										<div class="venue-attr_img icon-map-xs"></div>
+  										<div class="venue-attr_text"><%= venue.street %>,
+  											<br><%= venue.zip %> <%= venue.city %></div>
+  									</div>
+  									<div class="venue-attr">
+  										<div class="venue-attr_img icon-phone"></div>
+  										<a class="venue-attr_text" href=""><%= venue.phone_number %></a>
+  									</div>
+  									<div class="venue-attr">
+  										<div class="venue-attr_img icon-site"></div>
+  										<a class="venue-attr_text" href=""><%= venue.website %></a>
+  									</div>
+  								</div>
+  								<a href="<%= venue_path(venue) %>" class="venue-btn"></a>
+
+  							</div>
+  							<div class="venue-footer">
+  								<div class="venue-footer-cont">
+  									<div class="venue-name"><%= venue.venue_name %></div>
+  								</div>
+  								<div class="venue-price">
+  									<span class="venue-price_currency">€</span>
+  									<span class="venue-price_val">9</span>
+  									<span class="venue-price_plus">+</span>
+  								</div>
+  							</div>
+  						</div>
+  					</div>
+          <% end %>
+
+				</div>
+			</div>
+		</div>
+
+	</main>
+
+  <script>
+		$(document).ready(function () {
+			Init.main();
+		});
+	</script>
+  <script>
+  $(document).ready(function() {
+    var Timepicker = {
+      type: 23
+      , ampm: 0
+      , hour: 0
+      , minute: 0
+      , fieldhour: $('.js-hour')
+      , fieldminute: $('.js-minute')
+      , fieldampm: $('.js-ampm')
+      , input: $('.js-timepicker')
+      , start: function () {
+
+        $('.js-uphour').on('click', function () {
+          Timepicker.uphour()
+        });
+        $('.js-downhour').on('click', function () {
+          Timepicker.downhour()
+        });
+        $('.js-downminute').on('click', function () {
+          Timepicker.downminute()
+        });
+        $('.js-upminute').on('click', function () {
+          Timepicker.upminute()
+        });
+        $('.js-ampm').on('click', function () {
+          Timepicker.toggleampm()
+        });
+
+
+
+        $('.timepicker-dropdown').on('click', function () {
+          return false;
+        });
+
+        if(typeof (this.input.val()) != 'undefined')
+        {
+          var arr = this.input.val().split(':');
+          if(arr.length == 2){
+            this.hour = parseInt(arr[0]);
+            this.minute = parseInt(arr[1]);
+          }
+        }
+
+        this.print();
+      }
+      , print: function () {
+        var hour, minute, ampm;
+        if (this.hour < 10)
+          hour = '0' + this.hour;
+        else
+          hour = this.hour;
+
+        if (this.minute < 10)
+          minute = '0' + this.minute;
+        else
+          minute = this.minute;
+
+        if (this.ampm == 0) {
+          ampm = 'AM';
+          this.fieldampm.children('.timepicker-dropdown__am').addClass('selected');
+          this.fieldampm.children('.timepicker-dropdown__pm').removeClass('selected');
+        } else {
+          ampm = 'PM';
+          this.fieldampm.children('.timepicker-dropdown__am').removeClass('selected');
+          this.fieldampm.children('.timepicker-dropdown__pm').addClass('selected');
+        }
+
+
+        this.fieldhour.text(hour);
+        this.fieldminute.text(minute);
+
+        if (this.type == 12)
+          this.input.val(hour + ':' + minute + ' ' + ampm);
+        else
+          this.input.val(hour + ':' + minute);
+      }
+      , uphour: function () {
+        if (this.hour + 1 > this.type)
+          this.hour = 0;
+        else
+          this.hour = this.hour + 1;
+
+        this.print();
+      }
+      , downhour: function () {
+        if (this.hour - 1 < 0)
+          this.hour = this.type;
+        else
+          this.hour = this.hour - 1;
+
+        this.print();
+      }
+      , downminute: function () {
+        if (this.minute == 0)
+        {
+          this.minute = 30;
+          this.downhour();
+        }
+        else
+          this.minute = 0;
+
+        this.print();
+      }
+      , upminute: function () {
+        if (this.minute == 30)
+        {
+          this.minute = 0;
+          this.uphour();
+        }
+        else
+          this.minute = 30;
+
+        this.print();
+      }
+      , toggleampm: function () {
+        if (this.ampm == 0) this.ampm = 1;
+        else this.ampm = 0;
+        this.print();
+      }
+    };
+    Timepicker.start();
+  });
+
+  </script>
+<%= render 'layouts/footer' %>
+    <!--MODALS-->
+    <%= render 'shared/login_modal' %>
+    <%= render 'shared/signup_modal' %>
+</body>
+
+</html>

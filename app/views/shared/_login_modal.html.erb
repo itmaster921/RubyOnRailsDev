@@ -1,0 +1,31 @@
+<div class="modal modal_dark fade modal_center" id="login-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal__container">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="modal__close"></i></span></button>
+            <div class="modal__header modal__header_login">
+                <div class="modal__logo"></div>
+            </div>
+            <div class="modal__content">
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => { :id => "form" })  do |f| %>
+                    <fieldset class="form-group">
+                        <%= f.email_field :email, autofocus: true, :class => "form-control", :placeholder => true %>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <div class="form-group__append">
+                            <%= f.password_field :password, autocomplete: "off", :class => "form-control", :placeholder => true %>
+                            <span class="form-forgot"><%= link_to t('.forgot_password'), new_user_password_path  %></span>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group form-group_btns">
+                        <div class="btn-choose btn-choose_horizontal btn-choose_dark">
+                        <%= link_to user_omniauth_authorize_path(:facebook), class: "btn btn-primary-outline btn_lg js-save-selected-bookings", id:"fb-login" do %><span class="icon-fb_white"></span>&nbsp;<%= t('.login_fb') %><% end %><div class="btn-choose__or"><%= t('.or') %></div><button class="btn btn-primary btn_sm js-save-selected-bookings"><%= t('.login') %></button>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <div class="modal__small"><%= t('.signup_message')%> <%= link_to t('.signup'), new_user_registration_path %></div>
+                    </fieldset>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>

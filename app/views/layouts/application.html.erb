@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+    <% if admin_signed_in? %>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>mywebsite</title>
+
+        <!-- Main css styles -->
+        <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+
+        <!-- Main javascript files -->
+        <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+        <%= javascript_tag do %> I18n.defaultLocale = "<%= I18n.default_locale %>"; I18n.locale = "<%= I18n.locale %>"; <% end %>
+        <%= csrf_meta_tags %>
+
+        <%= favicon_link_tag 'favicon.ico' %>
+
+    </head>
+    <%= render 'shared/mixpanel_partial' %>
+    <%= render 'shared/message' %>
+    <body class="pace-done fixed-sidebar">
+        <!-- Wrapper-->
+        <div id="wrapper">
+            <!-- Navigation -->
+            <%= render 'layouts/navigation' %>
+            <!-- Page wraper -->
+            <div id="page-wrapper" class="gray-bg">
+                <!-- Page wrapper -->
+                <%= render 'layouts/topnavbar' %>
+                <!-- Main view  -->
+                <%= yield %>
+                <!-- Footer -->
+            </div>
+            <!-- End page wrapper-->
+        </div>
+        <!-- End wrapper-->
+    <% else %>
+        <!-- Main view  -->
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>mywebsite</title>
+
+            <!-- Main css styles -->
+            <%= stylesheet_link_tag 'user', media: 'all', 'data-turbolinks-track' => true %>
+
+            <!-- Main javascript files -->
+            <%= javascript_include_tag 'product', 'data-turbolinks-track' => true %>
+            <%= javascript_tag do %> I18n.defaultLocale = "<%= I18n.default_locale %>"; I18n.locale = "<%= I18n.locale %>"; <% end %>
+            <%= csrf_meta_tags %>
+            <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,700italic,900' rel='stylesheet' type='text/css'>
+            <%= favicon_link_tag 'favicon.ico' %>
+            <script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+              ga('create', 'UA-77555777-2', 'auto');
+              ga('send', 'pageview');
+
+            </script>
+
+            <% if current_user.present? %>
+              <script>
+                window.userLoggedIn = true;
+                window.currentUserEmail = "<%= current_user.email %>";
+              </script>
+            <% end %>
+
+        </head>
+        <%= render 'shared/mixpanel_partial' %>
+        <%= render 'shared/message' %>
+        <%= yield %>
+        <% end %>
+
+    </body>
+</html>

@@ -1,0 +1,23 @@
+<div class="modal fade admin-modal" id="add-admin" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>
+          <%= t('.header') %>
+        </h3>
+      </div>
+      <div class="modal-body">
+        <%= form_for [company, company.admins.new], remote: true, authenticity_token: true  do |f| %>
+          <%= render partial: "admins/form", locals: {f: f} %>
+        </div>
+      <div class="modal-footer">
+        <div class="actions text-center">
+          <button class='btn btn-primary ladda-button' data-style='expand-right' type='submit'>
+            <%= t('.button') %>
+          </button>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>

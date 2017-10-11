@@ -1,0 +1,154 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+            <input type="text" class="form-control input-sm m-b-xs" id="filter"
+                    placeholder="<%= t('.search_placeholder')%>">
+
+                <table class="footable table table-stripped toggle-arrow-tiny js-draft-invoices-table" data-page-size="8" data-filter=#filter>
+                    <thead>
+                    <tr>
+                      <th data-toggle="true"><%= t('.table_head_name')%></th>
+                      <th><%= t('.table_head_email')%></th>
+                      <th><%= t('.table_head_total')%></th>
+                      <th data-hide="all"></th>
+                      <th><%= t('.table_head_pdf')%></th>
+                      <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% @invoices.each do |invoice| %>
+                      <% user = invoice.user %>
+                        <tr data-id="<%= invoice.id%>">
+                          <td><%= user.try(:full_name) %></td>
+                          <td><%= user.try(:email) %></td>
+                          <td><%= number_to_currency(invoice.total) %></td>
+                          <td class='hidden'>
+                            <table class="table">
+                              <tr>
+                                <th><%= t('.invoice.table_head_date') %></th>
+                                <th><%= t('.invoice.table_head_start_time') %></th>
+                                <th><%= t('.invoice.table_head_end_time') %></th>
+                                <th><%= t('.invoice.table_head_court') %></th>
+                                <th><%= t('.invoice.table_head_price') %></th>
+                                <th><%= t('.invoice.table_head_action') %></th>
+                              </tr>
+                              <% invoice.invoice_components.sort_by(&:start_time).each do |ic| %>
+                                <tr id="invoice_component_<%=ic.id%>">
+                                  <td><%= ic.start_time.try(:strftime, '%d %B %Y') %></td>
+                                  <td><%= TimeSanitizer.output(ic.start_time).try(:strftime, '%H:%M') %></td>
+                                  <td><%= TimeSanitizer.output(ic.end_time).try(:strftime, '%H:%M') %></td>
+                                  <td><%= ic.court_name %></td>
+                                  <td><%= number_to_currency(ic.price) %></td>
+                                  <td><%= link_to t('.delete_link'), invoice_invoice_component_path(invoice, ic),
+                                    data: {remote: true, method: :delete, confirm: t('.delete_confirm') }
+                                  %></td>
+                                </tr>
+                              <% end %>
+                              <% if invoice.custom_invoice_components.any? %>
+                                <tr>
+                                  <th colspan="3"><%= t('.invoice.table_head_custom_name') %></th>
+                                  <th><%= t('.invoice.table_head_vat') %></th>
+                                  <th><%= t('.invoice.table_head_price') %></th>
+                                  <th><%= t('.invoice.table_head_action') %></th>
+                                </tr>
+                              <% end %>
+                              <% invoice.custom_invoice_components.sort_by(&:created_at).each do |cic| %>
+                                <tr id="custom_invoice_component_<%=cic.id%>">
+                                  <td colspan="3"><%= cic.name %></td>
+                                  <td><%= cic.vat_to_s %></td>
+                                  <td><%= number_to_currency(cic.price) %></td>
+                                  <td><%= link_to t('.delete_link'), invoice_custom_invoice_component_path(invoice, cic),
+                                    data: {remote: true, method: :delete, confirm: t('.delete_confirm') }
+                                  %></td>
+                                </tr>
+                              <% end %>
+                              <tr>
+                                <td colspan="6">
+                                  <div id='add-custom-invoice-component' class='btn btn-default btn-sm' data-url='<%= invoice_custom_invoice_components_path(invoice)%>'>
+                                    <%= t('.add_custom') %>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td colspan="3"></td>
+                                <td><strong><%= t(".total")%></strong></td>
+                                <td colspan="2">
+                                  <strong id="invoice_<%= invoice.id %>_total"><%= invoice.total %></strong>
+                                  <input type="hidden"/><!--needed for footable to not create duplicated rows-->
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td><%= link_to t('.pdf_link'), company_invoice_path(@company, invoice, format: :pdf) %></td>
+                          <td><input type="checkbox" name="invoice_ids" value="<%= invoice.id %>"></td>
+                        </tr>
+                    <% end %>
+
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="3">
+                            <ul class="pagination"></ul>
+                        </td>
+                        <td colspan="3">
+                          <div class="pull-right">
+                            <%= link_to t('.delete_selected_link'), destroy_all_company_invoices_path(@company),
+                              class: 'disabled js-invoices-multiple-action btn btn-danger',
+                              data: {
+                                confirm: t('.delete_selected_confirm'),
+                                method: :post,
+                                url: destroy_all_company_invoices_path(@company)
+                              }
+                            %>
+                            <%= link_to t('.send_link'), send_all_company_invoices_path(@company),
+                              class: 'disabled js-invoices-multiple-action btn btn-success',
+                              data: {
+                                confirm: t('.send_confirm'),
+                                method: :post,
+                                url: send_all_company_invoices_path(@company)
+                              }
+                            %>
+                          </div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='custom-invoice-component-form-container' class='hidden'>
+  <%= render 'custom_invoice_component_form' %>
+</div>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+    $('.footable').footable();
+
+    // multiple invoices action logic
+    var $multipleButtons = $('.js-invoices-multiple-action');
+    $('input[name=invoice_ids]').on('change', function() {
+      var $selected = $('input[name=invoice_ids]:checked');
+      var selectedIds = $selected.map(function() {
+        return $(this).val();
+      }).toArray();
+      if (selectedIds.length === 0) {
+        $multipleButtons.addClass('disabled');
+        $multipleButtons.each(function() {
+          $(this).attr('href', '#');
+        });
+      } else {
+        $multipleButtons.removeClass('disabled');
+        $multipleButtons.each(function() {
+          var url = $(this).data('url') + '?' + selectedIds.map(function(id) {
+            return 'selected_ids[]=' + id;
+          }).join('&');
+          $(this).attr('href', url);
+        });
+      }
+    });
+});
+</script>

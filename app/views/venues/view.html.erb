@@ -1,0 +1,89 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2><%= t('.header') %></h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#"><%= @venue.company.company_legal_name %></a>
+            </li>
+            <li>
+                <a><%= @venue.venue_name %></a>
+            </li>
+            <li class="active">
+                <strong><%= t('.resv') %></strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+
+<div class="wrapper wrapper-content">
+  <div class="row animated fadeInDown">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <div class='row'>
+            <div class='col-xs-12 col-md-6'>
+              <h5><%= t('.header') %></h5>
+            </div>
+            <div class='col-xs-12 col-md-6'>
+              <div class='pull-right'><%= react_component('ReservationsCartContainer') %></div>
+            </div>
+          </div>
+        </div>
+        <div class="ibox-content">
+          <div class='row'>
+          <div class='col-md-6'>
+            <div class="form-group">
+              <div class="input-group date" data-provide='datepicker'>
+                <input type="text"
+                       class="form-control"
+                       data-date-format="dd/mm/yyyy"
+                       value="<%= Date.today.strftime('%d/%m/%Y') %>"
+                       onchange='updateCalendar(this);'/>
+                       <span class="input-group-addon">
+                         <span class="fa fa-calendar"></span>
+                       </span>
+              </div>
+            </div>
+          </div>
+          <div class='col-md-3'>
+            <div class="form-group">
+              <select class='form-control' id='sport-select'>
+                <% @venue.supported_and_custom_sports.each do |sport| %>
+                  <option value='<%= sport %>'><%= sport.titleize %></option>
+                <% end %>
+              </select>
+            </div>
+          </div>
+          <div class='col-md-3'>
+            <div class="form-group">
+              <select class='form-control' id='surface-select'>
+              <option value="all">All</option>
+                <% @venue.supported_surfaces.each do |surface| %>
+                  <option value='<%= surface %>'><%= surface.titleize %></option>
+                <% end %>
+              </select>
+            </div>
+          </div>
+          </div>
+          <div id="calendar" data-venue-id="<%= @venue.id %>">
+          </div>
+          <br/>
+          <div id='legend'>
+            <% @venue.custom_colors.each do |type, color| %>
+              <% if color.present? %>
+                <div>
+                  <div class='legend-block' style='background-color: <%= color %>;'></div>
+                  <label class='help-block m-b-none'><%= t("venues.edit.custom_colors_names.#{type}") %></label>
+                </div>
+                <br/>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'reservations/modal' %>

@@ -1,0 +1,286 @@
+<% if current_user.present? %>
+  <input type="hidden" value="<%= current_user.id %>" id="userId" />
+<% end %>
+<%= render 'shared/newnav' %>
+  <main class="b-page">
+    <section class="page-section">
+        <div class="venue-grid">
+          <div class="venue-grid__search">
+            <form class="search-venue search-venue_results" role="search">
+              <div class="search-venue__block">
+                <select class="select2_sport form-control">
+                  <option value="tennis"><%= t('.sport')%></option>
+                </select>
+                <div class="search-venue__line"></div>
+              </div>
+              <div class="search-venue__block">
+                <select class="select2_duration form-control" id="searchDuration">
+                  <option value="60"><%= t('.duration')%></option>
+                </select>
+                <div class="search-venue__line"></div>
+              </div>
+              <div class="search-venue__block">
+                <div class="input-group">
+                  <input type="text" class="search-venue__input js-datepicker form-control" id="searchDate" value="<% if params["date"].present? %><%= params["date"] %><% else %><%= Time.zone.now.strftime("%d/%m/%Y") %><% end %>" placeholder="datapicker" />
+                  <span class="input-group-addon"><span class="icon-calender"></span></span>
+                </div>
+                <div class="search-venue__line"></div>
+              </div>
+              <div class="search-venue__block">
+                <div class="input-group dropdown js-tmpckr">
+                  <input type="text" class="search-venue__input dropdown-toggle js-timepicker form-control" id="searchTime" autocomplete="off" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="<% if params["time"].present? %><%= params["time"] %><% else %><%= (Time.zone.now + 1.hour).beginning_of_hour.strftime('%H:%M') %><% end %>" />
+                  <span class="input-group-addon" data-toggle="dropdown"><span class="icon-clock"></span></span>
+
+                  <div class="timepicker-dropdown dropdown-menu" aria-labelledby="timepicker">
+                    <div class="timepicker-dropdown__container">
+                      <div class="timepicker-dropdown__time">
+                        <div class="timepicker-dropdown__hours">
+                          <div class="timepicker-dropdown__arr_up js-uphour"></div>
+                          <div class="timepicker-dropdown__hour js-hour"><% if params["time"].present? %><%= params["time"].split(":").first %><% else %><%= (Time.zone.now + 1.hour).beginning_of_hour.strftime('%H') %><% end %></div>
+                          <div class="timepicker-dropdown__arr_down js-downhour"></div>
+                        </div>
+                        <div class="timepicker-dropdown__sep">:</div>
+                        <div class="timepicker-dropdown__minutes">
+                          <div class="timepicker-dropdown__arr_up js-upminute"></div>
+                          <div class="timepicker-dropdown__minute js-minute"><% if params["time"].present? %><%= params["time"].split(":").second %><% else %><%= (Time.zone.now + 1.hour).beginning_of_hour.strftime('%M') %><% end %></div>
+                          <div class="timepicker-dropdown__arr_down js-downminute"></div>
+                        </div>
+                      </div>
+                      <div class="timepicker-dropdown__ampm"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="search-venue__block">
+                <button class="btn" type="submit" id="searchAvailableVenuesBtn"><%= t('pages.search_form.find_venue')%></button>
+              </div>
+          </form>
+          <input type="hidden" id="reservationDuration" value="<%= @duration %>" />
+            <div class="venue-grid__search-btns">
+              <button class="btn-change-view icon__view_map"></button>
+              <button class="btn-change-view icon__view_grid active"></button>
+            </div>
+          </div>
+
+          <% if @available_times > 0 %>
+          <div class="grid-columns-3" >
+          <!-- VENUE REPETITION FROM HERE -->
+            <% @available.each do |venue| %>
+            <% @name = venue[:name] %>
+            <input type="hidden" value="<%= venue[:id] %>" id="venueId"/>
+            <div class="venue-wrap venue_details">
+              <div class="venue ">
+                <img class="venue-img" src="<%= venue[:photos][0].image.url() %>" alt="Venue image">
+                <div class="venue-overlay">
+                  <h4 class="venue-title">Info</h4>
+                  <div>
+                    <div class="venue-attr">
+                      <div class="venue-attr_img icon-map-xs"></div>
+                      <div class="venue-attr_text"><%= Venue.find(venue[:id]).street %>,
+                        <br><%= Venue.find(venue[:id]).zip %> <%= Venue.find(venue[:id]).city %></div>
+                    </div>
+                    <div class="venue-attr">
+                      <div class="venue-attr_img icon-phone"></div>
+                      <a class="venue-attr_text" href=""><%= Venue.find(venue[:id]).phone_number %></a>
+                    </div>
+                    <div class="venue-attr">
+                      <div class="venue-attr_img icon-site"></div>
+                      <a class="venue-attr_text" href=""><%= Venue.find(venue[:id]).website %></a>
+                    </div>
+                  </div>
+                  <a href="<%= venue_path(Venue.find(venue[:id])) %>" class="venue-btn"></a>
+
+                </div>
+                <div class="venue-footer">
+                  <div class="venue-footer-cont">
+                    <div class="venue-name"><%= venue[:name] %></div>
+<<<<<<< HEAD
+=======
+                  <span class="active"></span>
+                    <span class="active"></span>
+                    <span class="active"></span>
+                    <span class="active"></span>
+                    <span></span>
+                    <span class="venue-reviews"><%= t('.book_venue_messsage')%></span>
+>>>>>>> iamthemorron-tranlations
+                  </div>
+                  <div class="venue-price">
+                    <span class="venue-price_currency">€</span>
+                    <span class="venue-price_val"><%= venue[:reservations].first.second["lowest_price"] if venue[:reservations].first.present? && venue[:reservations].first.second["lowest_price"].present?  %></span>
+                    <span class="venue-price_plus">+</span>
+                  </div>
+                </div>
+              </div>
+              <div class="venue__times">
+                <!-- VENUE TIMES -->
+                <% venue[:reservations].each do |key, value| %>
+                     <% if value['available'] %>
+                       <% time = DateTime.parse(key).strftime("%H:%M") %>
+                       <%= link_to "#booking-modal", "data-toggle" => "modal", :id => 'searchAvailableMultiBtn',
+                         data: { venue: venue[:id], time: time, venue_name: venue[:name] } do  %>
+                       <button class="venue__time">
+                         <span class="venue__time-clock"><%= time %></span>
+                       </button>
+                       <% end %>
+                     <% end %>
+                <% end %>
+                <!-- VENUE TIMES END -->
+              </div>
+            </div>
+            <% end %>
+            <!-- VENUE REPETITION ENDS -->
+          </div>
+          <% else %>
+            <% if params["date"].present? && params["time"].present? && params["duration"].present? %>
+<<<<<<< HEAD
+            <h4 class="col-sm-12">Sorry, but we found <%= @available_times %> Venues Available for <strong><%= params[:duration] %> minutes</strong> on <strong><%= params[:date]  %></strong> around <strong><%= @time.strftime("%H:%M") %></strong></h4>
+=======
+            <h4 class="col-sm-12"><%= t('.not_available_with_params_html', count: @available_times, duration: params[:duration], date: params[:date], time: @time.strftime("%H:%M") )%></h4>
+>>>>>>> iamthemorron-tranlations
+            <% else %>
+            <h4 class="col-sm-12"><%= t('.not_available', count: @available_times) %></strong></h4>
+            <% end %>
+          <% end %>
+        </div>
+    </section>
+
+  </main>
+<%= render 'layouts/footer' %>
+<%= render 'shared/booking_success_modal' %>
+<%= render 'shared/booking_modal' %>
+<%= render 'shared/not_logged_modal' %>
+<% if current_user %>
+  <%= render 'shared/payment_modal' %>
+<% end %>
+<script>
+  $(document).ready(function () {
+    Init.main();
+  });
+</script>
+<script>
+$(document).ready(function() {
+  var Timepicker = {
+    type: 23
+    , ampm: 0
+    , hour: 0
+    , minute: 0
+    , fieldhour: $('.js-hour')
+    , fieldminute: $('.js-minute')
+    , fieldampm: $('.js-ampm')
+    , input: $('.js-timepicker')
+    , start: function () {
+
+      $('.js-uphour').on('click', function () {
+        Timepicker.uphour()
+      });
+      $('.js-downhour').on('click', function () {
+        Timepicker.downhour()
+      });
+      $('.js-downminute').on('click', function () {
+        Timepicker.downminute()
+      });
+      $('.js-upminute').on('click', function () {
+        Timepicker.upminute()
+      });
+      $('.js-ampm').on('click', function () {
+        Timepicker.toggleampm()
+      });
+
+
+
+      $('.timepicker-dropdown').on('click', function () {
+        return false;
+      });
+
+      if(typeof (this.input.val()) != 'undefined')
+      {
+        var arr = this.input.val().split(':');
+        if(arr.length == 2){
+          this.hour = parseInt(arr[0]);
+          this.minute = parseInt(arr[1]);
+        }
+      }
+
+      this.print();
+    }
+    , print: function () {
+      var hour, minute, ampm;
+      if (this.hour < 10)
+        hour = '0' + this.hour;
+      else
+        hour = this.hour;
+
+      if (this.minute < 10)
+        minute = '0' + this.minute;
+      else
+        minute = this.minute;
+
+      if (this.ampm == 0) {
+        ampm = 'AM';
+        this.fieldampm.children('.timepicker-dropdown__am').addClass('selected');
+        this.fieldampm.children('.timepicker-dropdown__pm').removeClass('selected');
+      } else {
+        ampm = 'PM';
+        this.fieldampm.children('.timepicker-dropdown__am').removeClass('selected');
+        this.fieldampm.children('.timepicker-dropdown__pm').addClass('selected');
+      }
+
+
+      this.fieldhour.text(hour);
+      this.fieldminute.text(minute);
+
+      if (this.type == 12)
+        this.input.val(hour + ':' + minute + ' ' + ampm);
+      else
+        this.input.val(hour + ':' + minute);
+    }
+    , uphour: function () {
+      if (this.hour + 1 > this.type)
+        this.hour = 0;
+      else
+        this.hour = this.hour + 1;
+
+      this.print();
+    }
+    , downhour: function () {
+      if (this.hour - 1 < 0)
+        this.hour = this.type;
+      else
+        this.hour = this.hour - 1;
+
+      this.print();
+    }
+    , downminute: function () {
+      if (this.minute == 0)
+      {
+        this.minute = 30;
+        this.downhour();
+      }
+      else
+        this.minute = 0;
+
+      this.print();
+    }
+    , upminute: function () {
+      if (this.minute == 30)
+      {
+        this.minute = 0;
+        this.uphour();
+      }
+      else
+        this.minute = 30;
+
+      this.print();
+    }
+    , toggleampm: function () {
+      if (this.ampm == 0) this.ampm = 1;
+      else this.ampm = 0;
+      this.print();
+    }
+  };
+  Timepicker.start();
+});
+
+</script>
+<script src="https://checkout.stripe.com/checkout.js">
+</script>

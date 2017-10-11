@@ -1,0 +1,106 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+  <div class="sidebar-collapse">
+    <%= link_to can?(:read, Company) ? company_path(current_admin.company) : venue_view_path(current_admin.company.venues.first) do  %>
+      <img src="<%= image_url 'amperlogowhite.png' %>" width="80%" id="logo" alt="mywebsite">
+    <% end %>
+    <ul class="nav metismenu" id="side-menu">
+      <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold"><%= current_admin.first_name %> <%= current_admin.last_name %></strong><br><%= current_admin.company.company_legal_name %>
+                            </span> <span class="text-muted text-xs block"><%= t('.settings')%> <b class="caret"></b></span>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                    <li><%= link_to t('.edit_admin_link'), edit_admin_registration_path %></li>
+                    <li><%= link_to t('.logout_link'), destroy_admin_session_path, method: :delete  %></li>
+                    </ul>
+                </div>
+            </li>
+            <% if can?(:manage, Venue) || can?(:manage, Reservation) || can?(:manage, Membership)  %>
+              <% if current_admin.company.venues.where("id > ?", 0) %>
+                <% current_admin.company.venues.where("id > ?", 0).each do |venue| %>
+
+                  <li class="<%= 'active' if (is_active_controller('game_passes') && !is_active_action('new')) %>">
+                    <a href=""><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard"><%= venue.venue_name %></span> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse <%= is_active_controller('venues') %>">
+                      <% if can? :manage, Reservation %>
+                        <li class="<%= is_active_action('view') %>"><%= link_to t('.reservations_link'), venue_view_path(venue) %></li>
+                      <% end %>
+                      <% if can? :read, [Venue, Court, Price, DayOff] %>
+                        <li class="<%= is_active_action('courts_and_prices') %>"><%= link_to t('.manage_venue_link'), courts_and_prices_path(venue) %></li>
+                      <% end %>
+                      <li class="<%= 'active' if is_active_controller('game_passes') %>"><%= link_to venue_game_passes_path(venue) do %>
+                        <span class="nav-label"><%= t('.game_pass_link')%></span>
+                      <% end %>
+                      <% if can? :manage_discounts, Venue %>
+                        <li class="<%= is_active_action('discounts') %>">
+                          <%= link_to venue_manage_discounts_path(venue) do %>
+                            <span class="nav-label"><%= t('.discounts_link')%></span>
+                          <% end %>
+                        </li>
+                      <% end %>
+                      <% if can? :read, Membership %>
+                        <li class="<%= is_active_action('memberships') %>"><%= link_to t('.memberships_link'), memberships_path(venue) %></li>
+                      <% end %>
+                      <% if can? :update, Venue %>
+                        <li class="<%= is_active_action('edit_emails') %>"><%= link_to t('.edit_emails_link'), venue_edit_emails_path(venue) %></li>
+                      <% end %>
+                      <% if can? :update, Venue %>
+                        <li class="<%= is_active_action('edit') %>"><%= link_to t('.edit_venue_link'), edit_venue_path(venue) %></li>
+                      <% end %>
+
+                      <li class="<%= is_active_action('reports') %>"><%= link_to t('.venue_reports_link'), reports_venue_path(venue) %></li>
+                    </ul>
+                  </li>
+                <% end %>
+              <% end %>
+            <% end %>
+            <% if can? :customers, Company %>
+              <li class="<%= is_active_action('customers') %>">
+                <%= link_to company_customers_path(current_admin.company) do %>
+                  <i class="fa fa-users"></i> <span class="nav-label"><%= t('.customers_link')%></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if can? :invoices, Company %>
+              <li class="<%= is_active_controller('invoices') %>">
+                <%= link_to company_invoices_path(current_admin.company) do %>
+                  <i class="fa fa-file-text-o"></i> <span class="nav-label"><%= t('.invoices_link')%></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if can? :reports, Company %>
+              <li class="<%= is_active_controller('company') && is_active_action('reports') %>">
+                <%= link_to company_reports_path(current_admin.company) do %>
+                  <i class="fa fa-paste"></i> <span class="nav-label"><%= t('.reports_link')%></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if can? :manage, Admin %>
+              <li class="<%= is_active_controller('admin') %>">
+                <%= link_to company_admins_path(current_admin.company) do %>
+                  <i class="fa fa-paste"></i> <span class="nav-label"><%= t('.manage_admins_link')%></span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if can? :update, Company %>
+              <li class="<%= 'active' if is_active_controller('companies') && is_active_action('edit') %>">
+                <%= link_to edit_company_path(current_admin.company) do  %>
+                  <i class="fa fa-edit"></i><%= t('.edit_company_link')%>
+                <% end %>
+              </li>
+            <% end %>
+            <% if can? :create, Venue %>
+              <li class="<%= 'active' if is_active_controller('venues') && is_active_action('new') %>">
+                <%= link_to new_venue_path do  %>
+                  <i class="fa fa-plus"></i>
+                  <%= t('.add_venue_link')%>
+                <% end %>
+              </li>
+            <% end %>
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,112 @@
+<%= render 'shared/newnav' %>
+
+
+<main class="profile">
+  <div class="row">
+    <div class="col-xs-16 col-sm-12 col-sm-offset-2">
+<br>
+        <%= form_for @company do |c| %>
+        <div class="profile-edit">
+          <div class="profile-edit__title">
+            <div class="row">
+              <div class="col-xs-16 col-sm-8">
+                <h2>Create A New Company</h2>
+              </div>
+              <div class="col-xs-16 col-sm-8">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= c.text_field :company_legal_name, :class => 'form-control', :placeholder => true %>
+              </fieldset>
+            </div>
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= c.text_field :company_tax_id, :class => 'form-control', :placeholder => true %>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= c.select :company_business_type, [["Osakeyhtiö", "Osakeyhtiö"], ["Toiminimi","Toiminimi"], ["Avoin yhtiö / Kommandiittiyhtiö","Avoin yhtiö / Kommandiittiyhtiö"], ["Julkinen Osakeyhtiö","Julkinen Osakeyhtiö"], ["Rekisteröity yhdistys","Rekisteröity yhdistys"]], id: "company_business_type", prompt: "Select...", class: "form-control js-select2" %>
+              </fieldset>
+            </div>
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= c.select :company_country, [["Finland","Finland"], ["Sweden","Sweden"], ["USA","USA"]], id:"company_country" ,prompt: "Select...", class: "form-control js-select2" %>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= c.text_field :company_street_address, :class => 'form-control', :placeholder => true %>
+              </fieldset>
+            </div>
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= c.text_field :company_zip, :class => 'form-control', :placeholder => true %>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= c.text_field :company_city, :class => 'form-control', :placeholder => true %>
+              </fieldset>
+            </div>
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= c.text_field :company_website, :class => 'form-control', :placeholder => true %>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= c.text_field :company_iban, :class => 'form-control', :placeholder => true %>
+              </fieldset>
+            </div>
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+               <%= c.text_field :company_phone, :class => 'form-control', :placeholder => true %>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+               <input type="checkbox" name="tos" checked="false">
+                <%= t('.stripe_term_accept_html', link: 'https://stripe.com/us/terms') %>
+                </fieldset>
+            </div>
+          </div>
+
+
+        <div class="profile-edit__save">
+          <%= c.submit t('.create_button'), :class => "btn btn-lg btn-primary" %>
+        </div>
+        <% end %>
+    </div>
+  </div>
+</main>
+<br>
+
+
+<script>
+  $(document).ready(function () {
+    Init.profile();
+  });
+</script>
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<%= render 'layouts/footer' %>
+

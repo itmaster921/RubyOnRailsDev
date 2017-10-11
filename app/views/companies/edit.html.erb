@@ -1,0 +1,107 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content text-center p-md">
+
+                    <h2><span class="text-navy"><%= t('.header', name: @company.company_legal_name)%></span></h2>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 white-bg">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content p-md">
+                      <%= form_for @company do |c| %>
+                        <div class="row">
+                          <div class="col-md-6 ">
+                              <div class="form-group">
+                                <%= c.label :company_legal_name %>
+                                <%= c.text_field :company_legal_name, :class => 'form-control', :placeholder => true, autofocus: true %>
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                <%= c.label :company_tax_id %>
+                                <%= c.text_field :company_tax_id, :class => 'form-control', :placeholder => true, autofocus: true %>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 select">
+                            <div class="form-group">
+                              <%= c.label :company_business_type %>
+                              <%= c.select :company_business_type, t('.company_business_type'), id: "company_business_type", prompt: true, class: "form-control" %>
+                            </div>
+                          </div>
+                          <div class="col-md-6 select">
+                            <div class="form-group">
+                              <%= c.label :company_country %>
+                              <%= c.select :company_country, t('.company_country'), id:"company_country" ,prompt: true, class: "form-control" %>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                                <%= c.label :company_street_address %>
+                                <%= c.text_field :company_street_address, :class => 'form-control', :placeholder => true, autofocus: true %>
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                <%= c.label :company_zip %>
+                                <%= c.text_field :company_zip, :class => 'form-control', :placeholder => true, autofocus: true %>
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                <%= c.label :company_city %>
+                                <%= c.text_field :company_city, :class => 'form-control', :placeholder => true, autofocus: true %>
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                <%= c.label :company_website %>
+                                <%= c.text_field :company_website, :class => 'form-control', :placeholder => true, autofocus: true %>
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                <%= c.label :company_phone %>
+                                <%= c.text_field :company_phone, :class => 'form-control', :placeholder => true, autofocus: true %>
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                                <%= c.label :company_iban %>
+                                <%= c.text_field :company_iban, :class => 'form-control', :placeholder => true, autofocus: true %>
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="actions">
+                          <%= c.submit t('.button'), :class => "btn btn-primary" %>
+                        </div>
+
+                      <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

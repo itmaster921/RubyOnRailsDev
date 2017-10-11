@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2016-03-16 19:07:07
+  place_id:
+
+two:
+  date: 2016-03-16 19:07:07
+  place_id:

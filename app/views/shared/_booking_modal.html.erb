@@ -1,0 +1,63 @@
+<div class="modal fade modal_center modal-booking" id="booking-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-booking__container">
+    <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+      Close
+    </button>
+      <div class="modal-booking__header">
+        <!--          <div class="modal-booking__icon"></div>-->
+
+        <div class="modal-booking__icon venue-category">
+          <div class="dropdown">
+            <button class="venue-category__select" type="button" id="dropdown-cat-modal-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%= image_tag 'icons/select2/tennis.svg' %>
+
+            </button>
+            <% if @venue.present? && @venue.try(:supported_sports).size > 1 %>
+              <div class="dropdown-menu dropdown-menu-cats" aria-labelledby="dropdown-cat-modal-1">
+                <% @venue.supported_sports.each do |sport| %>
+                <% path = 'icons/select2/active/' + sport + '.svg' %>
+                <a class="dropdown-item " id='<%= sport %>'><%= image_tag path %></a>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-16 col-sm-9">
+            <div class="modal-booking__title"><%= @venue.try(:venue_name) %></div>
+          </div>
+          <div class="col-xs-16 col-sm-7">
+            <div class="modal-booking__when form-inline">
+            <span><%= t('.available_on')%></span><span class="form-group__append dropdown">
+              <input type="text" class="modal-booking__datapicker js-datepicker__booking" <%= params[:date].present? ? "val='#{params[:date]}'" : ''%>/>
+              <span class="form-group__appendix"><span class="icon-arrow-down-picker-booking"></span></span> </span>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="modal-booking__content js-accordion" id="available_times">
+        <!-- MODAL CONTENT GOES HERE -->
+      </div>
+      <div class="modal-booking__footer">
+        <div class="row">
+          <div class="col-xs-16 col-sm-12">
+            <div class="modal-booking__courts"></div>
+          </div>
+          <div class="col-xs-16 col-sm-4">
+            <% if current_user %>
+              <button class="btn btn-lg btn-primary" id="selectBookingsBtn" data-user-id="<%= current_user.id %>"><%= t('.book_button')%></button>
+            <% else %>
+              <button class="btn btn-lg btn-primary" id="showLoginModal"><%= t('.book_button')%></button>
+            <% end %>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+<div class="row">
+    <div class="col-lg-12">
+      <div class="tabs-container">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#tab-1"><%= t('.header') %></a></li>
+          <li><a data-toggle="tab" href="#tab-2"><%= t('.import') %></a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="tab-1" class="tab-pane active">
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                      <%= react_component('CustomersTable', { form_authenticity_token: form_authenticity_token }, {}) %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="tab-2" class="tab-pane">
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                      <%= form_tag import_customers_company_path(@company), remote: true do %>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <%= label_tag :csv_file, t('.venue'), class: 'control-label' %>
+                              <%= select '', :venue_id, @company.venues.map {|v| [ v.venue_name, v.id ] }, include_blank: false, class: 'form-control' %>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <%= label_tag :csv_file, t('.csv_file'), class: 'control-label' %>
+                              <input type="file" class="form-control" name="csv_file" class="file">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <br>
+                            <%= button_tag type: 'submit', class:"btn", data: { disable_with: t('.importing') } do %>
+                              <%= t('.upload_button') %>
+                            <% end %>
+                          </div>
+                        </div>
+                      <% end %>
+
+                      <hr/>
+                      <div class="row">
+                        <div class="col-lg-12" id='csv-import-report'>
+                        </div>
+                      </div>
+
+                      <hr/>
+                      <%= link_to t('.download_csv_template'), customers_csv_template_company_path(@company) %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+<script type="text/javascript">
+  $('#filter').on('keyup', function(e) {
+    if (e.keyCode == 13) {
+      ajax_turboclick_link('<%= company_customers_path(@company) %>' + '?search=' + $(this).val());
+    }
+  });
+</script>

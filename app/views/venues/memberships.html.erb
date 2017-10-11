@@ -1,0 +1,80 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2><%= t('.header')%></h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#"><%= @venue.company.company_legal_name %></a>
+            </li>
+            <li>
+                <a><%= @venue.venue_name %></a>
+            </li>
+            <li class="active">
+                <strong><%= t('.header')%></strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<%= react_component('MembershipModal', {authenticityToken: form_authenticity_token,
+                                        courts: @venue.courts}, {}) %>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+   <div class="row m-t-lg">
+       <div class="col-lg-12">
+           <div class="tabs-container">
+               <ul class="nav nav-tabs">
+                   <li class="active"><a data-toggle="tab" href="#tab-1"><%= t('.membership', name: @venue.venue_name) %></a></li>
+                   <% if can? :manage, Membership %>
+                     <li class=""><a data-toggle="tab" href="#tab-2"><%= t('.create_membership')%></a></li>
+                     <li class=""><a data-toggle="tab" href="#tab-3"><%= t('.import_memberships')%></a></li>
+                   <% end %>
+               </ul>
+               <div class="tab-content">
+                   <div id="tab-1" class="tab-pane active">
+                     <%= render partial: 'venues/existing_memberships', locals: { venue: @venue }%>
+                   </div>
+                   <% if can? :manage, Membership %>
+                     <div id="tab-2" class="tab-pane">
+                       <%= render 'venues/memberships_new' %>
+                     </div>
+                     <div id="tab-3" class="tab-pane">
+                       <%= render 'venues/memberships_import' %>
+                     </div>
+                   <% end %>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+
+
+<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><%= t('.close_button')%></span></button>
+                <i class="fa fa-laptop modal-icon"></i>
+                <h4 class="modal-title"><%= t('.details_title')%></h4>
+                <small class="font-bold"><%= t('.details_text')%></small>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <%= t('.details_p_html') %>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal"><%= t('.close_button')%></button>
+                <button type="button" class="btn btn-primary"><%= t('.save_button')%></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+    $('.footable').footable();
+    $('.footable2').footable();
+});
+
+</script>

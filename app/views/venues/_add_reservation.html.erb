@@ -1,0 +1,141 @@
+<div class="modal inmodal" id="<%= timeid %>" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated fadeIn">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <%= form_tag venue_reservations_path(@venue) do |f| %>
+                <h4 class="modal-title"><%= t('.title')%></h4>
+                <small class="font-bold"><%= t('.description')%></small>
+            </div>
+            <div class="modal-body">
+              <div class="text-center">
+                  <br />
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                    <label><%= t('.select_user_label')%></label> OR CREATE NEW? -> remove this and add name + email for new user.
+                    <select class="select2_demo_2 form-control" id="e4" data-venue-id="<%= @venue.id %>" name="reservation[user_id]">
+                    </div>
+                </div>
+              </div>
+
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="form-group">
+                      <label ><%= t('.select_court_label')%></label>
+                      <select class="select2_demo_2 form-control" id="selectcourt" data-venue-id="<%= @venue.id %>" name="reservation[court_id]">
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="form-group">
+                          <label for=""><%= t('.select_start_time_label')%></label><br>
+                          <div class="input-group clockpicker" data-autoclose="true">
+                              <input type="text" class="form-control" id="endTime" data-date-format="dd/mm/yyyy" value="<%= Time.now.strftime("%d/%m/%Y") %>" name="reservation[start_time]">
+                              <span class="input-group-addon">
+                                  <span class="fa fa-clock-o"></span>
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="form-group">
+                      <label for="searchDate"><%= t('.select_date_label')%></label>
+                          <div class="input-group date" data-provide="datepicker">
+                              <input type="text" class="form-control" id="searchDate" data-date-format="dd/mm/yyyy" value="<%= Time.now.strftime("%d/%m/%Y") %>" name="reservation[date]">
+                              <div class="input-group-addon">
+                                  <span class="fa fa-calendar"></span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="form-group">
+                          <label for="e3"><%= t('.select_duration_label')%></label>
+                          <select class="select2_demo_2 form-control" id="e3" name="reservation[end_time]">
+                              <option value="60"><%= t('.60minutes')%></option>
+                              <option value="90"><%= t('.90minutes')%></option>
+                              <option value="120"><%= t('.120minutes')%></option>
+                          </select>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="form-group has-feedback">
+                          <label class="control-label"><%= t('.price_label')%></label>
+                          <input type="text" class="form-control" placeholder="<%= t('.price_placeholder')%>" />
+                          <i class="fa fa-eur form-control-feedback"></i>
+                      </div>
+                  </div>
+              </div>
+            <div class="actions text-center">
+            <button class="btn"></button>
+            </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $('.clockpicker').clockpicker({
+              placement: 'bottom',
+              autoclose: true});
+
+    $('.date').datepicker({
+      orientation: "bottom auto",
+      calendarWeeks: true,
+      autoclose: true,
+      todayHighlight: true
+
+    });
+</script>
+
+<script type="text/javascript">
+      $(document).ready(function() {
+        var $courts = $('#selectcourt');
+
+        $("#e3").select2();
+
+        jQuery.getJSON('/venues/' + $courts.attr('data-venue-id') + '/map_users.json').done(
+            function( data ) {
+
+                data = $.map(data, function(item) {
+                    return { id: item.id, text: item.name };
+                });
+
+                jQuery('#e4').select2({
+                    placeholder: 'Select User',
+                    allowClear: true,
+                    minimumInputLength: 0,
+                    multiple: true,
+                    data: data
+                });
+
+            }
+        );
+
+        jQuery.getJSON('/venues/' + $courts.attr('data-venue-id') + '/courts.json').done(
+            function( data ) {
+
+                data = $.map(data, function(item) {
+                    return { id: item.id, text: item.title_with_sport };
+                });
+
+                jQuery('#selectcourt').select2({
+                    placeholder: 'Select Courts',
+                    allowClear: true,
+                    minimumInputLength: 0,
+                    data: data
+                });
+            }
+        );
+    });
+</script>

@@ -1,0 +1,1 @@
+<p>Valitettavasti varauksenne <%= @reservation.start_time.strftime("%D") %> paikassa <%= @reservation.court.venue.venue_name %> on peruttu urheilukeskuksen puolesta. Maksetuista varauksista on maksut palautettu. Voitte olla yhteydessä urheilukeskukseen puhelinnumerosta <%= @reservation.court.venue.phone_number %></p>

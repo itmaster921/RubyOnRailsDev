@@ -1,0 +1,46 @@
+<%= form_for :custom_invoice_component, url: '', method: :post, remote: true, html: { 'data-type': 'json' } do |f| %>
+  <div class='row'>
+    <div class='col-sm-6'>
+      <div className="form-group">
+        <%= t('.name') %>
+      </div>
+    </div>
+    <div class='col-sm-3'>
+      <div className="form-group">
+        <%= t('.price') %>
+      </div>
+    </div>
+    <div class='col-sm-3'>
+      <div className="form-group">
+        <%= t('.vat') %>
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-sm-6'>
+      <div className="form-group">
+        <%= f.text_field :name, class: 'form-control', required: true %>
+      </div>
+    </div>
+    <div class='col-sm-3'>
+      <div className="form-group">
+        <%= f.text_field :price, class: 'form-control', required: true, data: { 'rule-number': true } %>
+      </div>
+    </div>
+    <div class='col-sm-3'>
+      <div className="form-group">
+        <%= f.select :vat_decimal, CustomInvoiceComponent::DEFAULT_VAT_DECIMALS.map { |vat| [ "#{vat*100}%", vat] }, { prompt: t('.select') }, class: 'form-control', required: true %>
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <br/>
+    <div class='col-sm-12 text-right'>
+      <div class='cancel-btn-JS btn btn-default btn-sm'><%= t('.cancel') %></div>
+
+      <%= button_tag type: 'submit', class: "submit-btn-JS btn btn-primary btn-sm" do %>
+        <%= t('.create') %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

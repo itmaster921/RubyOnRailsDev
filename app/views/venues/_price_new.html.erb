@@ -1,0 +1,141 @@
+<div class="modal fade" id="add-price" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>
+          <%= t('.header') %>
+        </h3>
+      </div>
+      <div class="modal-body">
+        <%= form_tag venue_prices_path(@venue), remote: true, id: "new_price_form" do |f| %>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label><%= t('.start_time_label')%></label>
+                <div class="input-group clockpicker" data-autoclose="true">
+                  <input type="text" class="form-control" id="startTime" name="price[start_time]">
+                  <span class="input-group-addon">
+                    <span class="fa fa-clock-o"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label ><%= t('.end_time_label')%></label>
+                <div class="input-group clockpicker" data-autoclose="true">
+                  <input type="text" class="form-control" id="endTime" name="price[end_time]">
+                  <span class="input-group-addon">
+                    <span class="fa fa-clock-o"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="e1"><%= t('.select_court_label')%></label><br>
+                <select class="select2_demo_2 form-control" id="e1" style="width:100%"multiple="multiple" data-venue-id="<%= @venue.id %>" name="court_ids[]">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <input type="checkbox" id="checkbox"> <%= t('.select_all_courts')%>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group has-feedback">
+                <label class="control-label"><%= t('.price')%></label>
+                <input type="text" class="form-control" placeholder="<%= t('.price')%>"  name="price[price]"/>
+                <i class="fa fa-eur form-control-feedback"></i>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label ><%= t('.choose_dates')%></label>
+                <span class="fa fa-eur"></span>
+              </div>
+            </div>
+          </div>
+          <div id="list">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="monday"> <%= t('date.day_names')[1] %> </label>
+                <input type="checkbox" id="monday" value="1" name="price[monday]" class="weekdays">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="tuesday"> <%= t('date.day_names')[2] %> </label>
+                <input type="checkbox" id="tuesday" value="1" name="price[tuesday]" class="weekdays">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="wednesday"> <%= t('date.day_names')[3] %> </label>
+                <input type="checkbox" id="wednesday" value="1" name="price[wednesday]" class="weekdays">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="thursday"> <%= t('date.day_names')[4] %> </label>
+                <input type="checkbox" id="thursday" value="1" name="price[thursday]" class="weekdays">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="friday"> <%= t('date.day_names')[5] %> </label>
+                <input type="checkbox" id="friday" value="1" name="price[friday]" class="weekdays">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="saturday"> <%= t('date.day_names')[6] %> </label>
+                <input type="checkbox" id="saturday" value="1" name="price[saturday]" class="weekend">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="sunday"> <%= t('date.day_names')[0] %> </label>
+                <input type="checkbox" id="sunday" value="1" name="price[sunday]" class="weekend">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="sunday"> <%= t('.weekdays') %> </label>
+                <input type="checkbox" id="weekdays" value="1" name="weekdays">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="sunday"> <%= t('.weekend') %> </label>
+                <input type="checkbox" id="weekend" value="1" name="weekend">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="sunday"> <%= t('.all_days') %> </label>
+                <input type="checkbox" id="all" value="1" name="all">
+              </div>
+            </div>
+          </div>
+          <br/>
+      </div>
+      <div class="actions text-center">
+        <button class="btn btn-primary"><%= t('.create_button') %></button>
+      </div>
+    <% end %>
+    <div class='modal-footer'>
+    </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="full-height-scroll">
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+        <th>
+          <%= t('.table_head_name')%>
+        </th>
+        <th>
+          <%= t('.table_head_value')%>
+        </th>
+        <th>
+          <%= t('.table_head_method')%>
+        </th>
+      </thead>
+      <tbody id='discounts'>
+        <% venue.discounts.each do |discount| %>
+          <%= render partial: 'discounts/show', locals: { venue: venue, discount: discount } %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

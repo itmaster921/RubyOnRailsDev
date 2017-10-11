@@ -1,0 +1,18 @@
+<div class="modal modal_light fade modal_center modal_booking-successful" id="booking-successful-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal__container">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="modal__close"></i></span></button>
+            <div class="modal__header modal__header_withicon">
+                <div class="icon-check"></div>
+                <div class="modal__title"><%= t('.title') %></div>
+            </div>
+            <div class="modal__bubble"></div>
+            <div class="modal__content">
+                <p class="modal__text"><%= t('.text')%></p>
+                <div class="btn-choose btn-choose_horizontal btn-choose_dark">
+                  <%= link_to root_path do%><button class="btn btn-success"><%= t('.make_another')%></button><% end %><div class="btn-choose__or"><%= t('support.or')%></div><%= link_to t('.view_booking'), user_path(current_user), class: "btn btn-primary" if current_user %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<input type="hidden" value="<%= @company.id %>" id="company-info">
+
+<% if !@company.managed? %>
+<div class="row">
+    <%= form_tag stripe_managed_path, method: 'POST' do %>
+        Stripe Managed Account test
+        <input type="checkbox" name="tos" checked"false">
+        I accept the <a href="https://stripe.com/us/terms"> Stripe Terms of Service</a>
+      <input type="submit" value="Create">
+    <% end %>
+</div>
+<% end %>
+
+<%= react_component('DashboardPage', {venue_ids: @company.venues.map(&:id),
+                                     company_id: @company.id,
+                                     locale: I18n.locale.to_s,
+                                     form_authenticity_token: form_authenticity_token,
+                                     }, {}) %>

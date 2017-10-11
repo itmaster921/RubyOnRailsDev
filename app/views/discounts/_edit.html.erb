@@ -1,0 +1,23 @@
+<div class="modal fade" id="edit-discount" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>
+          <%= t('.header')%>
+        </h3>
+      </div>
+      <%= form_for [venue, discount], remote: true, authenticity_token: true  do |d| %>
+        <div class="modal-body">
+          <%= render partial: "discounts/form", locals: {discount: d} %>
+        </div>
+        <div class="modal-footer">
+          <div class="actions text-center">
+            <button class='btn btn-primary ladda-button' data-style='expand-right' type='submit' onclick='$("#edit-discount").submit();'>
+              <%= t('.submit_button')%>
+            </button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

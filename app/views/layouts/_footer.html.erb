@@ -1,0 +1,63 @@
+  <footer class="b-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-sm-1 col-xs-offset-0 col-sm-offset-2">
+          <i class="icon-logo_grey"></i>
+        </div>
+        <div class="col-xs-9 col-sm-4 col-xs-offset-1">
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="https://mywebsite.zendesk.com/hc/fi"><%= t('.help') %></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/termsofuse"><%= t('.terms') %></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/privacypolicy"><%= t('.privacy') %></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-16 col-sm-14 col-sm-offset-1 col-md-offset-2 col-md-12">
+          <hr>
+          <div class="row">
+            <div class="col-xs-8 col-sm-8">
+
+            <div class="b-footer-social">
+              <%= t('.follow') %>
+              <a class="b-footer-social-btn_fb" href="https://www.facebook.com/mywebsiteapp"></a>
+              <a class="b-footer-social-btn_tw" href="https://twitter.com/mywebsiteapp"></a>
+            </div>
+            </div>
+            <div class="col-xs-8 col-sm-8">
+              <div class="b-footer-lang">
+                <div class="dropdown dropup">
+                    <button class="b-footer-lang__link" id="js-dropdown-menu-lang" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <% if I18n.locale == :fi %>
+                      <%= image_tag 'flags/finn.png' %>
+                    <% elsif I18n.locale == :en %>
+                      <%= image_tag 'flags/us.png' %>
+                    <% else %>
+                      <%= image_tag 'flags/finn.png' %>
+                    <% end %>
+
+                      <span><%= I18n.locale == :fi ? 'Suomi' : 'English' %></span>
+                    </button>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="js-dropdown-menu-lang" role="menu">
+										<a class="dropdown-item" href="<%= @en_url %>">
+											<%= image_tag 'flags/us.png' %> English
+										</a>
+                    <a class="dropdown-item" href="<%= @fi_url %>">
+											<%= image_tag 'flags/finn.png' %> Suomi
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>

@@ -1,0 +1,53 @@
+
+<body>
+<%= render 'shared/devisemes' %>
+
+    <main class="login-page">
+        <div class="modal modal_dark modal_center" style="display: block;">
+            <div class="modal-dialog" role="document">
+                <div class="modal__container">
+                    <div class="modal__header modal__header_login">
+                        <div class="modal__logo"></div>
+                    </div>
+                    <div class="modal__content">
+                        <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => { :id => "form" })  do |f| %>
+                            <fieldset class="form-group">
+                                <%= f.email_field :email, :class => "form-control", :placeholder => true %>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <div class="form-group__append">
+                                <%= f.password_field :password, autocomplete: "off", :class => "form-control", :placeholder => true %>
+                                <span class="form-forgot"><%= link_to t('.forgot_password'), new_user_password_path  %></span>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group form-group_btns">
+                                <div class="btn-choose btn-choose_horizontal btn-choose_dark"><%= link_to user_omniauth_authorize_path(:facebook), class: "btn btn-primary-outline btn_lg" do %><span class="icon-fb_white"></span>&nbsp;<%= t('shared.login_modal.login_fb') %><% end %><div class="btn-choose__or">or</div><button class="btn btn-primary btn_sm"><%= t('shared.login_modal.login') %></button>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <div class="modal__small"><%= t('.signup_message')%> <%= link_to t('.signup'), new_user_registration_path %></div>
+                            </fieldset>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+    $("#form").validate({
+        rules: {
+            "user[email]": {
+              required: true,
+              email: true,
+            },
+            "user[password]": {
+                required: true,
+                minlength: 8
+            }
+        }
+    });
+
+});
+</script>

@@ -1,0 +1,46 @@
+<div class="panel-body">
+  <div class="ibox float-e-margins">
+    <div class="">
+        <h3><strong><a href="#"><%= t('.updaid_link')%></a> </strong> | <a href="#"><%= t('.paid_link')%></a></h3>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                <input type="text" class="form-control input-sm m-b-xs" id="filter"
+                       placeholder="<%= t('.search_placeholder')%>">
+                       <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
+                           <thead>
+                           <tr>
+                               <th><%= t('.table_head_id')%></th>
+                               <th><%= t('.table_head_paid')%></th>
+                               <th><%= t('.table_head_name')%></th>
+                               <th><%= t('.table_head_action')%></th>
+                           </tr>
+                           </thead>
+                           <tbody>
+                           <!-- Add invoice.where(!is_draft) when done -->
+                             <tr>
+                               <td>a</td>
+                               <td>No</td>
+                               <td>j</td>
+                               <td>ö</td>
+                             </tr>
+                           </tbody>
+                           <tfoot>
+                             <a href="#"><%= t('.email_invoices_link')%></a>
+                             <a href="#"><%= t('.notification_link')%></a>
+                             <a href="#"><%= t('.mail_link')%></a>
+                           <tr>
+                               <td colspan="5">
+                                   <ul class="pagination pull-right"></ul>
+                               </td>
+                           </tr>
+                           </tfoot>
+                       </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

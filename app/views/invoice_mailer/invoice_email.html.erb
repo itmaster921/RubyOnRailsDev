@@ -1,0 +1,5 @@
+<h1>Lasku yritykseltä <%= @invoice.company.company_legal_name %></h1>
+<p>Lasku maksamattomista vuoroista mywebsitein kautta lähetettynä.
+<h3><%= link_to "Avaa lasku tästä!", "https://#{ENV['MAILER_HOST']}" + company_invoice_path(@invoice.company, @invoice, format: :pdf) %></h3>
+
+Otathan yhteyttä <%= @invoice.company.company_legal_name %>, jos laskussa on epäselvyyksiä puhelinnumerosta <%= @invoice.company.company_phone %>.</p>

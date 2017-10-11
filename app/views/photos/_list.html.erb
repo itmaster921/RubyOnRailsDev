@@ -1,0 +1,34 @@
+<% if @photos %>
+  <div class="row">
+    <% @photos.each do |photo| %>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading preview">
+            <%= image_tag photo.image.url(:medium) %>
+          </div>
+          <div class="panel-body">
+            <span class="pull-right">
+            <%= link_to photo, remote: true, method: :delete, data: {confirm: "Are you sure?"}, class: 'del-img-btn' do %>
+              <i class="fa fa-times fa-lg"></i>
+            <% end %>
+            <div class="sk-spinner sk-spinner-fading-circle" style='display: none'>
+              <div class="sk-circle1 sk-circle"></div>
+              <div class="sk-circle2 sk-circle"></div>
+              <div class="sk-circle3 sk-circle"></div>
+              <div class="sk-circle4 sk-circle"></div>
+              <div class="sk-circle5 sk-circle"></div>
+              <div class="sk-circle6 sk-circle"></div>
+              <div class="sk-circle7 sk-circle"></div>
+              <div class="sk-circle8 sk-circle"></div>
+              <div class="sk-circle9 sk-circle"></div>
+              <div class="sk-circle10 sk-circle"></div>
+              <div class="sk-circle11 sk-circle"></div>
+              <div class="sk-circle12 sk-circle"></div>
+            </div>
+            </span>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

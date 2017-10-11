@@ -1,0 +1,160 @@
+<div class="modal-header">
+  <div class="col-lg-4 text-center">
+    <h2><%= court.court_name %></h2>
+
+    <div class="m-b-sm">
+      <img alt="image" class="img-circle" src="<%= image_path('amperlogoiconblue.png') %>"
+                                          style="width: 62px">
+    </div>
+  </div>
+  <div class="col-lg-8">
+    <div class="ibox-content">
+      <strong>
+        <%= t('.header')%>
+      </strong>
+      <p>
+      <%= court.court_description %>
+      </p>
+      <% if can? :manage, Court %>
+        <button type="button" class="btn btn-primary btn-sm btn-block" onclick="loadCourtEdit(this);" data-url="<%= edit_venue_court_path(venue, court) %>">
+          <i class="fa fa-envelope"></i> <%= t('.edit_link', name: court.court_name)%>
+      </button>
+    <% end %>
+    </div>
+  </div>
+</div>
+<div class="modal-body">
+  <div class="full-height-scroll">
+    <% if court.prices %>
+      <% sorted_prices = court.prices.sort_by { |obj| obj.start_time } %>
+      <ul class="list-group clear-list">
+        <strong><%= t('.price_rules_monday')%></strong>
+        <% sorted_prices.each do |price| %>
+          <% if price.monday %>
+
+
+            <li class="list-group-item fist-item">
+              <span class="pull-right"> <strong><%= t('.from') %></strong> <%= price.start_time.try(:to_s, :time) %>
+              <strong><%= t('.to') %></strong> <%= price.end_time.try(:to_s, :time) %> </span>
+              <%= t('.price') %> <strong><%= number_to_currency(price.price) %></strong>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+      <ul class="list-group clear-list">
+        <strong><%= t('.price_rules_tuesday')%></strong>
+        <% sorted_prices.each do |price| %>
+          <% if price.tuesday %>
+            <li class="list-group-item fist-item">
+              <span class="pull-right"> <strong><%= t('.from') %></strong> <%= price.start_time.try(:to_s, :time) %>
+              <strong><%= t('.to') %></strong> <%= price.end_time.try(:to_s, :time) %> </span>
+              <%= t('.price') %> <strong><%= number_to_currency(price.price) %></strong>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+      <ul class="list-group clear-list">
+        <strong><%= t('.price_rules_wednesday')%></strong>
+        <% sorted_prices.each do |price| %>
+          <% if price.wednesday %>
+            <li class="list-group-item fist-item">
+              <span class="pull-right"> <strong><%= t('.from') %></strong> <%= price.start_time.try(:to_s, :time) %>
+              <strong><%= t('.to') %></strong> <%= price.end_time.try(:to_s, :time) %> </span>
+              <%= t('.price') %> <strong><%= number_to_currency(price.price) %></strong>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+      <ul class="list-group clear-list">
+        <strong><%= t('.price_rules_thursday')%></strong>
+        <% sorted_prices.each do |price| %>
+
+          <% if price.thursday %>
+            <li class="list-group-item fist-item">
+              <span class="pull-right"> <strong><%= t('.from') %></strong> <%= price.start_time.try(:to_s, :time) %>
+              <strong><%= t('.to') %></strong> <%= price.end_time.try(:to_s, :time) %> </span>
+              <%= t('.price') %> <strong><%= number_to_currency(price.price) %></strong>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+      <ul class="list-group clear-list">
+        <strong><%= t('.price_rules_friday')%></strong>
+        <% sorted_prices.each do |price| %>
+
+          <% if price.friday %>
+            <li class="list-group-item fist-item">
+              <span class="pull-right"> <strong><%= t('.from') %></strong> <%= price.start_time.try(:to_s, :time) %>
+              <strong><%= t('.to') %></strong> <%= price.end_time.try(:to_s, :time) %> </span>
+              <%= t('.price') %> <strong><%= number_to_currency(price.price) %></strong>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+      <ul class="list-group clear-list">
+        <strong><%= t('.price_rules_saturday')%></strong>
+        <% sorted_prices.each do |price| %>
+
+          <% if price.saturday %>
+            <li class="list-group-item fist-item">
+              <span class="pull-right"> <strong><%= t('.from') %></strong> <%= price.start_time.try(:to_s, :time) %>
+              <strong><%= t('.to') %></strong> <%= price.end_time.try(:to_s, :time) %> </span>
+              <%= t('.price') %> <strong><%= number_to_currency(price.price) %></strong>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+      <ul class="list-group clear-list">
+        <strong><%= t('.price_rules_sunday')%></strong>
+        <% sorted_prices.each do |price| %>
+          <% if price.sunday %>
+            <li class="list-group-item fist-item">
+              <span class="pull-right"> <strong><%= t('.from') %></strong> <%= price.start_time.try(:to_s, :time) %>
+              <strong><%= t('.to') %></strong> <%= price.end_time.try(:to_s, :time) %> </span>
+              <%= t('.price') %> <strong><%= number_to_currency(price.price) %></strong>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+
+    <% end %>
+
+    <div>
+      <label>
+        <%= t('.duration_policy')%>
+      </label>
+      <%= court.duration_policy.try(:gsub, "_", " ").to_s.titleize %>
+    </div>
+
+    <div>
+      <label>
+        <%= t('.start_time_policy')%>
+      </label>
+      <%= court.start_time_policy.try(:gsub, "_", " ").to_s.titleize %>
+    </div>
+
+    <br/>
+    <div>
+      <% if court.active %>
+        <span class='label'><%= t('courts.court.active')%></span>
+      <% else %>
+        <span class='label'><%= t('courts.court.closed')%></span>
+      <% end %>
+      <% if court.payment_skippable %>
+        <span class='label'><%= t('.payment_skippable')%></span>
+      <% else %>
+        <span class='label'><%= t('.payment_not_skippable')%></span>
+      <% end %>
+    </div>
+
+  </div>
+</div>
+<div class="modal-footer">
+  <% if can? :manage, Court %>
+    <button type="button" class="btn btn-default" data-delete-url="<%= venue_court_path(venue, court) %>"
+            onclick="deleteCourt(this);">
+      <i class="fa fa-trash"></i> <%= t('.delete_button') %>
+    </button>
+  <% end %>
+  <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('.close_button')%></button>
+</div>

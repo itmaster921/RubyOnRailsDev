@@ -1,0 +1,53 @@
+<div class="m-t-md col-lg-8">
+  <%= form_tag '#', id: 'custom-mail-form' do %>
+    <input type="hidden" id="venue_id" value="<%= venue.id %>"/>
+    <div class="form-group">
+      <label for="email_from_select"><%= t '.from' %></label>
+      <select name="custom_mail[from]" class="form-control" id="email_from_select" onchange="setEmailFromField()">
+        <option value="<%= current_admin.email %>"><%= current_admin.email %></option>
+        <option value="<%= 'no-reply@mywebsite.com' %>"><%= "no-reply@mywebsite.com" %></option>
+        <option value="<%= 'other' %>"><%= t '.other_email' %></option>
+      </select>
+      <input type="email" name="custom_mail[from]" class="form-control hidden m-t-sm" id="email_from_text" placeholder="<%= t '.from' %>" disabled=true />
+    </div>
+
+    <div class="form-group">
+      <label for="subject"><%= t '.subject' %></label>
+      <input type="text" name="custom_mail[subject]" class="form-control" id="email_subject" placeholder="<%= t '.subject' %>"/>
+    </div>
+
+    <div class="form-group">
+      <label for="email_to_groups"><%= t '.add_groups' %></label>
+      <select name="custom_mail[to_group]" class="select2-hidden-accessible form-control" id="email_to_groups" style="width:100%" multiple="multiple"></select>
+    </div>
+
+    <div class="form-group">
+      <label for="email_to_users"><%= t '.add_users' %></label>
+      <input type="email" name="custom_mail[to_users]" multiple="multiple" class="form-control" id="email_to_users" placeholder="<%= t '.user_emails_placeholder' %>"/>
+    </div>
+
+    <div class="form-group">
+      <label for="email_body"><%= t '.email_body' %></label>
+      <textarea name="custom_mail[body]" class="form-control" id="email_body" placeholder="<%= t '.email_body' %>" rows=10></textarea>
+    </div>
+
+    <div class="form-group" >
+      <label for="header_image" data-toggle="tooltip" title data-placement="top" data-original-title="<%= t '.image_tooltip' %>">
+        <%= t '.image_label' %>
+      </label>
+      <input type="file" name="custom_mail[header_image]" id="header_image"></input>
+    </div>
+
+    <div class="form-group">
+      <input type="checkbox" name="custom_mail[send_copy]" id='send_copy'/>
+      <label for="send_copy"><%= t '.send_copy' %></label>
+    </div>
+
+    <button class='btn btn-primary'><i class='fa fa-send'></i><%= t '.send_button' %></button>
+  <% end %>
+</div>
+
+<script>
+  $('form#custom-mail-form').submit(submitCustomMailForm);
+  $('[data-toggle="tooltip"]').tooltip()
+</script>

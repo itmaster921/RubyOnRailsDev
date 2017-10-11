@@ -1,0 +1,300 @@
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+<div class="row">
+  <div class="col-md-12 ">
+    <div class="form-group">
+      <%= v.label :venue_name %>
+      <%= v.text_field :venue_name, :class => 'form-control', :placeholder => true, autofocus: true, required: true %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group">
+      <%= v.label :website %>
+      <%= v.text_field :website, :class => 'form-control', :placeholder => true, autofocus: true %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <%= v.label :phone_number %>
+      <%= v.text_field :phone_number, :class => 'form-control', :placeholder => true, autofocus: true %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      <%= v.label :description %>
+      <%= v.text_area :description, rows: 5, :class => 'form-control', :placeholder => true, autofocus: true, required: true%>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class='col-md-4'>
+    <div class="form-group">
+      <%= v.label :street %>
+      <%= v.text_field :street, :class => 'form-control', :placeholder => true, autofocus: true %>
+    </div>
+  </div>
+  <div class='col-md-4'>
+    <div class="form-group">
+      <%= v.label :zip %>
+      <%= v.text_field :zip, :class => 'form-control', :placeholder => true, autofocus: true %>
+    </div>
+  </div>
+  <div class='col-md-4'>
+    <div class="form-group">
+      <%= v.label :city %>
+      <%= v.text_field :city, :class => 'form-control', :placeholder => true, autofocus: true %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      <%= v.label :parking_info %>
+      <%= v.text_area :parking_info, rows: 3, :class => 'form-control', :placeholder => true, autofocus: true %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      <%= v.label :transit_info %>
+      <%= v.text_area :transit_info, rows: 3, :class => 'form-control', :placeholder => true, autofocus: true %>
+    </div>
+  </div>
+</div>
+
+<div class='row'>
+  <div class="col-md-4">
+    <div class="form-group">
+      <%= v.label :booking_ahead_limit %>
+      <%= v.text_field :booking_ahead_limit, :class => 'form-control', :placeholder => true, autofocus: true %>
+      <span class='help-block m-b-none'>
+        <%= t('.booking_ahead_limit') %>
+      </span>
+    </div>
+  </div>
+    <div class="col-md-4">
+    <div class="form-group">
+      <%= v.label :cancellation_time %>
+      <%= v.text_field :cancellation_time, :class => 'form-control', :placeholder => true, autofocus: true %>
+      <span class='help-block m-b-none'>
+        <%= t('.cancellation_time') %>
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class='container'>
+    <h3><%= t('.opening_hours')%></h3>
+  </div>
+  <div class="col-md-3">
+    <%= label_tag t('.monday') %>
+    <div class="input-group clockpicker">
+      <input type='text' value="<%= @venue.opening(:mon) %>"
+                         calss="form-control"
+                         placeholder="#"
+                         name="hours[opening[mon]]">
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= label_tag t('.tuesday') %>
+    <div class="input-group clockpicker">
+      <input type='text' value="<%= @venue.opening(:tue) %>"
+                         calss="form-control"
+                         placeholder="#"
+                         name="hours[opening[tue]]">
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= label_tag t('.wednesday') %>
+    <div class="input-group clockpicker">
+      <input type='text' value="<%= @venue.opening(:wed) %>"
+                         calss="form-control"
+                         placeholder="#"
+                         name="hours[opening[wed]]">
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= label_tag t('.thursday') %>
+    <div class="input-group clockpicker">
+      <input type='text' value="<%= @venue.opening(:thu) %>"
+                         calss="form-control"
+                         placeholder="#"
+                         name="hours[opening[thu]]">
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= label_tag t('.friday') %>
+    <div class="input-group clockpicker">
+      <input type='text' value="<%= @venue.opening(:fri) %>"
+                         calss="form-control"
+                         placeholder="#"
+                         name="hours[opening[fri]]">
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= label_tag t('.saturday') %>
+    <div class="input-group clockpicker">
+      <input type='text' value="<%= @venue.opening(:sat) %>"
+                         calss="form-control"
+                         placeholder="#"
+                         name="hours[opening[sat]]">
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= label_tag t('.sunday') %>
+    <div class="input-group clockpicker">
+      <input type='text' value="<%= @venue.opening(:sun) %>"
+                         calss="form-control"
+                         placeholder="#"
+                         name="hours[opening[sun]]">
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+</div>
+
+<div class="row">
+  <div class="container"><br><h3><%= t('.closing_time')%></h3></div>
+  <br>
+  <div class="col-md-3">
+    <%= label_tag t('.monday') %>
+    <div class="input-group clockpicker">
+      <input type='text' value="<%= @venue.closing(:mon) %>"
+                         calss="form-control"
+                         placeholder="#"
+                         name="hours[closing[mon]]">
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= label_tag t('.tuesday') %>
+    <div class="input-group clockpicker">
+      <input type='text' value="<%= @venue.closing(:tue) %>"
+                         calss="form-control"
+                         placeholder="#"
+                         name="hours[closing[tue]]">
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= label_tag t('.wednesday') %>
+    <div class="input-group clockpicker">
+      <input type='text' value="<%= @venue.closing(:wed) %>"
+                         calss="form-control"
+                         placeholder="#"
+                         name="hours[closing[wed]]">
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= label_tag t('.thursday') %>
+    <div class="input-group clockpicker">
+      <input type='text' value="<%= @venue.closing(:thu) %>"
+                         calss="form-control"
+                         placeholder="#"
+                         name="hours[closing[thu]]">
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= label_tag t('.friday') %>
+    <div class="input-group clockpicker">
+      <input type='text' value="<%= @venue.closing(:fri) %>"
+                         calss="form-control"
+                         placeholder="#"
+                         name="hours[closing[fri]]">
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= label_tag t('.saturday') %>
+    <div class="input-group clockpicker">
+      <input type='text' value="<%= @venue.closing(:sat) %>"
+                         calss="form-control"
+                         placeholder="#"
+                         name="hours[closing[sat]]">
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+  <div class="col-md-3">
+    <%= label_tag t('.sunday') %>
+    <div class="input-group clockpicker">
+      <input type='text' value="<%= @venue.closing(:sun) %>"
+                         calss="form-control"
+                         placeholder="#"
+                         name="hours[closing[sun]]">
+    </div>
+    <script type="text/javascript">
+$('.clockpicker').clockpicker({
+  placement: 'bottom',
+  autoclose: true});
+    </script>
+  </div>
+</div>

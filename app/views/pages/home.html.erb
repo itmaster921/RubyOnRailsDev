@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>mywebsite</title>
+	<script>
+	</script>
+</head>
+
+<body>
+	<header class="b-header b-header_mainpage">
+		<nav class="navbar navbar-full navbar-dark">
+			<button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#main-landing-navbar">
+				&#9776;
+			</button>
+			<div class="collapse navbar-toggleable-xs" id="main-landing-navbar">
+				<a class="navbar-brand_logo" href="/"></a>
+				<ul class="nav navbar-nav">
+					<li class="nav-item">
+						<div class="dropdown">
+							<button class="nav-link btn-location" id="js-dropdown-location" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon-map"></span><span>Helsinki</span></button>
+						</div>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav b-header-nav_right">
+          <% if (!user_signed_in?) %>
+          <li class="nav-item">
+            <a class="b-header-btn" href="#" data-toggle="modal" data-target="#signup-modal"><%= t('.signup_html')%></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#login-modal"><span class="icon-user"></span><span><%= t('.login_html')%></span></a>
+          </li>
+          <% else %>
+          <li class="nav-item nav-item_emptyborder">
+            <%= link_to user_path(current_user.id), class: "nav-link" do %>
+            <span class="icon-user"></span><span><%= current_user.first_name %></span></a> <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to destroy_user_session_path, method: :delete, class: "nav-link" do %>
+            <span class="icon-logout"></span><span><%= t('.logout')%></span></a> <% end %>
+          </li>
+          <% end %>
+					<li class="nav-item">
+						<a class="nav-link" href="https://mywebsite.zendesk.com/hc/fi"><span class="icon-help"></span><span><%= t('.help')%></span></a>
+					</li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://sales.mywebsite.com"><span><%= t('.get_mywebsite') %></span></a>
+          </li>
+				</ul>
+			</div>
+		</nav>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-16 col-md-12 col-md-offset-2">
+					<div class="jumbotron jumbotron-header">
+						<h1><%= t('.header')%></h1>
+						<div class="lead"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<main class="b-page">
+  <% if current_user.present? %>
+    <input type="hidden" value="<%= current_user.id %>" id="userId" />
+  <% end %>
+		<!--find a venue-->
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-16 col-lg-offset-1 col-lg-14 col-xl-offset-3 col-xl-10">
+					<form class="search-venue" role="search">
+            <div class="search-venue__block">
+              <%= select_tag 'searchSport', options_for_select(Court.supported_sports, :tennis), class: 'select2_sport form-control' %>
+              <div class="search-venue__line"></div>
+            </div>
+						<div class="search-venue__block">
+							<select class="select2_duration form-control" id="searchDuration">
+								<option value="60" selected><%= t('.duration')%></option>
+								<option value="90"><%= t('.duration')%></option>
+								<option value="120"><%= t('.duration')%></option>
+							</select>
+							<div class="search-venue__line"></div>
+						</div>
+						<div class="search-venue__block">
+							<div class="input-group">
+								<input type="text" class="search-venue__input js-datepicker form-control" value="<%= DateTime.now.strftime("%d/%m/%Y") %>" id="searchDate" placeholder="datapicker" />
+								<span class="input-group-addon"><span class="icon-calender"></span></span>
+							</div>
+							<div class="search-venue__line"></div>
+						</div>
+						<div class="search-venue__block">
+							<%= search_time_select_box %>
+						</div>
+						<div class="search-venue__block">
+              <button class="btn" type="submit" id="searchAvailableVenuesBtn"><%= t('.find_venue')%></button>
+						</div>
+
+
+
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid jumbotron-main">
+
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-16 col-sm-offset-2 col-sm-8">
+						<div class="jumbotron">
+							<h2><%= t('.join_header') %></h2>
+							<hr>
+							<p class="lead"><%= t('.join_content') %></p>
+
+							<div class="lead">
+              <% if !current_user.present? %>
+                <a class="btn btn-success btn-lg" href="#" data-toggle="modal" data-target="#signup-modal" role="button"><%= t('.join_button') %></a>
+              <% end %>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+    <%= react_component('VenueCarouselContainer') %>
+
+	</main>
+
+  <script>
+		$(document).ready(function () {
+			Init.main();
+		});
+	</script>
+    <%= render 'layouts/footer' %>
+    <!--MODALS-->
+    <%= render 'shared/login_modal' %>
+    <%= render 'shared/signup_modal' %>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-12 ">
+    <div class="form-group">
+      <%= discount.label :name %>
+      <%= discount.text_field :name, class: 'form-control', placeholder: true, autofocus: true, required: '' %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 select">
+    <div class="form-group">
+      <%= discount.label :value %>
+      <%= discount.text_field :value, class: 'form-control', placeholder: true, autofocus: true, required: '',
+                              value: discount.object.value || 0%>
+  </div>
+  </div>
+</div>
+<div class='row'>
+  <div class="col-md-12">
+    <div class="form-group">
+      <%= discount.label :method %>
+      <div>
+        <div class='col-md-6'>
+          <label>
+            <input type="radio" name="discount[method]" value="percentage" <%= discount.object.percentage? ? 'checked':''%> ></input>
+            <%= I18n.t('discounts.shared.percentage')%>
+          </label>
+        </div>
+        <div class='col-md-6'>
+          <label>
+            <input type="radio" name="discount[method]" value="fixed" <%= discount.object.percentage? ? '':'checked'%>></input>
+            <%= I18n.t('discounts.shared.fixed')%>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class='row'>
+  <div class="col-md-12">
+    <div class="form-group">
+      <label>
+        <input type="checkbox" name="discount[round]" <%= discount.object.round? ? 'checked':''%> ></input>
+        <%= t('.round_text')%>
+      </label>
+    </div>
+  </div>
+</div>
+
+

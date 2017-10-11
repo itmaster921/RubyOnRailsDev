@@ -1,0 +1,162 @@
+
+
+<%= render 'shared/newnav' %>
+
+
+<main class="profile">
+  <div class="row">
+    <div class="col-xs-16 col-sm-12 col-sm-offset-2">
+<br>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-line form-line_light' }) do |f| %>
+        <%= render 'shared/devisemes' %>
+        <div class="profile-edit">
+          <div class="profile-edit__title">
+            <div class="row">
+              <div class="col-xs-16 col-sm-8">
+                <h2><%= t('.header') %></h2>
+              </div>
+              <div class="col-xs-16 col-sm-8">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= f.text_field :first_name, autofocus: true, :placeholder => true, :class => 'form-control' %>
+              </fieldset>
+            </div>
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= f.text_field :last_name, autofocus: true, :placeholder => true, :class => 'form-control' %>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= f.email_field :email, :placeholder => true, :class => 'form-control' %>
+              </fieldset>
+            </div>
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= f.text_field :admin_ssn, :placeholder => true, :class => 'form-control' %>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-16 col-sm-8 col-sm-offset-7 col-xs-offset-8">
+            <fieldset class="form-group">
+            <h4><%= t('.birthday_title')%></h4>
+            </fieldset>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+              <select class="form-control js-select2" id="dateSelect" name="admin[admin_birth_day]">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+              </select>
+              </fieldset>
+            </div>
+            <div class="col-xs-16 col-sm-8">
+              <fieldset class="form-group">
+                <%= select_tag('admin[admin_birth_month]', options_for_select(t('date.month_names')[1..-1].each_with_index.map { |m, i| [m, i+1] }), class: 'form-control js-select2', id: 'monthSelect') %>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-16 col-sm-16">
+              <fieldset class="form-group">
+                <select class="form-control js-select2" id="yearSelect" name="admin[admin_birth_year]">
+                  <script>
+                  var myDate = new Date();
+                  var year = myDate.getFullYear();
+                  for(var i = 1900; i < year+1; i++){
+                    document.write('<option value="'+i+'">'+i+'</option>');
+                  }
+                  </script>
+                </select>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="row">
+              <div class="col-xs-16 col-sm-8">
+                <fieldset class="form-group">
+                  <%= f.password_field :password, class: 'form-control', placeholder: true %>
+                </fieldset>
+              </div>
+              <div class="col-xs-16 col-sm-8">
+                <fieldset class="form-group">
+                  <%= f.password_field :password_confirmation, class: 'form-control', placeholder: true %>
+                </fieldset>
+              </div>
+            </div>
+
+        <div class="profile-edit__save">
+          <%= f.submit t('.save_button'), :class => "btn btn-lg btn-primary" %>
+        </div>
+        <% end %>
+    </div>
+  </div>
+</main>
+<br>
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<%= render 'layouts/footer' %>
+<script>
+  $(document).ready(function () {
+    Init.profile();
+  });
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+  $('#monthSelect').select2({
+  });
+
+  $('#yearSelect').select2({
+  });
+
+  $('#dateSelect').select2({
+  });
+
+});
+</script>
+
+

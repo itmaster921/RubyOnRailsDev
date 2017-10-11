@@ -1,0 +1,27 @@
+<%= render 'shared/devisemes' %>
+
+<main class="login-page">
+    <div class="modal modal_dark modal_center" style="display: block;">
+        <div class="modal-dialog" role="document">
+            <div class="modal__container">
+                <div class="modal__header modal__header_login">
+                </div>
+                <div class="modal__content">
+                    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+                    <fieldset class="form-group">
+                        <div class="form-group__append">
+                            <h2 id="whitetext">Unohditko salasanan?</h2>
+                        </div>
+                    </fieldset>
+                        <fieldset class="form-group">
+                            <%= f.email_field :email, :class => "form-control", :placeholder => true %>
+                        </fieldset>
+                        <fieldset class="form-group form-group_btns">
+                            <button class="btn btn-primary btn-block" style="height: 50px"><%= t('.pass_reset_instruction') %></button>
+                        </fieldset>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,73 @@
+<div class="modal-dialog">
+    <div class="modal-content animated fadeIn">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <i class="fa fa-exclamation-triangle fa-5"></i>
+            <h4 class="modal-title"><%= t('.modal_title')%></h4>
+            <small class="font-bold"><%= t('.modal_content')%></small>
+        </div>
+        <div class="modal-body">
+          <div class="">
+            <div class="row text-center">
+                <% price = Price.find(conflicts.first) %>
+                <p><%= t('.price_text')%>
+                <% params[:court_ids].each do |court_id| %>
+                    <% court = Court.find(court_id) %>
+                    <%= court.sport.titleize %><%= court.court_name %>
+                <% end %>
+                <p>
+                <%= t('.from_on', start_time: params[:price][:start_time], end_time: params[:price][:end_time]) %>
+                    <% days = Price::WEEKDAYS.select {|day| params[:price][day]} %>
+                    <%= (days.map(&:to_s) || []).join(', ') %>
+                </p>
+                <p>
+                    <%= t('.rule_text', price_id: price.id) %>
+                    <% price.courts.each do |c| %>
+                        <%= c.court_name %>
+                    <% end %>
+                    <%= t('.from_on', start_time: price.start_time.try(:strftime, '%H:%M'), end_time: price.end_time.try(:strftime, '%H:%M')) %>
+                    <% days = Price::WEEKDAYS.select {|day| price.send(day)} %>
+                    <%= (days.map(&:to_s) || []).join(', ') %>
+                </p>
+            </div>
+            <div class="text-center">
+                <h2><%= t('.solve_options') %></h2>
+            </div>
+            <div class="row">
+                <h3>Option 1:</h3>
+                <%= link_to venue_price_path(@venue, @price), class: "js-destroy-price" do %>
+                  <%= t('.cancel_link') %>
+                <% end %>
+            </div>
+            <div class="row">
+                <h3>Option 2:</h3>
+                <a class="js-price-no-merge" href="#"><%= t('.create_rule_link')%></a>
+                <!-- close modal -->
+            </div>
+            <div class="row">
+                <h3><%= t(".option3")%></h3>
+                <p><%= t('.option3_text')%></p>
+                <%= link_to t('.merge_link'), merge_conflicts_venue_price_path(@venue, @price, conflicts: @court_conflicts), data: {method: :post} %>
+
+                <%= t('.conflicts') %>
+                <% conflicts.each do |p| %>
+                  <% conflicts = @price.find_conflicts(p) %>
+                  <p>
+                  <b><%= t('.price_rule', id: p.id)%></b>
+                  <%=t('.on')%>
+                  <b><%= conflicts[:days].map(&:to_s).join(', ')%></b>
+                  <%=t('.from')%> <%= minute_of_a_day_to_time conflicts[:conflicting_interval][0] %>
+                  <%=t('.to')%> <%= minute_of_a_day_to_time conflicts[:conflicting_interval][1] %>
+                  <%=t('.for_courts')%>
+                  <% params[:court_ids].each do |court_id| %>
+                      <% court = Court.find(court_id) %>
+                      <%= court.court_name %>
+                  <% end %>
+                  </p>
+                <% end %>
+                <%= t('.price_rules_changed', price: @price.price) %>
+            </div>
+              <br />
+          </div>
+    </div>
+</div>

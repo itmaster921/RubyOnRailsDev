@@ -1,0 +1,37 @@
+<%= render 'shared/devisemes' %>
+
+<main class="login-page">
+    <div class="modal modal_dark modal_center" style="display: block;">
+        <div class="modal-dialog" role="document">
+            <div class="modal__container">
+                <div class="modal__header modal__header_login">
+                </div>
+                <div class="modal__content">
+                    <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+                      <fieldset class="form-group">
+                          <div class="form-group__append">
+                              <h2 id="whitetext"> <%= t('.header')%></h2>
+                          </div>
+                      </fieldset>
+                      <fieldset class="form-group">
+                          <%= f.email_field :email, class:"form-control", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), :placeholder => true %>
+                      </fieldset>
+                      <fieldset class="form-group form-group_btns">
+                          <%= f.submit t('.submit_button'), class:"btn btn-primary btn-block", id:"passwordButton" %>
+                      </fieldset>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<style>
+  #passwordButton {
+    height: 50px;
+  }
+  #whitetext {
+    color: white;
+  }
+</style>
+

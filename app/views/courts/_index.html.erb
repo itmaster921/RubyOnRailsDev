@@ -1,0 +1,5 @@
+<tbody id="courts" >
+  <% courts.each do |court| %>
+    <%= render partial: 'courts/court', locals: { venue: venue, court: court } %>
+  <% end %>
+</tbody>

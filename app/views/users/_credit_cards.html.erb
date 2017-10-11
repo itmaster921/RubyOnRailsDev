@@ -1,0 +1,6 @@
+<select class="select2_payment form-control" id="cardSelect" name="card">
+  <option value="" disabled><%= t('.default_option') %></option>
+  <% cards.each do |card| %>
+    <option value="<%= card.id %>" data-code="<%= card.last4 %>"><%= card.brand %> <%= t('.ending_message', date: card.last4) %></option>
+  <% end %>
+</select>

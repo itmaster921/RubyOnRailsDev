@@ -1,0 +1,40 @@
+<%= render 'shared/devisemes' %>
+
+<main class="login-page">
+    <div class="modal modal_dark modal_center" style="display: block;">
+        <div class="modal-dialog" role="document">
+            <div class="modal__container">
+                <div class="modal__header modal__header_login">
+                </div>
+                <div class="modal__content">
+                    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+                    <%= f.hidden_field :reset_password_token %>
+                      <fieldset class="form-group">
+                          <div class="form-group__append">
+                              <h2 id="whitetext"> <%= t('.header')%></h2>
+                          </div>
+                      </fieldset>
+                      <fieldset class="form-group">
+                          <%= f.password_field :password, :class => 'form-control', :placeholder => true,  autocomplete: "off" %>
+                      </fieldset>
+                      <fieldset class="form-group">
+                          <%= f.password_field :password_confirmation, autocomplete: "off", :class => "form-control", :placeholder => true %>
+                      </fieldset>
+                      <fieldset class="form-group form-group_btns">
+                          <%= f.submit t('.submit_button'), class:"btn btn-primary btn-block", id:"passwordButton" %>
+                      </fieldset>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<style>
+  #passwordButton {
+    height: 50px;
+  }
+  #whitetext {
+    color: white;
+  }
+</style>

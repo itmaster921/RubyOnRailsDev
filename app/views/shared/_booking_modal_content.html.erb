@@ -1,0 +1,110 @@
+<div class="row">
+  <div class="col-xs-16 col-md-5">
+    <div class="modal-booking__list">
+
+      <% i = 1 %>
+      <% @available.to_h.each_pair do |key, value| %>
+        <% time = DateTime.parse(key).strftime("%H:%M") %>
+        <div class="modal-booking__list-one js-accordion_link" id="content-<%=i%>" data-time="<%=time%>" >
+          <div class="row">
+            <div class="col-xs-3 col-sm-3">
+              <div class="hex-price hex-price_blue hex-price_sm">
+                <sup class="hex-price__currency">€</sup>
+                <span class="hex-price__val"><%= value['lowest_price'].to_i %>+</span>
+              </div>
+            </div>
+            <div class="col-xs-3 col-sm-2">
+              <div class="modal-booking__list-time"><%= time %></div>
+            </div>
+            <div class="col-xs-8 col-sm-9">
+              <div class="modal-booking__list-text">
+                <b><%= value['available_courts'].length %></b>
+                <%= t('shared.booking_modal_content.available') %>
+              </div>
+            </div>
+            <div class="col-xs-2 col-sm-2">
+              <div class="modal-booking__list-arr">
+                <span class="icon-arrow-right3"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% i += 1 %>
+      <% end %>
+
+    </div>
+  </div>
+  <div class="col-xs-16 col-md-11">
+    <div class="modal-booking__contents">
+      <% i = 1 %>
+      <% @available.to_h.each_pair do |key, value| %>
+        <% time = DateTime.parse(key).strftime("%H:%M") %>
+        <div class="modal-booking__contents-one js-accordion_content" data-id="content-<%=i%>" data-time="<%=time%>" data-datetime="<%=key%>">
+          <div class="modal-booking__courts">
+            <% value['available_courts'].each do |court| %>
+              <div class="modal-booking__court modal-booking__court_white" data-id="<%= court['id'] %>" data-payment-skippable=<%= court['payment_skippable'] %>>
+                <div class="modal-booking__court-title"><%= court['name'] %></div>
+                <div class="modal-booking__court-des">
+                  <span class="modal-booking__court-duration"><%= value['duration'] %></span>
+                  min
+                </div>
+                <div class="hex-price hex-price_white hex-price_sm">
+                  <sup class="hex-price__currency">€</sup><span class="hex-price__val"><%= court['price'] %></span>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <% i+= 1 %>
+      <% end %>
+
+      <% if @available.to_h.keys.size > 0 %>
+      <div class="modal-booking__contents-one modal-booking__contents-one-first js-accordion_content ">
+        <div class="modal-booking__contents-nantitle"><%= t('shared.booking_modal_content.nantitle')%></div>
+        <p class="modal-booking__contents-nantext"><%= t('shared.booking_modal_content.nantext_line1')%></p>
+        <p class="modal-booking__contents-nantext"><%= t('shared.booking_modal_content.nantext_line2')%></p>
+      </div>
+    <% else %>
+      <div class="modal-booking__contents-one modal-booking__contents-one-first js-accordion_content ">
+        <div class="modal-booking__contents-nantitle"><%= t('shared.booking_modal_content.nofound_nantitle')%></div>
+        <p class="modal-booking__contents-nantext"><%= t('shared.booking_modal_content.nantext_line1')%></p>
+        <p class="modal-booking__contents-nantext"><%= t('shared.booking_modal_content.nantext_line2')%></p>
+      </div>
+    <% end %>
+    </div>
+  </div>
+</div>
+
+
+<%= javascript_tag do %>
+  function sports_image(type) {
+    var images  = {
+      'squash': "<%= image_path('icons/select2/squash.svg') %>",
+      'badminton': "<%= image_path("icons/select2/badminton.svg") %>",
+      'tennis': "<%= image_path("icons/select2/tennis.svg") %>"
+      }
+    return images[type];
+  }
+
+  var image_url =  sports_image('<%= params[:sport_name] %>');
+
+  $(".venue-category__select img").attr("src", image_url);
+
+  $(".dropdown-menu-cats").on("click", 'a', function(event) {
+     var sport_name = $(event.currentTarget).attr('id');
+     $(".venue-category__select img").attr("src", sports_image(sport_name));
+
+     var id = $('#venueId').val();
+     var date = $('#searchDate').val();
+     var time = $('#searchTime').val();
+     var duration = $('#searchDuration option:selected').val();
+     if ($('#selectUser').val() > 0) {
+       var userId = $('#selectUser').val();
+     } else {
+       var userId = undefined;
+     }
+     $(".venue-category__select").val(sport_name);
+     searchAvailable(id, date, time, duration, userId, sport_name);
+  })
+
+<% end %>

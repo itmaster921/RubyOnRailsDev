@@ -1,0 +1,1659 @@
+en:
+  'true': 'Yes'
+  'false': 'No'
+  'nil': 'None'
+  unlimited: unlimited
+
+  weekdays:
+    monday: monday
+    tuesday: tuesday
+    wednesday: wednesday
+    thursday: thursday
+    friday: friday
+    saturday: saturday
+    sunday: sunday
+  weekdays_short:
+    mon: Mon
+    tue: Tue
+    wed: Wed
+    thu: Thu
+    fri: Fri
+    sat: Sat
+    sun: Sun
+
+  api:
+    authentication:
+      unauthorized: You are not currently logged in.
+      timeout: Authentication timed out.
+    users:
+      not_found: User not found
+      email_check:
+        email_required: Email parameter is required
+        success: Account found with given email
+        error: No account found with given email
+      confirm_account:
+        email_required: Email parameter is required
+        success: Confirmation email sent successfully
+        error: Confirmation email could not be sent
+      not_confirmed: User is already created but not confirmed
+      email_required: Email parameter is required
+      reset_password_email: Reset password email sent successfully
+      already_exists: Email already exists
+      profile_updated: User profile updated successfully
+      password_updated: Password updated successfully
+      errors:
+        passwords_required: Both the current_password and password parameters are required
+    customers:
+      user_not_found: Customer not found
+      already_confirmed: Can't modify already confirmed customer
+      no_venue: Company doesn't have any venue yet
+      shared_user: Can't modify customer with relation to other companies
+      cant_delete: Can't delete customer
+
+  user_mailer:
+    membership_card_reminder:
+      user_card_reminder: Your current memberships can not be charged because you have not added a credit card to your account.
+      click_here: To change that, click here.
+  photos:
+    header: Manage Venue Photos
+  mailer:
+    booking:
+      subject: "Booking confirmation for %{venue_name} on %{date}"
+    user:
+      credit_card_reminder: Credit card reminder
+  activerecord:
+    errors:
+      models:
+        admin:
+          attributes:
+            reset_password_token:
+              blank: "is not valid"
+              invalid: "is not valid"
+        user:
+          attributes:
+            reset_password_token:
+              blank: "is not valid"
+              invalid: "is not valid"
+            email:
+              blank: can not be blank
+              taken: has already been taken
+            first_name:
+              blank: can not be blank
+            last_name:
+              blank: can not be blank
+            current_password:
+              invalid: is not valid
+            password:
+              too_short: is too short
+        email_list:
+          attributes:
+            name:
+              blank: can not be blank
+              taken: has already been taken
+        membership:
+          attributes:
+            reservations:
+              invalid: is invalid
+            user:
+              blank: can not be blank
+
+    attributes:
+      court/court_name:
+        any: Any
+        outdoor: Outdoor
+        indoor: Indoor
+      court/sport_name:
+        tennis: Tennis
+        squash: Squash
+        badminton: Badminton
+        floorball: Floorball
+        golf: Golf
+        volleyball: Volleyball
+        tabletennis: Tabletennis
+        basketball: Basketball
+        soccer: Soccer
+        private: Private
+        any: Any
+      user:
+        street_address: Street Address
+        city: City
+        email: Email
+        first_name: First Name
+        last_name: Last Name
+        zipcode: Zipcode
+        phone_number: Phone
+      reservation:
+        user: User
+        court: Court
+        price: Price
+        start_time: Start time
+        end_time: End time
+        overlapping_reservation: ''
+        'Court': 'Court'
+        payment_type:
+          paid: Paid
+          unpaid: Unpaid
+          semi_paid: Semi Paid
+        booking_type:
+          online: Online
+          admin: Admin
+          membership: Membership
+          guest: Guest
+      reservations_log:
+        status:
+          created: Created
+          updated: Updated
+          paid: Paid
+          refunded: Refunded
+          cancelled: Cancelled
+          reselling: Reselling
+          resold: Resold
+      memberships:
+        start_time: Start time
+        end_time: End time
+        price: Price
+        user: User
+        venue: Venue
+        weekday: Weekday
+        court_sport: Court sport
+        court: Court
+      custom_invoice_component:
+        name: Name
+        price: Price
+        vat_decimal: Vat
+  game_pass:
+    game_pass: Game Passes
+    create_game_pass: Create Game Pass
+    update_game_pass: Update Game Pass
+    game_pass_list: Game Pass List
+    total_charges: Total Charges
+    remaining_charges: Remaining Charges
+    court_sports: Court Sports
+    court_type: Court Type
+    dates_limit: Dates limit
+    time_limitations: Time limitations
+    show_limitations: Limitations
+    price: Price
+    user: User
+    active: Active
+    actions: Actions
+    confirm_delete_title: Deletion
+    confirm_delete_text: Game pass will be deleted
+    confirm_delete_button: Delete
+    create_game_pass_modal:
+      create_game_pass_success: Game Pass Creation Successful
+      create_game_pass_error: Game Pass Creation Failed
+      create_game_pass_form_not_filled: Fill Forms Before Submitting
+      update_game_pass_success: Game Pass Update Successful
+      update_game_pass_error: Game Pass Update Failed
+      delete_game_pass_success: Game Pass deletion Successful
+      delete_game_pass_error: Game Pass deletion Failed
+      select_template: Select Template
+      save_as_template: Save as Template
+      template_name: Template Name
+      custom_game_pass: Custom Game Pass
+      user_shown_name: User-shown Name
+      select_user: Select User
+      select_court_sports: Select Court Sports
+      select_court_sports_placeholder: Any Court Sports
+      select_court_type: Select Court Type
+      start_date: Start Date
+      start_date_placeholder: empty - unlimited
+      end_date: End Date
+      end_date_placeholder: empty - unlimited
+      total_charges: Total Charges
+      remaining_charges: Remaining Charges
+      price: Price
+      time_limitations: Time limitations
+      add_time_limit: Add time limit
+      time_from: Works from
+      time_to: to
+      time_unlimited: Time unlimited
+      weekdays: Weekdays
+      any_weekday: Any weekday
+      mark_as_paid: Mark as paid
+      is_paid: Paid
+  memberships:
+    user:
+      address: Street Address
+      city: City
+      email: Email
+      first_name: First Name
+      last_name: Last Name
+      zipcode: Zipcode
+      phone_number: Phone
+    import_errors:
+      failures: Failures
+      invalid_reservations: "Invalid reservations:"
+  guests:
+    new:
+      full_name: Full Name
+  admins:
+    edit:
+      button: Update Admin
+      header: Edit Admin
+    form:
+      auth_level: Authorization Level
+      birth_date: Date of Birth
+      birth_day: Day
+      birth_month: Month
+      birth_year: Year
+    index:
+      add_link: Add Admins
+      header: Manage Admin
+      list_title: Admins
+      search_placeholder: Search in table
+      table_header_auth_level: Authorization Level
+      table_header_email: Email
+      table_header_name: Name
+      title: Manage your company's admins!
+    new:
+      button: Create Admin
+      header: Add Admin
+    passwords:
+      edit:
+        change_password: Change my password
+        confirm_password_label: Confirm new password
+        minimum_char_message: "%{minimum_password_length} characters minimum"
+        new_password_label: New password
+        title: Change your Admin password
+      new:
+        pass_reset_instruction: Send me reset password instructions
+    registrations:
+      edit:
+        header: Your Profile
+        new_password: New Password (leave blank if you don't want to change it)
+        save_button: Save Changes
+        waiting_confirm: 'Currently waiting confirmation for: ${email}'
+      new:
+        birthday_title: Birthdate
+        header: Create New Admin Account
+        save_button: Save Changes
+    sessions:
+      new:
+        login_button: Sign In
+        signup_link: Signup
+        signup_link_text: Don’t have an account?
+
+  customers:
+    table:
+      id: Customer ID
+      full_name: Customer Name
+      email: Customer Email
+      phone_number: Phone number
+      address: Address
+      outstanding_balance: Outstanding Balance
+      reservations_done: Reservations done
+      last_reservation: Last Reservation
+      lifetime_value: Lifetime Value
+      actions: Actions
+      search_placeholder: Search in table
+      empty: 'No customers found'
+      create_customer: Create customer
+      confirm_delete_title: Deletion
+      confirm_delete_text: Will permanently remove customer
+      confirm_delete_button: Delete
+      delete_success: Customer deletion Successful
+      delete_failed: Customer deletion Failed
+    modal:
+      title_create: Create customer
+      title_update: Update customer
+      form_not_filled: Fill Forms Before Submitting
+      submit_button_create: Create
+      submit_button_update: Update
+      create_success: Customer Creation Successful
+      create_failed: Customer Creation Failed
+      update_success: Customer Update Successful
+      update_failed: Customer Update Failed
+      first_name: First name
+      last_name: Last name
+      email: Customer Email
+      phone_number: Phone number
+      city: City
+      street_address: Street address
+      zipcode: Zipcode
+
+  companies:
+    company_business_type:
+    - - Osakeyhtiö
+      - Osakeyhtiö
+    - - Toiminimi
+      - Toiminimi
+    - - Avoin yhtiö / Kommandiittiyhtiö
+      - Avoin yhtiö / Kommandiittiyhtiö
+    - - Julkinen Osakeyhtiö
+      - Julkinen Osakeyhtiö
+    - - Rekisteröity yhdistys
+      - Rekisteröity yhdistys
+    company_country:
+    - - Finland
+      - Finland
+    - - Sweden
+      - Sweden
+    - - USA
+      - USA
+    customers:
+      header: Your Customer List
+      import: Import Customers
+      download_csv_template: Download CSV template
+      upload_button: Import
+      csv_file: CSV file
+      venue: Venue
+      importing: Importing...
+    edit:
+      button: Save Changes
+      company_business_type:
+      - - Osakeyhtiö
+        - Osakeyhtiö
+      - - Toiminimi
+        - Toiminimi
+      - - Avoin yhtiö / Kommandiittiyhtiö
+        - Avoin yhtiö / Kommandiittiyhtiö
+      - - Julkinen Osakeyhtiö
+        - Julkinen Osakeyhtiö
+      - - Rekisteröity yhdistys
+        - Rekisteröity yhdistys
+      company_country:
+      - - Finland
+        - Finland
+      - - Sweden
+        - Sweden
+      - - USA
+        - USA
+      header: Edit %{name} Details
+    form:
+      button: Save Changes
+      company_business_type:
+      - - Osakeyhtiö
+        - Osakeyhtiö
+      - - Toiminimi
+        - Toiminimi
+      - - Avoin yhtiö / Kommandiittiyhtiö
+        - Avoin yhtiö / Kommandiittiyhtiö
+      - - Julkinen Osakeyhtiö
+        - Julkinen Osakeyhtiö
+      - - Rekisteröity yhdistys
+        - Rekisteröity yhdistys
+      company_country:
+      - - Finland
+        - Finland
+      - - Sweden
+        - Sweden
+      - - USA
+        - USA
+      title: Edit Company Details
+    new:
+      company_business_type:
+      - - Osakeyhtiö
+        - Osakeyhtiö
+      - - Toiminimi
+        - Toiminimi
+      - - Avoin yhtiö / Kommandiittiyhtiö
+        - Avoin yhtiö / Kommandiittiyhtiö
+      - - Julkinen Osakeyhtiö
+        - Julkinen Osakeyhtiö
+      - - Rekisteröity yhdistys
+        - Rekisteröity yhdistys
+      company_country:
+      - - Finland
+        - Finland
+      - - Sweden
+        - Sweden
+      - - USA
+        - USA
+      create_button: Create
+      stripe_term_accept_html: I accept the <a href="%{link}"> Stripe Terms of Service</a>
+    report:
+      header: "%{name} Reports"
+      pdf_link: Open PDF
+      table_header_amount: Transfer Amount
+      table_header_date: Transfer Date
+      title: Reports
+      transfers_title: Transfers
+    reports:
+      download_button: Download Report
+      download_title: Download Report of Payment Transactions
+      from: From
+      header: "%{name} Reports"
+      title: Reports
+      to: To
+      transfers_title: Transfers
+      invoices_report: Invoices report
+    show:
+      balance_title: Balance
+      customers_title: Customers
+      day: Day
+      month: Month
+      monthly: Monthly
+      notifications_msg: You have ${msgs} messages and %{notifications} notifications.
+      popup_msg: mywebsite Dashboard
+      popup_welcome: mywebsite Dashboard
+      reservations_title: Reservations
+      revenue_title: Revenue
+      total: Total
+      welcome_msg: Welcome %{name}
+      year: Year
+    transfer_details:
+      table_head_amount: Charge Amount
+      table_head_date: Charge Date
+      table_head_fee: Charge Fee
+      table_head_net: Charge Net
+      table_head_type: Charge Type
+    customers_import:
+      failures: Failures
+  courts:
+    court:
+      active: Active
+      closed: Closed
+      on_sale: On Sale
+      shared_court: Shared Court
+      private: '(private)'
+    edit:
+      cancel_button: Cancel
+      header: Edit Court
+      submit_button: Update
+    form:
+      active_title: Is this court active
+      must_pay_title: Allow users to skip payment
+      duration_policy_title: Minimum Duration Policy
+      durations:
+        any_duration: None
+        half_hour: Half an hour (30 minutes)
+        one_hour: One hour (60 minutes)
+        two_hour: Two hours (120 minutes)
+      indoor_outdoor:
+        indoor: Indoor
+        outdoor: Outdoor
+      indoor_outdoor_title: Indoor/Outdoor Court
+      sport_name:
+      - - Badminton
+        - Badminton
+      - - Bowling
+        - Bowling
+      - - Golf
+        - Golf
+      - - Squash
+        - Squash
+      - - Tennis
+        - Tennis
+      - - Basketball
+        - Basketball
+      - - Floorball
+        - Floorball
+      - - Volleyball
+        - Volleyball
+      - - Tabletennis
+        - Tabletennis
+      - - Soccer
+        - Soccer
+      start_time:
+        any_start_time: None
+        half_hour_mark: Half hour mark (8:30, 9:30, etc..)
+        hour_mark: Hour mark (8:00, 9:00, etc..)
+      start_time_policy_title: Start Time Policy
+      share_court: Share Court
+      select_shared_court_label: 'Share court with:'
+    show:
+      add_title: Add a new Court
+      confirm_msg: Are you sure?
+      court_description: 'Court description:'
+      court_info: 'Court Information:'
+      court_sport: 'Court Sport:'
+      edit_link: Edit Court
+      from: From
+      prices_friday: Prices on Fridays
+      prices_monday: Prices on Mondays
+      prices_saturday: Prices on Saturdays
+      prices_sunday: Prices on Sundays
+      prices_thursday: Prices on Thursdays
+      prices_title: 'Your Existing Prices:'
+      prices_tuesday: Prices on Tuesdays
+      prices_wednesday: Prices on Wednesdays
+      remove_link: Remove
+      to: to
+    delete:
+      confirm_title: Are you sure?
+      confirm_text: You are about to remove this court permanently.
+      button_text: "Yes, remove it!"
+      success_text: Court deleted successfully.
+    sport_name:
+    - - Badminton
+      - Badminton
+    - - Golf
+      - Golf
+    - - Squash
+      - Squash
+    - - Tennis
+      - Tennis
+    - - Basketball
+      - Basketball
+    - - Floorball
+      - Floorball
+    - - Volleyball
+      - Volleyball
+    - - Tabletennis
+      - Tabletennis
+    - - Soccer
+      - Soccer
+  date:
+    abbr_day_names:
+    - Sun
+    - Mon
+    - Tue
+    - Wed
+    - Thu
+    - Fri
+    - Sat
+    abbr_month_names:
+    -
+    - Jan
+    - Feb
+    - Mar
+    - Apr
+    - May
+    - Jun
+    - Jul
+    - Aug
+    - Sep
+    - Oct
+    - Nov
+    - Dec
+    day_names:
+    - Sunday
+    - Monday
+    - Tuesday
+    - Wednesday
+    - Thursday
+    - Friday
+    - Saturday
+    formats:
+      default: "%Y-%m-%d"
+      long: "%B %d, %Y"
+      short: "%b %d"
+    month_names:
+    -
+    - January
+    - February
+    - March
+    - April
+    - May
+    - June
+    - July
+    - August
+    - September
+    - October
+    - November
+    - December
+    order:
+    - year
+    - month
+    - day
+  devise:
+    confirmations:
+      confirmed: Your email address has been successfully confirmed.
+      new:
+        header: Resend confirmation instructions
+        submit_button: Resend confirmation instructions
+      send_instructions: You will receive an email with instructions for how to confirm your email address in a few minutes.
+      send_paranoid_instructions: If your email address exists in our database, you will receive an email with instructions for how to confirm your email address in a few minutes.
+      show:
+        header: Welcome to mywebsite! Create a new password to secure your account
+        submit_button: Create Password
+    failure:
+      already_authenticated: You are already signed in.
+      inactive: Your account is not activated yet.
+      invalid: Invalid %{authentication_keys} or password.
+      last_attempt: You have one more attempt before your account is locked.
+      locked: Your account is locked.
+      not_found_in_database: Invalid %{authentication_keys} or password.
+      timeout: Your session expired. Please sign in again to continue.
+      unauthenticated: You need to sign in or sign up before continuing.
+      unconfirmed: You have to confirm your email address before continuing.
+    mailer:
+      confirmation_instructions:
+        content: 'You can confirm your account email through the link below:'
+        header: Welcome %{email}
+        link_label: Confirm my account
+        subject: Confirmation instructions
+      password_change:
+        content: We're contacting you to notify you that your password has been changed.
+        header: Hello %{email}!
+        subject: Password Changed
+      reset_password_instructions:
+        content: Someone has requested a link to change your password. You can do this through the link below.
+        header: Hello %{email}!
+        instruction_line1: If you didn't request this, please ignore this email.
+        instruction_line2: Your password won't change until you access the link above and create a new one.
+        link_label: Change my password
+        subject: Reset password instructions
+      unlock_instructions:
+        content: Your account has been locked due to an excessive number of unsuccessful sign in attempts.
+        header: Hello %{email}!
+        instruction_line: 'Click the link below to unlock your account:'
+        link_label: Unlock my account
+        subject: Unlock instructions
+    omniauth_callbacks:
+      failure: Could not authenticate you from %{kind} because "%{reason}".
+      success: Successfully authenticated from %{kind} account.
+    passwords:
+      edit:
+        header: Change Your Password
+        confirm_password_label: Confirm new password
+        min_len: "%{num} characters minimum"
+        password_label: New password
+        submit_button: Change my password
+      new:
+        header: Forgot your password?
+        submit_button: Send me reset password instructions
+      no_token: You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided.
+      send_instructions: You will receive an email with instructions on how to reset your password in a few minutes.
+      send_paranoid_instructions: If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.
+      updated: Your password has been changed successfully. You are now signed in.
+      updated_not_active: Your password has been changed successfully.
+    registrations:
+      destroyed: Bye! Your account has been successfully cancelled. We hope to see you again soon.
+      edit:
+        add_new_card_button: Add New
+        edit_profile: Edit Profile
+        form_title: Edit your details
+        header: Your profile
+        invoices: Invoices
+        last_updated: last updated %{date}
+        my_reservations: My Reservations
+        no_cards_message: You dont have any credit cards on your account.
+        payment_method: Payment method
+        save_changes: Save Changes
+      signed_up: Welcome! You have signed up successfully.
+      signed_up_but_inactive: You have signed up successfully. However, we could not sign you in because your account is not yet activated.
+      signed_up_but_locked: You have signed up successfully. However, we could not sign you in because your account is locked.
+      signed_up_but_unconfirmed: A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.
+      update_needs_confirmation: You updated your account successfully, but we need to verify your new email address. Please check your email and follow the confirm link to confirm your new email address.
+      updated: Your account has been updated successfully.
+    sessions:
+      already_signed_out: Signed out successfully.
+      new:
+        forgot_password: Forgot ?
+        signup: Signup
+        signup_message: Don’t have an account?
+      signed_in: Signed in successfully.
+      signed_out: Signed out successfully.
+    shared:
+      links:
+        confirmations: Didn't receive confirmation instructions?
+        forgot_password: Forgot your password?
+        login: Log in
+        sign_in_with: Sign in with %{with}
+        signup: Sign up
+        unlock: Didn't receive unlock instructions?
+    unlocks:
+      new:
+        header: Resend unlock instructions
+        unlock_button: Resend unlock instructions
+      send_instructions: You will receive an email with instructions for how to unlock your account in a few minutes.
+      send_paranoid_instructions: If your account exists, you will receive an email with instructions for how to unlock it in a few minutes.
+      unlocked: Your account has been unlocked successfully. Please sign in to continue.
+  discounts:
+    shared:
+      percentage: Percentage
+      fixed: Fixed
+    edit:
+      header: Edit Discount
+      submit_button: Update Discount
+    index:
+      table_head_name: Name
+      table_head_value: Value
+      table_head_method: Discount Type
+    new:
+      header: Add Discount
+      submit_button: Create Discount
+    form:
+      round_text: Round final price to the nearest Euro.
+    show:
+      rounded: Rounded
+  enumerize:
+    admin:
+      levels:
+        cashier: Employee
+        god: Super Admin
+        guest: N/A
+        manager: Manager
+  errors:
+    messages:
+      already_confirmed: was already confirmed, please try signing in
+      confirmation_period_expired: needs to be confirmed within %{period}, please request a new one
+      expired: has expired, please request a new one
+      not_found: not found
+      not_locked: was not locked
+      not_saved:
+        one: '1 error prohibited this %{resource} from being saved:'
+        other: "%{count} errors prohibited this %{resource} from being saved:"
+    reservation:
+      user: Selected user invalid
+      court:
+        closed: is closed for the seleted time
+      end_time:
+        timing_order: should be greater than Start time
+        duration_problem: This court does not allow the selected duration.
+      start_time:
+        in_the_future: can not be in the past
+        day_off: The date you have chosen is a day off.
+        days_in_advance: You are only allowed to book %{limit} days in advance
+        half: You can only book at the half hour mark (9:30, 10:30, etc..).
+      overlapping: Overlapping with reservation by %{user_name}
+    venue:
+      list:
+        court_empty: Venue must have at least one court to be listed
+        days_empty: Venue must specify business hours for all days to be listed
+        phots_empty: Venue must have at least one picture to be listed
+        sun: Sunday
+        mon: Monday
+        tue: Tueday
+        wed: Wednesday
+        thu: Thursday
+        fri: Friday
+        sat: Satdau
+        price_not_specifying: Courts must specify pricing for all bookable times for the venue to be listed
+    membership:
+      weekday: "invalid, can not translate '%{weekday}', use names: monday, tuesday..."
+      court_sport: "invalid, can not translate '%{sport}', use one of: %{defaults}."
+      no_court: "'%{name}' not found."
+  helpers:
+    label:
+      admin:
+        admin_ssn: Social Security Number
+        current_password: Current Password
+        email: Email
+        first_name: First Name
+        last_name: Last Name
+        password: Password
+        password_confirmation: Password Confirmation
+      company:
+        company_business_type: Your Business Type
+        company_city: City
+        company_iban: Bank Account IBAN
+        company_legal_name: Company Legal Name?
+        company_phone: Phone
+        company_street_address: Business Address
+        company_tax_id: Tax ID
+        company_website: Website
+        company_zip: Zipcode
+        compnay_country: Where are you based?
+      court:
+        court_description: Court Description
+        court_name: Court Name
+        sport_name: Court Sport Type
+        custom_sport_name: Custom sport name (makes court private)
+      discount:
+        name: Discount Name
+        percentage: Percentage
+        fixed: Fixed
+        method: Discount Type
+        value: Value
+      venue:
+        booking_ahead_limit: Booking Ahead Limit
+        cancellation_time: Cancellation Limit in Hours
+        city: City
+        description: Venue Description
+        friday_closing_time: Friday
+        friday_opening_time: Friday
+        monday_closing_time: Monday
+        monday_opening_time: Monday
+        parking_info: Parking Info
+        phone_number: Phone
+        saturday_closing_time: Saturday
+        saturday_opening_time: Saturday
+        street: Street Address
+        sunday_closing_time: Sunday
+        sunday_opening_time: Sunday
+        thursday_closing_time: Thursday
+        thursday_opening_time: Thursday
+        transit_info: Transit Information
+        tuesday_closing_time: Tuesday
+        tuesday_opening_time: Tuesday
+        venue_name: Venue Name
+        website: Website
+        wednesday_closing_time: Wednesday
+        wednesday_opening_time: Wednesday
+        zip: Zip code
+    placeholder:
+      admin:
+        admin_ssn: Social Security Number
+        current_password: Password
+        email: Email
+        first_name: First Name
+        last_name: Last Name
+        password: Password
+        password_confirmation: Password Confirmation
+      company:
+        company_city: City
+        company_iban: IBAN
+        company_legal_name: Company Legal Name
+        company_phone: Phone
+        company_street_address: Address
+        company_tax_id: Tax ID
+        company_website: Website
+        company_zip: Zipcode
+      court:
+        court_description: Court Description
+        court_name: Court Name
+        sport_name: Court Sport Type
+        custom_sport_name: Custom sport name
+      discount:
+        name: Discount Name
+        percentage: Percentage
+      user:
+        city: City
+        country: Country
+        email: Email
+        first_name: First Name
+        last_name: Last Name
+        password: Password
+        password_confirmation: Password Confirmation
+        phone_number: Phone Number
+        street_adress: Street Address
+        zipcode: Zipcode
+      venue:
+        booking_ahead_limit: "#"
+        city: City
+        description: Description
+        friday_closing_time: "#"
+        friday_opening_time: "#"
+        monday_closing_time: "#"
+        monday_opening_time: "#"
+        parking_info: Parking Info
+        phone_number: Phone
+        saturday_closing_time: "#"
+        saturday_opening_time: "#"
+        street: Street Address
+        sunday_closing_time: "#"
+        sunday_opening_time: "#"
+        thursday_closing_time: "#"
+        thursday_opening_time: "#"
+        transit_info: Transit Information
+        tuesday_closing_time: "#"
+        tuesday_opening_time: "#"
+        venue_name: Venue Name
+        website: Website
+        wednesday_closing_time: "#"
+        wednesday_opening_time: "#"
+        zip: Zip code
+    select:
+      prompt: Select...
+  invoices:
+    create_invoices:
+      header: Create Invoices
+      submit_button: Create Invoices
+      table_head_action: Action
+      table_head_balance: Outstanding Balance
+      table_head_email: Customer Email
+      table_head_id: Customer ID
+      table_head_name: Customer Name
+    drafts_table:
+      cancel_link: Cancel
+      delete_confirm: Are you sure that you want to delete this invoice row?
+      delete_link: Delete
+      delete_selected_confirm: Are you sure that you want to delete selected invoices?
+      delete_selected_link: Delete selected
+      edit_link: Edit
+      invoice:
+        table_head_action: Action
+        table_head_court: Court
+        table_head_date: Date
+        table_head_end_time: End time
+        table_head_price: Price
+        table_head_start_time: Start time
+        table_head_custom_name: Custom name
+        table_head_vat: VAT-%
+      pdf_link: Open PDF
+      search_placeholder: Search in table
+      send_confirm: Are you sure that you want to send selected invoices?
+      send_link: Send selected
+      table_head_email: Customer Email
+      table_head_name: Customer Name
+      table_head_pdf: View PDF
+      table_head_total: Invoice Total
+      total: 'Total:'
+      add_custom: Add custom component
+      custom_component_created: Custom invoice component was created
+    custom_invoice_component_form:
+      name: Name
+      price: Price
+      vat: Vat
+      select: Select
+      cancel: Cancel
+      create: Create
+      creating: Creating...
+    index:
+      create_invoices: Create Invoices
+      invoices: Invoices
+    invoice_list:
+      drafts: Drafts
+      paid: Paid Invoices
+      search_placeholder: Search in table
+      table_head_id: Invoice ID
+      table_head_name: Customer Name
+      table_head_paid: Is Paid
+      table_head_total: Total
+      table_head_action: Action
+      updaid: Unpaid Invoices
+      send_confirm: Are you sure that you want to send selected invoices?
+      resend_link: Resend selected
+      mark_paid_confirm: Are you sure that you want to mark selected invoices as paid?
+      mark_paid_link: Mark paid
+      mark_paid_title: Mark paid all selected invoices
+    invoice_table:
+      table_head_court: Court
+      table_head_end_time: End time
+      table_head_price: Price
+      table_head_start_time: Start time
+      total: 'Total:'
+    send_invoices:
+      email_invoices_link: Email Invoices
+      mail_link: Mail Invoices
+      notification_link: Send mywebsite Notification
+      paid_link: Paid Invoices
+      search_placeholder: Search in table
+      table_head_action: Action
+      table_head_id: Invoice ID
+      table_head_name: Customer Name
+      table_head_paid: Is Paid
+      updaid_link: Unpaid Invoices
+    show:
+      table_head_court: Court
+      table_head_end_time: End time
+      table_head_price: Price
+      table_head_start_time: Start time
+      total: 'Total:'
+    mark_paid:
+      success: "%{count} invoices were marked paid successfully"
+  layouts:
+    footer:
+      blog: Blog
+      careers: Careers
+      download_ios_html: |
+        <span>Download&nbsp;app</span>
+        <small>on&nbsp;iOS</small>
+      download_text_html: Find new friends to&nbsp;play sports with
+      follow: Follow us
+      help: Help
+      privacy: Privacy policy
+      terms: Terms and conditions
+    navigation:
+      game_pass_link: Game Passes
+      add_venue_link: Add Venue
+      customers_link: Customers
+      discounts_link: Discounts
+      edit_admin_link: Edit Admin Profile
+      edit_company_link: Edit Company Settings
+      edit_venue_link: Edit Venue
+      invoices_link: Invoices
+      logout_link: Log out
+      manage_admins_link: Manage Admins
+      manage_venue_link: Manage Venue
+      memberships: Recurring Reservations
+      memberships_link: Recurring Reservations
+      edit_emails_link: Emails
+      reports_link: Reports
+      reservations_link: Reservations
+      cancelled_reservations_link: Cancelled reservations
+      settings: Settings
+      venue_reports_link: Reports
+    topnavbar:
+      messages_link: Messages
+  number:
+    currency:
+      format:
+        delimiter: ","
+        format: "%u%n"
+        precision: 2
+        separator: "."
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "€"
+    format:
+      delimiter: ","
+      precision: 3
+      separator: "."
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion: Billion
+          million: Million
+          quadrillion: Quadrillion
+          thousand: Thousand
+          trillion: Trillion
+          unit:
+      format:
+        delimiter:
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          eb: EB
+          gb: GB
+          kb: KB
+          mb: MB
+          pb: PB
+          tb: TB
+    percentage:
+      format:
+        delimiter:
+        format: "%n%"
+    precision:
+      format:
+        delimiter:
+  pages:
+    home:
+      duration: 60 minutes
+      find_venue: Find a venue
+      header: Your sports companion
+      header_lead: Begin exploring sport venues in your city and meet new sport enthusiasts
+      help: Help
+      join_button: Join mywebsite
+      join_content: mywebsite is in pilot-phase and we have launched the service first with Kalastajatorpan Tennisklubi, Aktia-Tennishalli and Martinmäen Tenniskeskus. More venues are joining all the time. You can help us get new venues to join mywebsite by telling them about us.
+      join_header: Opening up more opportunities to be active and athletic
+      login_html: Log&nbsp;In
+      logout: Logout
+      signup_html: Sign&nbsp;Up
+      sport: tennis
+      venues_list: Venues in Helsinki
+      get_mywebsite: Sales
+    search_form:
+      duration: 60 minutes
+      find_venue: Find a venue
+      sport: tennis
+    search_results:
+      book_venue_messsage: Click on time to book
+      duration: 60 minutes
+      find_venue: Find a venue
+      not_available: Sorry, but we found %{count} Venues Available for your search.
+      not_available_with_params_html: Sorry, but we found %{count} Venues Available for <strong>%{duration} minutes</strong> on <strong>%{date}</strong> around <strong>%{time}</strong>
+      sport: tennis
+  prices:
+    price:
+      friday: Friday
+      header: Price
+      monday: Monday
+      saturday: Saturday
+      sunday: Sunday
+      thursday: Thursday
+      tuesday: Tuesday
+      wednesday: Wednesday
+  reservations:
+    edit:
+      amount_paid_label: Amount paid so far
+      end_time_label: End Time
+      mark_reservation: Mark reservation as paid ?
+      price_label: Price
+      get_automatically: Get automatically
+      price_placeholder: No Price Available
+      select_date_label: Select Date
+      start_time_label: Start Time
+      submit_button: Update Reservation
+      note: Notes
+      use_game_pass: Use Game Pass
+      select_game_pass: Select Game pass
+    form:
+      submit_button: Book Now
+    new:
+      amount_paid_label: Amount paid so far
+      court_label: Select Court
+      end_time_label: End Time
+      mark_reservation: Mark reservation as paid ?
+      owner_label: Reservation owner
+      price_label: Price
+      get_automatically: Get automatically
+      price_placeholder: No Price Available
+      select_date_label: Select Date
+      select_existing: create existing user
+      select_guest: create guest user
+      select_new: create new user
+      select_user_label: select user
+      start_time_label: Start Time
+      submit_button: Create Reservation
+      note: Notes
+    new_cart:
+      owner_label: Reservation owner
+      select_existing: create existing user
+      select_guest: create guest user
+      select_new: create new user
+      select_user_label: select user
+      submit_button: Create Reservations
+      note: Notes
+    resell_to_user_form:
+      new_owner_label: Sell reselling reservation to new owner
+      select_existing: existing user
+      select_guest: create guest user
+      select_new: create new user
+      select_user_label: select user
+      submit_button: Sell
+      success: "Reservation Resold successfully."
+    show:
+      close_link: Close
+      customer_name: 'Customer Name:'
+      phone_number: Phone Number
+      delete_link: Delete
+      edit_link: Edit
+      log_link: Log
+      resell_link: Put on resell
+      withdraw_resell_link:  Withdraw Resell
+      sell_to_user_link: Sell to other user
+      end_time: 'End Time:'
+      made_by_admin: Made by admin
+      made_online: Made Online
+      resv_date: 'Reservation Date:'
+      resv_price: 'Reservation Price:'
+      start_time: 'Start Time:'
+      reselling: Reselling
+      resold: Resold
+      membership: Membership
+    show_log:
+      table_head_time: Time
+      table_head_status: Status
+      table_head_params: Params
+      close_btn: Close
+      start_time: Start Time
+      end_time: End Time
+      court: Court
+      payment_type: Payment Type
+      booking_type: Booking Type
+      user: User
+      membership: Membership Id
+      reselling: Membership onsale
+
+    modal:
+      resv_details: 'Reservation Details:'
+    form_info:
+      reselect_button: Reselect on calendar
+    invoiced: Invoiced
+    unpaid: Unpaid
+    online: Online
+    at_venue: Paid at the venue
+  shared:
+    business_hours:
+       closing_time: Closing Time
+       opening_hours: Opening Hours
+       sunday: Sunday
+       monday: Monday
+       tuesday: Tuesday
+       wednesday: Wednesday
+       thursday: Thursday
+       friday: Friday
+       saturday: Saturday
+    booking_modal:
+      around: Around
+      available_on: Availability on
+      book_button: book
+      title: Talin Tennoskeskus
+    booking_modal_content:
+      available: courts available
+      nantext_line1: Choose any of the time slots you wish along with their corresponding available courts to begin your booking. Then choose the best time slot or court that works best for you.
+      nantext_line2: All chosen bookings will appear at the bottom which you add and delete at any time
+      nantitle: Let’s start booking
+      nofound_nantitle: No courts found
+    booking_success_modal:
+      make_another: make another
+      text: Booking has been added to reservations on your profile
+      title: Booking successful
+      view_booking: view booking
+      booking_failed: Booking failed
+    credit_card_modal:
+      cancel_button: Cancel
+      card_cvc: CVC / CWW
+      card_number: Card number
+      submit_button: Save
+      title: Add new credit card
+    login_modal:
+      forgot_password: Forgot ?
+      signup: Signup
+      signup_message: Don’t have an account?
+      login: log in
+      login_fb: log in with facebook
+      or: or
+    newnav:
+      help: Help
+      login_html: Log&nbsp;In
+      logout: Logout
+      signup_html: Sign&nbsp;Up
+      get_mywebsite: Sales
+    not_logged_modal:
+      login: log in
+      modal_text: You have to be logged in to make a reservation.
+      signup: Sign Up
+      title: oops...
+    payment_modal:
+      payment_text: You have %{charges} usable charges on Game Pass. Click Pay to use Game Pass to Pay
+      payment_saved: Saved amount
+      skip_payment: Pay Onsite
+      book_text: You are about to book
+      no_payment: Pay at location
+      court_count: Court(s) with total price of
+      no_card_msg: You dont have any credit cards on your account.
+      pay_button: Pay
+      book_button: Book
+      submit_button: Add New
+      title: Payment
+    signup_modal:
+      sign_up: Sign Up
+      or: or
+      sign_up_fb: Signup with facebook
+      terms_accept_html: By signing up you accept our <a href="%{link}">Terms of Conditions</a>
+  support:
+    array:
+      last_word_connector: ", and "
+      two_words_connector: " and "
+      words_connector: ", "
+    or: or
+  time:
+    am: am
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      long: "%B %d, %Y %H:%M"
+      short: "%d %b %H:%M"
+    pm: pm
+  users:
+    common:
+      header: Your profile
+    credit_cards:
+      default_option: Your Cards
+      edit_profile: Edit Profile
+      ending_message: Ending in %{date}
+      header: Your profile
+      invoices: Invoices
+      my_reservations: My Reservations
+    invoices:
+      download_invoice: Download Invoice
+      edit_profile: Edit Profile
+      header: Your profile
+      invoice_info: info
+      invoice_name_html: Invoice&nbsp;<b>#%{num}</b>
+      invoices: Invoices
+      membership: Recurring Reservations
+      my_reservations: My Reservations
+      paid: Paid invoices
+      pay_now_button: pay now
+      title_date: 'Due: %{date}'
+      unpaid: Unpaid invoices
+    menu:
+      edit_profile: Edit Profile
+      invoices: Invoices
+      my_reservations: My Reservations
+      my_memberships: My Recurring Reservations
+    show:
+      add_to_calendar: Add To Calendar
+      membership: "%{sport} Recurring Reservations"
+      cancel_reservation_link: Cancel Reservation
+      resell_reservation_link: Resell Reservation
+      withdraw_resell_reservation_link: Withdraw Resell
+      reservation_paid: Paid Online
+      reservation_unpaid: Pay at Venue
+      reservation_reselling: Reselling
+      cancelled: CANCELLED
+      cant_cancel_reservation_message: Can't Cancel Reservation
+      cant_resell_reservation_message: Can't Resell Reservation
+      edit_profile: Edit Profile
+      future_reservations: Future reservations
+      header: Your profile
+      invoices: Invoices
+      my_reservations: My Reservations
+      my_recurring_reservations: My Recurring Reservations
+      past_reservations: Past reservations
+      reselling_reservations: Reselling reservations
+      resold_reservations: Resold reservations
+    user_no_password:
+      address: Street Address
+      city: City
+      email: Email
+      first_name: First Name
+      last_name: Last Name
+      zipcode: Zipcode
+      phone_number: Phone
+  venues:
+    add_reservation:
+      120minutes: 120 Minutes
+      60minutes: 60 Minutes
+      90minutes: 90 Minutes
+      description: You can change the date and time still.
+      price_label: Price (get automatically)
+      price_placeholder: Price
+      select_court_label: Select Court
+      select_date_label: Select Date
+      select_duration_label: Select Duration (end_time = start_time + duration)
+      select_start_time_label: Start Time
+      select_user_label: Select User
+      title: Add New Reservation
+    court_new:
+      courts_number_label: Number of courts
+      header: Add Court
+      submit_button: Create
+    courts_and_prices:
+      add_courts: Add Courts
+      add_holidays: Add Holidays
+      add_prices: Add Prices
+      courts_link: Courts
+      find_text: Find your Courts, information about them and about your Pricing rules here!
+      header: Manage Venue
+      holidays_link: Holidays
+      last_modify_html: 'Last modification: <i class="fa fa-clock-o"></i> 2:10 pm - 12.06.2014'
+      price_rules_link: Price Rules
+    edit_emails:
+      header: Manage Emails
+      booking_confirmation_email: Booking Confirmation Email
+      booking_confirmation_header: Enter a message to be appended to your customers' reservation confirmation emails.
+      booking_confirmation_placeholder: Booking Confirmation message.
+      registration_confirmation_email: Registration Confirmation Email
+      registration_confirmation_header: Enter a message to be appended to your customers' registration confirmation emails.
+      registration_confirmation_placeholder: Registration Confirmation message.
+      email_lists: Email Lists
+      compose: Compose
+    edit:
+      courts_prices: Courts & Prices
+      delete_button: Delete Venue
+      header: Edit %{name}
+      list_venue: List Venue
+      save_button: Save Changes
+      custom_colors: Custom colors
+      custom_colors_info: You can edit default calendar colors used for reservations
+      custom_colors_names:
+        unpaid: Unpaid Reservation
+        paid: Fully Paid Reservation
+        semi_paid: Semi Paid Reservation
+        guest: Guest Reservation
+        membership: Recurring Reservation
+        reselling: Reselling Reservation
+        invoiced: Invoiced Reservation
+        other: Other
+      no_color: Without color
+    existing_memberships:
+      credit_card_reminder: Click here to send a reminder to add a credit card.
+      header: Your Customer List
+      table_head_end_date: End Date
+      table_head_end_time: End Time
+      table_head_status: Status
+      table_head_name: Customer Name
+      table_head_price: Price
+      table_head_weekday: Weekday
+      table_head_court: Court
+      table_head_time: Time
+      table_head_edit: Edit
+      table_head_remove: Remove recurring reservation
+      table_head_payment_method: Payment Method
+      table_head_payment_method_cc: Credit Card Subscription
+      table_head_payment_method_invoice: Invoice
+      table_head_resv_court: Reservation Court
+      table_head_start_date: Start Date
+      table_head_start_time: Start Time
+      table_head_venue: Venue Name
+      table_head_weekday: Weekday
+      table_head_status: Status
+      cc_charge_change: Convert to Credit Card Payment
+      failed: Failed
+      resv_errors: The following reservations could not be made
+      errors: Errors
+      cancel: Cancel
+      create_non_overlapping: Create Non Overlapping Reservations
+      ignore_overlaps_tooltip: Ignore all overlapping reservations and proceed to create valid ones
+      table_head_reservations: Reservations
+      resell_reservation_link: Resell Reservation
+      withdraw_resell_reservation_link: Withdraw Resell
+      resold_reservation: Resold
+      reservation_log_link: Log
+    form:
+      closing_time: Closing Time
+      opening_hours: Opening Hours
+      booking_ahead_limit: How many days in advance can be booked
+      cancellation_time: How many hours in advance can reservations be cancelled
+      sunday: Sunday
+      monday: Monday
+      tuesday: Tuesday
+      wednesday: Wednesday
+      thursday: Thursday
+      friday: Friday
+      saturday: Saturday
+    holidays_new:
+      end_date: End date
+      end_time: End Time
+      header: Add Holidays
+      leave_empty: Leave empty for all day holidays
+      off_time: Off Time
+      select_court: Select Court
+      start_date: Start date
+      start_time: Start Time
+      submit_button: Add
+      whole_venue_checkbox: Holiday for the whole venue.
+    manage_court:
+      payment_skippable: Skipping payment allowed
+      payment_not_skippable: Skipping payment not allowed
+      close_button: Close
+      duration_policy: 'Minimum Duration Policy:'
+      edit_link: Edit %{name}
+      from: From
+      header: Court Description
+      price: Price
+      price_rules_friday: Price Rules for Friday
+      price_rules_monday: Price Rules for Monday
+      price_rules_saturday: Price Rules for Saturday
+      price_rules_sunday: Price Rules for Sunday
+      price_rules_thursday: Price Rules for Thursday
+      price_rules_tuesday: Price Rules for Tuesday
+      price_rules_wednesday: Price Rules for Wednesday
+      start_time_policy: 'Start Time Policy:'
+      to: to
+      delete_button: Delete
+    manage_discounts:
+      add_disounts_link: Add Discounts
+      customers: Customers
+      discounts: Discounts
+      header: Manage Discounts
+      search_placeholder: Search in table
+      text: Manage user discounts!
+    discounts_customers_table:
+      table_head_action: Action
+      table_head_email: Customer Email
+      table_head_id: Customer ID
+      table_head_name: Customer Name
+      table_head_type: Discount Type
+    manage_price:
+      close_button: Close
+      update_button: Update
+      cancel_button: Cancel
+      edit_button: Edit
+      days_affect: 'Days this price affects:'
+      delete_button: Delete
+      from: From
+      header: Price Rule
+      notice: This price effects multiple courts and on one or more days of the week.
+      price: Price
+      price_rule: Courts ruled by this Price Rule
+      to: to
+    memberships:
+      close_button: Close
+      update_button: Update
+      cancel_button: Cancel
+      edit_membership: Edit Recurring Reservations
+      create_membership: Create a New Recurring Reservations
+      details_p_html: |
+        <strong>Lorem Ipsum is simply dummy</strong> text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+        printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
+        remaining essentially unchanged.
+      details_text: Show Recurring Reservations details here, edit the Recurring Reservations details etc.
+      details_title: Recurring Reservations Details
+      header: Recurring Reservations
+      membership: "%{name} Recurring Reservations"
+      save_button: Save changes
+      import_memberships: Import Recurring Reservations
+    memberships_new:
+      create_new_user: create new user
+      header: Add a Recurring Reservations
+      membership_end_date: Recurring Reservations End Date
+      membership_owner: Recurring Reservations owner
+      membership_start_date: Recurring Reservations Start Date
+      price_label: Price
+      select_court_label: Select Court
+      select_end_time: Select End Time
+      select_existing_user: select existing user
+      select_start_time: Select Start Time
+      select_user_label: select user
+      select_weekday_label: Select Weekday
+      submit_button: Create
+    memberships_import:
+      download_csv_template: Download CSV template
+      upload_button: Import
+      csv_file: CSV file
+      ignore_conflicts: Ignore reservations conflicts
+      importing: Importing...
+    new:
+      create_button: Create Venue
+      header: Add Venue
+      title: New Venue
+    price_new:
+      all_days: All Days
+      choose_dates: Choose Dates for Price
+      create_button: Create
+      end_time_label: End Time
+      header: Add Price Rule
+      price: Price
+      select_all_courts: Select All Courts
+      select_court_label: Select Court(s) (some or all)
+      start_time_label: Start Time
+      weekdays: Weekdays
+      weekend: Weekend
+    prices_modal:
+      cancel_link: Cancel creating the Price Rule, edit your Rule to not have a conflict.
+      conflicts: 'Conflicts:'
+      create_rule_link: Create the Price Rule, but remove Court 4 from the Price Rule you are trying to create, so there are no conflicts
+      for_courts: for courts
+      from: from
+      from_on: from %{start_time} - %{end_time} on
+      merge_link: MERGE EM !!!
+      modal_content: The Price Rule you tried to add is trying to overwrite your old rules, we need to resolve this conflict!
+      modal_title: Price Rule Conflict!
+      option3: 'Option 3:'
+      option3_text: Create the new rule and overwrite the existing Price Rule times that the new Price Rule defines the price inside the parameters given
+      price_rule: Price rule %{id}
+      price_rules_changed: This pricing rules will be adjusted and changed to $ %{price}
+      price_text: You tried to add a Price Rule to Courts
+      rule_text: This Rule Clashes with Price Rule %{price_id} that is for Courts
+      solve_options: 'Options to solve conflict:'
+      to: to
+      'true': true
+    show:
+      60minutes: 60 min
+      90minutes: 90 min
+      120minutes: 120 min
+      about_venue: About this venue
+      check_times: Check times
+      close_button: Close
+      find_button: Find a Court
+      icon_title: 'Sports: here you can view all the sports available at this venue'
+      info: Info
+      map: Map
+      opening_hours: Opening hours
+      sports: Sports
+      tennis: Tennis
+    view:
+      header: Venue Reservation View
+      option1: Config option 1
+      option2: Config option 2
+      resv: Reservations
+      resv_details: 'Reservation Details:'
+      book_all: Book all
+      use_cart: Use cart
+      clear: Clear
+      reserve_all: Reserve All
+      calendar_prev_week_button: Previous Week
+      calendar_next_week_button: Advance One Week
+      calendar_prev_day_button: Previous Day
+      calendar_next_day_button: Advance One Day
+      calendar_reservation_reselect: |
+        Editing reservation: select new time by drawing on a date you want,
+        like you would creating a normal reservation.
+    reports:
+      sales_report: Sales Report
+      header: Reports
+      from: from
+      to: To
+      download_btn: Download report
+    cancelled_reservations:
+      header: Cancelled reservations
+      table_head_id: ID
+      table_head_user: User
+      table_head_cancellation_time: Cancelled at
+      table_head_reservation_time: Reservation time
+      table_head_reservation_court: Court name
+      reservation_log_link: Log
+      search_placeholder: Search in table
+  email_lists:
+    index:
+      name_placeholder: New Email List
+    email_list:
+      name: Name
+      email: Email
+      actions: Actions
+    update:
+      success: Email list renamed
+    remove_users:
+      success: Users removed from the email list
+    add_users:
+      success: Users added succesfully
+    destroy:
+      success: Email List deleted
+    custom_mail:
+      success: Email Queued for delivery
+      no_recipient: No recipient selected
+    send_mail:
+      from: From
+      other_email: Enter other email
+      subject: Subject
+      add_groups: To (add email groups)
+      add_users: To (add users)
+      user_emails_placeholder: Emails separated by comma
+      email_body: Email Body
+      image_tooltip: "Image to append to top of email body. Default: Venue primary image"
+      image_label: Image (Optional)
+      send_copy: Send me a copy
+      send_button: Send
+
+  validator:
+    errors:
+      date: 'Please enter a valid date in the format DD/MM/YYYY'
+      time: 'Please enter a valid time in the format HH:mm'
+
+  services:
+    csv_import_base:
+      report: 'Created: %{created}, connected: %{skipped}, failed: %{failed}'
+      no_file: Please select CSV file
+      invalid_file: Invalid file
+      failed_to_process: 'Failed to process CSV. Error: %{error}'
+      invalid_header: "Invalid header. Missing columns: %{missing}"
+      required: '*required'
+      non_required: 'can be empty'
+    csv_import_users:
+      no_venue: Please select venue for import
+      failed_to_process_data: 'Failed to process data: %{data}'
+    csv_import_memberships:
+      report: 'Created: %{created}, skipped: %{skipped}, failed: %{failed}'
+      no_email: NO_EMAIL
+      no_venue: Please select venue for import
+      corrupted_data: CORRUPTED DATA
+      failed_to_process_data: 'Failed to process data: %{data}'
+      column_comments:
+        email: 'Used as user ID'
+        local_timezone: in local timezone
+        court_index: 'Index for court type(1,2,3...)'
+        court_sport: "One of: %{defaults}"
+        court_outdoor: "Defaults to 'indoor' if empty"
+
+  will_paginate:
+    previous_label: '<'
+    next_label: '>'
+    page_gap: '...'
+  thanks: Thanks!

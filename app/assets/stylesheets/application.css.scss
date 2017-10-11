@@ -1,0 +1,117 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require font-awesome
+ *= require jquery/clockpicker
+ *= require bootstrap/bootstrap.min.css
+ *= require bootstrap-datepicker
+ *= require animate/animate.css
+ *= require iCheck/custom.css
+ *= require iCheck/blue.css
+ *= require toastr/toastr.min.css
+ *= require fullcalendar/fullcalendar.css
+ *= require fullcalendar/fullcalendar.scheduler.min.css
+ *= require select2/select2.min.css
+ *= require dropzone/dropzone.min.css
+ *= require dropzone/filepicker.css
+ *= require footable/footable.core.css
+ *= require sweetalert/sweetalert.css
+ *= require jvectormap/jquery-jvectormap-2.0.2.css
+ *= require style
+ *= require venues.scss
+ *= require courts.scss
+ *= require game_pass.scss
+ *= require dashboard.scss
+ *= require ladda/ladda-themeless.min.css
+ *= require slick/slick.css
+ *= require slick/slick-theme.css
+ *= require invoices.scss
+ *= require react-select/react-select.min.css
+ *= require react-virtualized-select/react-virtualized-select.css
+ *= require react-datepicker/react-datepicker.min.css
+ */
+
+.popover.clockpicker-popover {
+	z-index: 10500 !important;
+}
+
+#logo {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+.modal-body {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+}
+
+.panel-heading.preview {
+  padding: 0;
+  width: 100%;
+}
+
+.panel-heading.preview img{
+  width: 100%;
+}
+
+.datepicker {
+  z-index: 10000 !important;
+}
+
+.venue-image {
+  margin-left: 5px;
+  display: inline-block;
+  float: left;
+}
+
+.venue-inner-image {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.venue-del-image {
+  position: relative;
+  top: 10px;
+  left: 85px;
+  border-radius: 10px;
+}
+
+.venue-main-image {
+  padding: 5px;
+  border: solid 1px blue;
+}
+
+#legend {
+  width: 210px;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.legend-block {
+  width: 20px;
+  height: 20px;
+  float: left;
+  margin-right: 10px;
+}
+
+.legend-block.unpaid {
+  background-color: #f44336;
+}
+.legend-block.guest {
+  background-color: blue;
+}
+.legend-block.paid {
+  background-color: #4caf50;
+}
+.legend-block.semipaid {
+  background-color: #F8AC59;
+}

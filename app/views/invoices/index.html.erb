@@ -1,0 +1,39 @@
+<div class="wrapper wrapper-content  animated fadeInRight">
+   <div class="row m-t-lg">
+       <div class="col-lg-12">
+           <div class="tabs-container">
+               <ul class="nav nav-tabs">
+                   <li class="active"><a data-toggle="tab" href="#tab-1"><%= t('.invoices')%></a></li>
+                   <% if can? :manage, Invoice %>
+                     <li class=""><a data-toggle="tab" href="#tab-2"><%= t('.create_invoices')%></a></li>
+                   <% end %>
+               </ul>
+               <div class="tab-content">
+                   <div id="tab-1" class="tab-pane active">
+                    <%= render 'invoice_list' %>
+                   </div>
+                   <% if can? :manage, Invoice %>
+                     <div id="tab-2" class="tab-pane">
+                       <%= render 'create_invoices' %>
+                     </div>
+                   <% end %>
+               </div>
+
+
+           </div>
+       </div>
+   </div>
+</div>
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+    $('.footable').footable();
+    $('.footable2').footable();
+
+
+});
+
+</script>

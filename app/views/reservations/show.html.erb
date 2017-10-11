@@ -1,0 +1,57 @@
+<div id="resv">
+  <div class="row">
+    <%= t('.customer_name')%> <h5><%= @reservation.user.try(:full_name) %></h5>
+    <%= t('.resv_price')%> <h5><%= number_to_currency(@reservation.price) %></h5>
+    <%= t('.resv_date')%> <h5><%= TimeSanitizer.output(@reservation.start_time).strftime('%A, %d/%m/%y') %></h5>
+    <%= t('.start_time')%> <h5><%= TimeSanitizer.output(@reservation.start_time).strftime('%H:%M') %></h5>
+  </div>
+  <div class="row">
+    <%= t('.end_time')%> <h5><%= TimeSanitizer.output(@reservation.end_time).strftime('%H:%M') %></h5>
+  </div>
+  <% if @reservation.try(:user).try(:phone_number).present? %>
+    <div class="row">
+      <%= t('.phone_number')%> <h5><%= @reservation.user.phone_number %></h5>
+    </div>
+  <% end %>
+  <% if @reservation.try(:note).present? %>
+    <div class="row">
+      <%= t('.note')%> <h5><%= @reservation.note %></h5>
+    </div>
+  <% end %>
+  <div class="row">
+    <% if @reservation.paid? %>
+      <span class='label label-info'>
+    <% elsif @reservation.semi_paid? %>
+      <span class='label label-warning'>
+    <% elsif @reservation.unpaid? %>
+      <span class='label label-danger'>
+    <% end %>
+        <%= @reservation.payment_type.humanize %>
+      </span>
+      &nbsp;
+      &nbsp;
+      <% if @reservation.admin? %>
+        <span class='label'><i class='fa fa-user'/><%= t('.made_by_admin')%></span>
+      <% elsif @reservation.online? %>
+        <span class='label'><i class='fa fa-user'/><%= t('.made_online')%></span>
+        <% if @reservation.resold? %>
+          <span class='label label-info'><%= t('.resold')%></span>
+        <% end %>
+      <% elsif @reservation.membership? %>
+        <span class='label label-success'><i class='fa fa-repeat'/><%= t('.membership')%></span>
+        <% if @reservation.reselling? %>
+          <span class='label label-info'><%= t('.reselling')%></span>
+          <button type="button" class="btn btn-warning" onclick="loadSellResv('<%= resell_to_user_form_venue_reservation_path(@reservation.court.venue, @reservation) %>')" ><%= t('.sell_to_user_link')%></button>
+          <%= link_to t('.withdraw_resell_link'), reservation_resell_path(@reservation), remote: true, class: 'btn btn-warning' %>
+        <% else %>
+          <%= link_to t('.resell_link'), reservation_resell_path(@reservation), remote: true, class: 'btn btn-warning' %>
+        <% end %>
+      <% end %>
+  </div><br>
+  <div class="row text-center">
+    <button type="button" class="btn btn-warning" onclick="loadEditResv(this)" data-edit-url="<%= edit_venue_reservation_path(@reservation.court.venue, @reservation) %>" ><%= t('.edit_link')%></button>
+    <button type="button" class="btn btn-warning" onclick="loadResvLog('<%= reservation_show_log_path(@reservation) %>')"><%= t('.log_link')%></button>
+    <button type="button" class="btn btn-danger" onclick="deleteResv(this)" data-delete-url="<%= "/venues/#{@venue.id}/reservations/#{@reservation.id}" %>"><%= t('.delete_link')%></button>
+    <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('.close_link')%></button>
+  </div>
+</div>

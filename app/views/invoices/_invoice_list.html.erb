@@ -1,0 +1,104 @@
+<div class="panel-body">
+  <div class="ibox float-e-margins">
+    <div class="invoice-links">
+      <h3>
+        <a href="?mode=drafts" class="<%= "active" if @mode == "drafts"%>"><%= t('.drafts')%></a> |
+        <a href="?mode=unpaid" class="<%= "active" if @mode == "unpaid"%>"><%= t('.updaid')%></a> |
+        <a href="?mode=paid"  class="<%= "active" if @mode == "paid"%>"><%= t('.paid')%></a>
+      </h3>
+    </div>
+    <% if @mode == "drafts" %>
+      <%= render 'drafts_table' %>
+    <% else %>
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="ibox float-e-margins">
+                  <div class="ibox-content">
+                  <input type="text" class="form-control input-sm m-b-xs" id="filter"
+                        placeholder="<%= t('.search_placeholder')%>">
+                        <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
+                            <thead>
+                            <tr>
+                                <th><%= t('.table_head_id')%></th>
+                                <th><%= t('.table_head_paid')%></th>
+                                <th><%= t('.table_head_name')%></th>
+                                <th><%= t('.table_head_total')%></th>
+                                <th><%= t('.table_head_action') %></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Add invoice.where(!is_draft) when done -->
+                            <% @invoices.each do |i| %>
+                              <tr>
+                                <td><%= i.id %></td>
+                                <td>No</td>
+                                <td><%= i.user.try(:full_name) %></td>
+                                <td><%= number_to_currency(i.total) %></td>
+                                <td><input type="checkbox" name="invoice_ids" value="<%= i.id %>" onchange="appendToResendBtn(this)"></td>
+                              </tr>
+                            <% end %>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="2">
+                                    <ul class="pagination pull-left"></ul>
+                                </td>
+                                <td colspan="3">
+                                  <div class="pull-right">
+                                    <% if @mode == "unpaid" && @invoices.any? %>
+                                      <%= link_to t('.resend_link'), '#',
+                                        class: "disabled btn btn-success action-btn",
+                                        id: "resend_invoice_btn",
+                                        data: {
+                                          url: send_all_company_invoices_path(@company),
+                                          confirm: t('.send_confirm')
+                                        },
+                                        method: :post
+                                      %>
+                                      <%= link_to t('.mark_paid_link'), '#',
+                                        class: "disabled btn btn-success action-btn",
+                                        id: "mark_paid_invoice_btn",
+                                        data: {
+                                          url: mark_paid_company_invoices_path(@company),
+                                          confirm: t('.mark_paid_confirm')
+                                        },
+                                        title: t('.mark_paid_title'),
+                                        method: :post
+                                      %>
+                                    <% end %>
+                                  </div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+    <% end%>
+  </div>
+</div>
+
+<script>
+  function appendToResendBtn(checkbox){
+    var $table = $(checkbox).closest('table');
+    var $action_btn = $table.find('.action-btn');
+    var selectedIds = $table.find('input[name=invoice_ids]:checked').map(function(i, elem){
+      return $(elem).val();
+    }).toArray();
+
+    if (selectedIds.length === 0) {
+      $action_btn.addClass('disabled');
+      $action_btn.attr('href', '#');
+    } else {
+      $action_btn.removeClass('disabled');
+      $action_btn.each(function(i, elem){
+        var url = $(elem).data('url') + '?' + selectedIds.map(function(id) {
+          return 'selected_ids[]=' + id;
+        }).join('&');
+        $(elem).attr('href', url);
+      })
+
+    }
+  }
+</script>

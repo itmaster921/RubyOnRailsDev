@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  venue_id: 
+  user_id: 
+  date: 2016-01-18 22:07:19
+  start_time: 2016-01-18 22:07:19
+  end_time: 2016-01-18 22:07:19
+  price: 9.99
+  total: 9.99
+
+two:
+  venue_id: 
+  user_id: 
+  date: 2016-01-18 22:07:19
+  start_time: 2016-01-18 22:07:19
+  end_time: 2016-01-18 22:07:19
+  price: 9.99
+  total: 9.99

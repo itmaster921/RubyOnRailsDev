@@ -1,0 +1,50 @@
+class VenueCarouselSportList extends React.Component {
+
+  componentDidMount() {
+    const {sport} = this.props
+    this.getSport(sport)
+  }
+
+  getSport(sport) {
+    const {onSetSportSportChange} = this.props
+    onSetSportSportChange(sport)
+  }
+
+  sport_list_image(type) {
+    var images  = {
+      'tennis': "<%= image_path("icons/select2/tennis.svg") %>"
+      }
+    return images[type];
+  }
+  sports_category_image(type) {
+    var images  = {
+      'tennis': "<%= image_path("icons/cats/tennis.svg") %>"
+      }
+    return images[type];
+  }
+
+  remaining_sports() {
+    var array = ["padel", "tennis"];
+    const {sport} = this.props
+    var filtered = array.filter(function(i) {
+      return i != sport;
+    });
+    return filtered;
+  }
+
+  render () {
+    var self = this;
+    return (
+      <div className="venue-category">
+        <div className="dropdown">
+          <button className="venue-category__select" type="button" id="dropdown-cat-modal-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="<%= image_url 'amperlogowhite.png' %>" />
+          </button>
+        </div>
+        <a href="#">
+          <span>{I18n.t('pages.home.venues_list')}</span>
+        </a>
+      </div>
+    );
+  }
+}

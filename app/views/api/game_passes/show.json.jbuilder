@@ -1,0 +1,13 @@
+json.id @game_pass.id
+json.user_id @game_pass.user_id
+json.venue_id @game_pass.venue_id
+json.name @game_pass.name
+json.total_charges @game_pass.total_charges
+json.remaining_charges @game_pass.remaining_charges
+json.price @game_pass.price
+json.court_sports @game_pass.court_sports
+json.court_type @game_pass.court_type
+json.start_date @game_pass.start_date_to_s
+json.end_date @game_pass.end_date_to_s
+json.time_limitations @game_pass.time_limitations
+json.is_paid @game_pass.is_paid

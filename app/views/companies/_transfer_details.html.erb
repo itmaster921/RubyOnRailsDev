@@ -1,0 +1,22 @@
+<table class="footable table table-stripped toggle-arrow-tiny">
+    <thead>
+    <tr>
+        <th><%= t('.table_head_amount') %></th>
+        <th><%= t('.table_head_fee') %></th>
+        <th><%= t('.table_head_net') %></th>
+        <th><%= t('.table_head_date') %></th>
+        <th><%= t('.table_head_type') %></th>
+    </tr>
+    </thead>
+    <tbody>
+          <% transfers.each do |transfer| %>
+          <tr>
+            <td><%= number_to_currency(transfer.amount/100.0) %></td>
+            <td><%= number_to_currency(transfer.fee/100.0) %></td>
+            <td><%= number_to_currency(transfer.net/100.0) %></td>
+            <td><%= Time.at(transfer.created).to_datetime.strftime("%d/%m/%Y") %></td>
+            <td><%= transfer.type %></td>
+          </tr>
+          <% end %>
+    </tbody>
+</table>
